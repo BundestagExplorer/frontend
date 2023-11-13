@@ -8,6 +8,8 @@ Contains the implementation for frontend using react.
 
 ## Development
 
+Run the frontend locally
+
 ### Prerequisites**:
 - install Node
 
@@ -17,12 +19,14 @@ Run local (auto-updating) node:
 
 ## Deployment
 
+Create a docker image and run the image in a nginx container
+
 ### Prerequisites**:
 - install Node
 - install Docker
 
 ### START/RUN
-Build image:
+Build image (NOTE: npm install might take some time):
 `docker build -t frontend .`
 
 Run on port 8080:
