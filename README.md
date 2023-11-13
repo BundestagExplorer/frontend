@@ -30,7 +30,7 @@ Build image (NOTE: npm install might take some time):
 `docker build -t frontend .`
 
 Run on port 8080:
-`docker run -p 8080:8080 frontend`
+`docker run -p 8080:80 --name frontend frontend`
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
