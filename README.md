@@ -22,7 +22,6 @@ Run local (auto-updating) node:
 Create a docker image and run the image in a nginx container
 
 ### Prerequisites**:
-- install Node
 - install Docker
 
 ### START/RUN
