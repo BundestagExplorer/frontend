@@ -11,26 +11,23 @@ Contains the implementation for frontend using react.
 Run the frontend locally
 
 ### Prerequisites**:
-- install Node
-
-### START/RUN
-Run local (auto-updating) node:
-`npm start`
-
-## Deployment
-
-Create a docker image and run the image in a nginx container
-
-### Prerequisites**:
-- install Node
 - install Docker
 
 ### START/RUN
-Build image (NOTE: npm install might take some time):
-`docker build -t frontend .`
+Run local (auto-updating) node in a docker container on localhost:8080:
+`docker compose up`
 
-Run on port 8080:
-`docker run -p 8080:80 --name frontend frontend`
+## Deployment
 
+Create a production build using node, that is deployed in an nginx container on localhost:8080
+
+### Prerequisites**:
+- install Docker
+
+### START/RUN
+Build and run image:
+`docker compose -f docker-compose_prod.yml up --build `
+
+NOTE: npm install might take some time, but only on first startup
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

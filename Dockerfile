@@ -1,14 +1,9 @@
-# Stage 0, "build-stage", based on Node.js, to build and compile the frontend
-FROM node:21 as build-stage
+FROM node:21 as node
+
 WORKDIR /app
 COPY package*.json /app/
+ENV PATH /app/node_modules/.bin:$PATH
 RUN npm install
 COPY ./ /app/
-RUN npm run build
 
-
-# Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
-FROM nginx:1.25.3
-COPY --from=build-stage /app/build/ /usr/share/nginx/html
-# Copy the nginx.conf
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+CMD ["npm", "start"]  
