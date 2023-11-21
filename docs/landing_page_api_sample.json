@@ -1,0 +1,82 @@
+[
+    {
+        "chronological_id": 1,
+        "date": "Januar 2023",
+        "bubbles": [
+            {
+                "meta_topic": "Wirtschaft",
+                "sub_topic_list": [
+                    {
+                        "label": "Börsencrash",
+                        "weight": 30
+                    },
+                    {
+                        "label": "Aktienkurs",
+                        "weight": 20
+                    },
+                    {
+                        "label": "Stonks",
+                        "weight": 40
+                    }
+                ]
+            },
+            {
+                "meta_topic": "Umwelt",
+                "sub_topic_list": [
+                    {
+                        "label": "Klimawandel",
+                        "weight": 30
+                    },
+                    {
+                        "label": "Schäden",
+                        "weight": 20
+                    },
+                    {
+                        "label": "Hitze",
+                        "weight": 40
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "chronological_id" : 2,
+        "date": "Februar 2023",
+        "bubbles": [
+            {
+                "meta_topic": "Wirtschaft",
+                "sub_topic_list": [
+                    {
+                        "label": "Börsencrash",
+                        "weight": 30
+                    },
+                    {
+                        "label": "Aktienkurs",
+                        "weight": 20
+                    },
+                    {
+                        "label": "Stonks",
+                        "weight": 40
+                    }
+                ]
+            },
+            {
+                "meta_topic": "Umwelt",
+                "sub_topic_list": [
+                    {
+                        "label": "Klimawandel",
+                        "weight": 30
+                    },
+                    {
+                        "label": "Schäden",
+                        "weight": 20
+                    },
+                    {
+                        "label": "Hitze",
+                        "weight": 40
+                    }
+                ]
+            }
+        ]
+    }
+]
