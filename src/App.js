@@ -1,48 +1,83 @@
-import logo from './logo.svg';
-import './App.css';
-import React from 'react';
-//import { render } from 'react-dom';
-import WordCloud from 'react-d3-cloud';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import _ from 'lodash';
+import HighchartsExporting from 'highcharts/modules/exporting';
+import HighchartsAccessibility from 'highcharts/modules/accessibility';
+import HighchartsMore from 'highcharts/highcharts-more';
+HighchartsExporting(Highcharts);
+HighchartsAccessibility(Highcharts);
+HighchartsMore(Highcharts);
 
-const data = [
-  { text: 'Hallo', value: 400 },
-  { text: 'Team!', value: 400 },
-  { text: 'BundestagExplorer', value: 400 },
-  { text: '#bestesprojekt', value: 400 },
-  { text: 'foo bar', value: 400 },
-];
+const getOptions = (type) => ({
+  chart: {
+    type,
+    width: 1000,
+    height: 1000,
+  },
+  title: {
+    text: _.startCase(`${type} chart`),
+  },
+  plotOptions: {
+    packedbubble: {
+      layoutAlgorithm: {
+        gravitationalConstant: 0.05,
+        splitSeries: true,
+        seriesInteraction: false,
+        dragBetweenSeries: true,
+        parentNodeLimit: true
+    },
+      minSize: '30%',
+      maxSize: '40%',
+      dataLabels: {
+        enabled: true,
+        format: '{point.name}',
+      },
+    },
+  },
+  series: [
+    {
+      "name": "Wirtschaft",
+      "data": [
+          {
+              "name": "Börsencrash",
+              "value": 30
+          },
+          {
+              "name": "Aktienkurs",
+              "value": 20
+          },
+          {
+              "name": "Stonks",
+              "value": 40
+          }
+      ]
+  },
+  {
+      "name": "Umwelt",
+      "data": [
+          {
+              "name": "Klimawandel",
+              "value": 30
+          },
+          {
+              "name": "Schäden",
+              "value": 20
+          },
+          {
+              "name": "Hitze",
+              "value": 40
+          }
+      ]
+  }
+  ],
+  credits: {
+    enabled: false,
+  },
+});
 
 function App() {
-
-
-
-  //render(<WordCloud data={data} />, document.getElementById('root'));
-
-
   return (
-    <div className="App">
-      <div><WordCloud data={data}/>
-</div>
-        
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-          Hello Worl
-        </p>
-        
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-
-      </header>
-
-    </div>
+    <HighchartsReact highcharts={Highcharts} options={getOptions('packedbubble')} />
   );
 }
 
