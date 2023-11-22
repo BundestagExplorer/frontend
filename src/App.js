@@ -26,12 +26,17 @@ const getOptions = (type) => ({
   },
   plotOptions: {
     packedbubble: {
+      // https://api.highcharts.com/highcharts/series.packedbubble.layoutAlgorithm
+      // Dokumentation der folgenden Optionen
       layoutAlgorithm: {
         gravitationalConstant: 0.05,
+        // friction = 0 friert die Animation ein 
+        friction: -0.7,
         splitSeries: true,
         seriesInteraction: false,
         dragBetweenSeries: true,
-        parentNodeLimit: true
+        parentNodeLimit: true,
+        enableSimulation: false //disables the annoying simulation
     },
       minSize: '30%',
       maxSize: '40%',
