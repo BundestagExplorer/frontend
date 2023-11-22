@@ -2,38 +2,38 @@
     {
         "chronological_id": 1,
         "date": "Januar 2023",
-        "bubbles": [
+        "series": [
             {
-                "meta_topic": "Wirtschaft",
-                "sub_topic_list": [
+                "name": "Wirtschaft",
+                "data": [
                     {
-                        "label": "Börsencrash",
-                        "weight": 30
+                        "name": "Börsencrash",
+                        "value": 30
                     },
                     {
-                        "label": "Aktienkurs",
-                        "weight": 20
+                        "name": "Aktienkurs",
+                        "value": 20
                     },
                     {
-                        "label": "Stonks",
-                        "weight": 40
+                        "name": "Stonks",
+                        "value": 40
                     }
                 ]
             },
             {
-                "meta_topic": "Umwelt",
-                "sub_topic_list": [
+                "name": "Umwelt",
+                "data": [
                     {
-                        "label": "Klimawandel",
-                        "weight": 30
+                        "name": "Klimawandel",
+                        "value": 30
                     },
                     {
-                        "label": "Schäden",
-                        "weight": 20
+                        "name": "Schäden",
+                        "value": 20
                     },
                     {
-                        "label": "Hitze",
-                        "weight": 40
+                        "name": "Hitze",
+                        "value": 40
                     }
                 ]
             }
@@ -42,38 +42,38 @@
     {
         "chronological_id" : 2,
         "date": "Februar 2023",
-        "bubbles": [
+        "series": [
             {
-                "meta_topic": "Wirtschaft",
-                "sub_topic_list": [
+                "name": "Wirtschaft",
+                "data": [
                     {
-                        "label": "Börsencrash",
-                        "weight": 30
+                        "name": "Börsencrash",
+                        "value": 30
                     },
                     {
-                        "label": "Aktienkurs",
-                        "weight": 20
+                        "name": "Aktienkurs",
+                        "value": 20
                     },
                     {
-                        "label": "Stonks",
-                        "weight": 40
+                        "name": "Stonks",
+                        "value": 40
                     }
                 ]
             },
             {
-                "meta_topic": "Umwelt",
-                "sub_topic_list": [
+                "name": "Umwelt",
+                "data": [
                     {
-                        "label": "Klimawandel",
-                        "weight": 30
+                        "name": "Klimawandel",
+                        "value": 30
                     },
                     {
-                        "label": "Schäden",
-                        "weight": 20
+                        "name": "Schäden",
+                        "value": 20
                     },
                     {
-                        "label": "Hitze",
-                        "weight": 40
+                        "name": "Hitze",
+                        "value": 40
                     }
                 ]
             }
