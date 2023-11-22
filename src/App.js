@@ -19,9 +19,7 @@ HighchartsMore(Highcharts);
 const getOptions = (type) => ({
 
   chart: {
-    type,
-    width: 1000,
-    height: 1000,
+    type
   },
   title: {
     text: _.startCase(`${type} chart`),
