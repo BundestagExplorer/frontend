@@ -8,7 +8,16 @@ HighchartsExporting(Highcharts);
 HighchartsAccessibility(Highcharts);
 HighchartsMore(Highcharts);
 
+//TODO
+// 1. make the bubbles clickable, redirect clicks to a random page (www.google.com) vor visualziation
+// 2. display the legend items on the right side, just like in the mockup
+// 3. make the legend items clickable
+// 4. make the applications responsive, currently the layout uses a fixed height/width specified in pixels
+// 5. integrate a slider to switch between two states
+// 6. disable animation, except for switching between two states, speed up the transition animation (if possible)
+// 6.1 the current style of the animation quite anoying
 const getOptions = (type) => ({
+
   chart: {
     type,
     width: 1000,
