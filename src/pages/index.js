@@ -342,6 +342,7 @@ class CustomBubbleChart extends Component {
       chartOptions: {
         chart: {
           type: 'packedbubble',
+          height: (1/2 * 100) + '%'
 
         },
         legend: {
