@@ -6,9 +6,40 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
+
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const steps = ['Präferenzen auswählen', 'Fragen beantworten', 'Resultat ansehen'];
+
+
+function createData(name, calories, fat, carbs, protein) {
+    return { name, calories, fat, carbs, protein };
+  }
+  
+  const rows = [
+    createData('Cannabis legalisieren', 'JA', 'NEIN', 'NEIN', 'NEIN'),
+    createData('Windkraft ausbauen', 'JA', 'NEIN', 'NEIN', 'NEIN'),
+    createData('Islamismus bekämpfen', 'JA', 'NEIN', 'NEIN', 'NEIN'),
+    createData('Schulen bauen', 'JA', 'NEIN', 'NEIN', 'NEIN'),
+    createData('Etat für Bundeswehr erhöhen', 'JA', 'NEIN', 'NEIN', 'NEIN')
+  ];
+
 
 
 export default function HorizontalLinearStepper() {
@@ -93,18 +124,109 @@ export default function HorizontalLinearStepper() {
         </React.Fragment>      
       
       ) :
+      activeStep === 0 ?(
+        <React.Fragment>
+            <h1>Zu welchen Themen möchten Sie Fragen beantworten?</h1>
+            <FormGroup>
+                <FormControlLabel control={<Checkbox />} label="Umweltschutz" />
+                <FormControlLabel control={<Checkbox />} label="Migration" />
+                <FormControlLabel control={<Checkbox />} label="Ernährung" />
+                <FormControlLabel control={<Checkbox />} label="Finanzen" />
+            </FormGroup>
+            <Button onClick={handleNext}>
+              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+            </Button>
+        </React.Fragment>  
+      ):
       activeStep === 1 ?(
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
+            <h1>Bitte beantworten Sie die folgenden Fragen:</h1>
+            <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography>Accordion 1</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget.
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography>Accordion 2</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion disabled>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel3a-content"
+          id="panel3a-header"
+        >
+          <Typography>Disabled Accordion</Typography>
+        </AccordionSummary>
+      </Accordion>
+            <Button onClick={handleNext}>
+              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+            </Button>
         </React.Fragment>  
       )
-      : (
+      :
+      activeStep === 2 ?(
+        <React.Fragment>
+            <h1>Größte Übereinstimmung: Die PARTEI</h1>
+
+            <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Frage</TableCell>
+            <TableCell align="right">Ihre Antwort</TableCell>
+            <TableCell align="right">CDU</TableCell>
+            <TableCell align="right">SPD</TableCell>
+            <TableCell align="right">Die PARTEI</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row.name}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.name}
+              </TableCell>
+              <TableCell align="right">{row.calories}</TableCell>
+              <TableCell align="right">{row.fat}</TableCell>
+              <TableCell align="right">{row.carbs}</TableCell>
+              <TableCell align="right">{row.protein}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+
+            <Button onClick={handleNext}>
+              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+            </Button>
+
+
+        </React.Fragment>  
+      ): (
         <React.Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
