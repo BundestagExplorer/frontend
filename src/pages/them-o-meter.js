@@ -7,9 +7,7 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -24,6 +22,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+
+import ViewResults from './them-o-meter/view-results';
+import PreferenceSelection from './them-o-meter/choose-preferences';
 
 const steps = ['Präferenzen auswählen', 'Fragen beantworten', 'Resultat ansehen'];
 
@@ -126,16 +127,9 @@ export default function HorizontalLinearStepper() {
       ) :
       activeStep === 0 ?(
         <React.Fragment>
-            <h1>Zu welchen Themen möchten Sie Fragen beantworten?</h1>
-            <FormGroup>
-                <FormControlLabel control={<Checkbox />} label="Umweltschutz" />
-                <FormControlLabel control={<Checkbox />} label="Migration" />
-                <FormControlLabel control={<Checkbox />} label="Ernährung" />
-                <FormControlLabel control={<Checkbox />} label="Finanzen" />
-            </FormGroup>
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button>
+        <PreferenceSelection></PreferenceSelection>
+        <Button onClick={handleNext}>
+          {activeStep === steps.length - 1 ? 'Finish' : 'Next'}</Button>
         </React.Fragment>  
       ):
       activeStep === 1 ?(
