@@ -6,28 +6,12 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-
-
-
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-
-
 import ViewResults from './them-o-meter/view-results';
 import PreferenceSelection from './them-o-meter/choose-preferences';
 import AnswerQuestions from './them-o-meter/answer-questions';
 
 const steps = ['Präferenzen auswählen', 'Fragen beantworten', 'Resultat ansehen'];
-
-
-  
-
-
-
 
 export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
