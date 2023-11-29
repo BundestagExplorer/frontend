@@ -1,4 +1,5 @@
 // Code übernommen aus: https://mui.com/material-ui/react-stepper/
+//TODO: Logik für den Stepper verstehen und clutter ausmisten
 
 import * as React from 'react';
 import Box from '@mui/material/Box';
