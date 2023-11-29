@@ -15,31 +15,17 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+
 
 import ViewResults from './them-o-meter/view-results';
 import PreferenceSelection from './them-o-meter/choose-preferences';
+import AnswerQuestions from './them-o-meter/answer-questions';
 
 const steps = ['Präferenzen auswählen', 'Fragen beantworten', 'Resultat ansehen'];
 
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
   
-  const rows = [
-    createData('Cannabis legalisieren', 'JA', 'NEIN', 'NEIN', 'NEIN'),
-    createData('Windkraft ausbauen', 'JA', 'NEIN', 'NEIN', 'NEIN'),
-    createData('Islamismus bekämpfen', 'JA', 'NEIN', 'NEIN', 'NEIN'),
-    createData('Schulen bauen', 'JA', 'NEIN', 'NEIN', 'NEIN'),
-    createData('Etat für Bundeswehr erhöhen', 'JA', 'NEIN', 'NEIN', 'NEIN')
-  ];
+
 
 
 
@@ -134,46 +120,7 @@ export default function HorizontalLinearStepper() {
       ):
       activeStep === 1 ?(
         <React.Fragment>
-            <h1>Bitte beantworten Sie die folgenden Fragen:</h1>
-            <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>Accordion 1</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography>Accordion 2</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion disabled>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3a-content"
-          id="panel3a-header"
-        >
-          <Typography>Disabled Accordion</Typography>
-        </AccordionSummary>
-      </Accordion>
+            <AnswerQuestions></AnswerQuestions>
             <Button onClick={handleNext}>
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
@@ -182,38 +129,7 @@ export default function HorizontalLinearStepper() {
       :
       activeStep === 2 ?(
         <React.Fragment>
-            <h1>Größte Übereinstimmung: Die PARTEI</h1>
-
-            <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Frage</TableCell>
-            <TableCell align="right">Ihre Antwort</TableCell>
-            <TableCell align="right">CDU</TableCell>
-            <TableCell align="right">SPD</TableCell>
-            <TableCell align="right">Die PARTEI</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-
+            <ViewResults></ViewResults>
             <Button onClick={handleNext}>
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
