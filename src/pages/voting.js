@@ -12,8 +12,6 @@ const Voting = () => {
                 result="accepted"
                 party="Example Party"
                 additionalInfo="Additional information about the voting..."
-                width="300px"
-                align="left"
             />
             <PollCard
                 date="2023-12-04"
@@ -21,8 +19,6 @@ const Voting = () => {
                 result="rejected"
                 party="Another Party"
                 additionalInfo="More details about the voting..."
-                width="400px"
-                align="right"
             />
         </div>
     );
