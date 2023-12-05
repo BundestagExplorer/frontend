@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import _ from 'lodash';
@@ -12,6 +12,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { useNavigate } from 'react-router-dom';
 
 HighchartsExporting(Highcharts);
 HighchartsAccessibility(Highcharts);
@@ -70,244 +71,6 @@ const marks_zeitraum = [
   },
 ];
 
-const political_data = [
-  {
-    "name": "Landwirtschaft",
-    "data": [
-      { "name": "Veganismus", "value": 10 },
-      { "name": "Bio", "value": 40 },
-      { "name": "Dürre", "value": 40 },
-      { "name": "Glyphosat", "value": 40 },
-    ]
-  },
-  {
-    "name": "Justiz",
-    "data": [
-      { "name": "Staatsanwalt", "value": 40 }
-    ]
-  },
-  {
-    "name": "Wirtschaft",
-    "data": [
-      { "name": "Börsenkrise", "value": 40 },
-      { "name": "Leitzins", "value": 40 },
-      { "name": "EZB", "value": 40 },
-      { "name": "Inflation", "value": 40 }
-    ]
-  },
-  {
-    "name": "Gesundheit",
-    "data": [
-      { "name": "Pflegekräfte", "value": 40 }
-    ]
-  },
-  {
-    "name": "Verkehr",
-    "data": [
-      { "name": "Fahrradstrecken", "value": 40 },
-      { "name": "ÖPNV", "value": 40 },
-      { "name": "Bahn", "value": 40 }
-    ]
-  },
-  {
-    "name": "Arbeit",
-    "data": [
-      { "name": "Verteilung", "value": 40 },
-      { "name": "Reiche", "value": 40 },
-      { "name": "Arbeitslosigkeit", "value": 40 }
-    ]
-  },
-  {
-    "name": "Finanzen",
-    "data": [
-      { "name": "Euro", "value": 40 },
-      { "name": "Steuer", "value": 40 },
-      { "name": "Erbschaft", "value": 40 }
-    ]
-  },
-  {
-    "name": "Wohnungen und Bau",
-    "data": [
-      { "name": "Obdachlose", "value": 40 },
-      { "name": "Sozialwohnungen", "value": 40 }
-    ]
-  },
-  {
-    "name": "Familie",
-    "data": [
-      { "name": "Kindergarten", "value": 40 },
-      { "name": "Rentner", "value": 40 }
-    ]
-  },
-  {
-    "name": "Verteidigung",
-    "data": [
-      { "name": "Bundeswehr", "value": 40 },
-      { "name": "Krieg", "value": 40 },
-      { "name": "Verteidigung", "value": 40 }
-    ]
-  },
-  {
-    "name": "Innenpolitik",
-    "data": [
-      { "name": "Rechtsextremismus", "value": 40 },
-      { "name": "Berlin", "value": 40 },
-      { "name": "Bayern", "value": 40 }
-    ]
-  },
-  {
-    "name": "Digitalisierung",
-    "data": [
-      { "name": "Digitalisierung", "value": 40 },
-      { "name": "Künstliche Intelligenz", "value": 40 }
-    ]
-  },
-  {
-    "name": "Umwelt",
-    "data": [
-      { "name": "Klimawandel", "value": 40 },
-      { "name": "Wasserverschmutzung", "value": 40 },
-      { "name": "Hitze", "value": 40 }
-    ]
-  },
-  {
-    "name": "Bildung und Forschung",
-    "data": [
-      { "name": "G8", "value": 40 },
-      { "name": "Lehrer", "value": 40 },
-      { "name": "NC", "value": 40 }
-    ]
-  },
-  {
-    "name": "Außenpolitik",
-    "data": [
-      { "name": "Syrien", "value": 40 },
-      { "name": "Libyen", "value": 40 },
-      { "name": "Krim", "value": 40 },
-      { "name": "Russland", "value": 40 }
-    ]
-  }
-];
-
-const political_data_updated = [
-  {
-    "name": "Landwirtschaft",
-    "data": [
-      { "name": "Veganismus", "value": 10 },
-      { "name": "Bio", "value": 40 },
-      { "name": "Dürre", "value": 60 },
-      { "name": "Glyphosat", "value": 20 },
-    ]
-  },
-  {
-    "name": "Justiz",
-    "data": [
-      { "name": "Staatsanwalt", "value": 10 }
-    ]
-  },
-  {
-    "name": "Wirtschaft",
-    "data": [
-      { "name": "Börsenkrise", "value": 30 },
-      { "name": "Leitzins", "value": 50 },
-      { "name": "EZB", "value": 20 },
-      { "name": "Inflation", "value": 10 }
-    ]
-  },
-  {
-    "name": "Gesundheit",
-    "data": [
-      { "name": "Pflegekräfte", "value": 70 }
-    ]
-  },
-  {
-    "name": "Verkehr",
-    "data": [
-      { "name": "Fahrradstrecken", "value": 50 },
-      { "name": "ÖPNV", "value": 30 },
-      { "name": "Bahn", "value": 20 }
-    ]
-  },
-  {
-    "name": "Arbeit",
-    "data": [
-      { "name": "Verteilung", "value": 20 },
-      { "name": "Reiche", "value": 10 },
-      { "name": "Arbeitslosigkeit", "value": 10 }
-    ]
-  },
-  {
-    "name": "Finanzen",
-    "data": [
-      { "name": "Euro", "value": 20 },
-      { "name": "Steuer", "value": 30 },
-      { "name": "Erbschaft", "value": 40 }
-    ]
-  },
-  {
-    "name": "Wohnungen und Bau",
-    "data": [
-      { "name": "Obdachlose", "value": 40 },
-      { "name": "Sozialwohnungen", "value": 40 }
-    ]
-  },
-  {
-    "name": "Familie",
-    "data": [
-      { "name": "Kindergarten", "value": 40 },
-      { "name": "Rentner", "value": 40 }
-    ]
-  },
-  {
-    "name": "Verteidigung",
-    "data": [
-      { "name": "Bundeswehr", "value": 40 },
-      { "name": "Krieg", "value": 60 },
-      { "name": "Verteidigung", "value": 40 }
-    ]
-  },
-  {
-    "name": "Innenpolitik",
-    "data": [
-      { "name": "Rechtsextremismus", "value": 40 },
-      { "name": "Berlin", "value": 60 },
-      { "name": "Bayern", "value": 40 }
-    ]
-  },
-  {
-    "name": "Digitalisierung",
-    "data": [
-      { "name": "Digitalisierung", "value": 40 },
-      { "name": "Künstliche Intelligenz", "value": 40 }
-    ]
-  },
-  {
-    "name": "Umwelt",
-    "data": [
-      { "name": "Klimawandel", "value": 40 },
-      { "name": "Wasserverschmutzung", "value": 40 },
-      { "name": "Hitze", "value": 40 }
-    ]
-  },
-  {
-    "name": "Bildung und Forschung",
-    "data": [
-      { "name": "G8", "value": 40 },
-      { "name": "Lehrer", "value": 40 },
-      { "name": "NC", "value": 40 }
-    ]
-  },
-  {
-    "name": "Außenpolitik",
-    "data": [
-      { "name": "Syrien", "value": 40 },
-      { "name": "Libyen", "value": 40 },
-      { "name": "Krim", "value": 40 },
-      { "name": "Russland", "value": 40 }
-    ]
-  }
-];
-
 
 //https://mui.com/material-ui/react-slider/
 function RangeSlider() {
@@ -331,126 +94,341 @@ function RangeSlider() {
   );
 }
 
+const CustomBubbleChart = () => {
+  const navigate = useNavigate()
+  const political_data = [
+    {
+      "name": "Landwirtschaft",
+      "data": [
+        { "name": "Veganismus", "value": 10 },
+        { "name": "Bio", "value": 40 },
+        { "name": "Dürre", "value": 40 },
+        { "name": "Glyphosat", "value": 40 },
+      ]
+    },
+    {
+      "name": "Justiz",
+      "data": [
+        { "name": "Staatsanwalt", "value": 40 }
+      ]
+    },
+    {
+      "name": "Wirtschaft",
+      "data": [
+        { "name": "Börsenkrise", "value": 40 },
+        { "name": "Leitzins", "value": 40 },
+        { "name": "EZB", "value": 40 },
+        { "name": "Inflation", "value": 40 }
+      ]
+    },
+    {
+      "name": "Gesundheit",
+      "data": [
+        { "name": "Pflegekräfte", "value": 40 }
+      ]
+    },
+    {
+      "name": "Verkehr",
+      "data": [
+        { "name": "Fahrradstrecken", "value": 40 },
+        { "name": "ÖPNV", "value": 40 },
+        { "name": "Bahn", "value": 40 }
+      ]
+    },
+    {
+      "name": "Arbeit",
+      "data": [
+        { "name": "Verteilung", "value": 40 },
+        { "name": "Reiche", "value": 40 },
+        { "name": "Arbeitslosigkeit", "value": 40 }
+      ]
+    },
+    {
+      "name": "Finanzen",
+      "data": [
+        { "name": "Euro", "value": 40 },
+        { "name": "Steuer", "value": 40 },
+        { "name": "Erbschaft", "value": 40 }
+      ]
+    },
+    {
+      "name": "Wohnungen und Bau",
+      "data": [
+        { "name": "Obdachlose", "value": 40 },
+        { "name": "Sozialwohnungen", "value": 40 }
+      ]
+    },
+    {
+      "name": "Familie",
+      "data": [
+        { "name": "Kindergarten", "value": 40 },
+        { "name": "Rentner", "value": 40 }
+      ]
+    },
+    {
+      "name": "Verteidigung",
+      "data": [
+        { "name": "Bundeswehr", "value": 40 },
+        { "name": "Krieg", "value": 40 },
+        { "name": "Verteidigung", "value": 40 }
+      ]
+    },
+    {
+      "name": "Innenpolitik",
+      "data": [
+        { "name": "Rechtsextremismus", "value": 40 },
+        { "name": "Berlin", "value": 40 },
+        { "name": "Bayern", "value": 40 }
+      ]
+    },
+    {
+      "name": "Digitalisierung",
+      "data": [
+        { "name": "Digitalisierung", "value": 40 },
+        { "name": "Künstliche Intelligenz", "value": 40 }
+      ]
+    },
+    {
+      "name": "Umwelt",
+      "data": [
+        { "name": "Klimawandel", "value": 40 },
+        { "name": "Wasserverschmutzung", "value": 40 },
+        { "name": "Hitze", "value": 40 }
+      ]
+    },
+    {
+      "name": "Bildung und Forschung",
+      "data": [
+        { "name": "G8", "value": 40 },
+        { "name": "Lehrer", "value": 40 },
+        { "name": "NC", "value": 40 }
+      ]
+    },
+    {
+      "name": "Außenpolitik",
+      "data": [
+        { "name": "Syrien", "value": 40 },
+        { "name": "Libyen", "value": 40 },
+        { "name": "Krim", "value": 40 },
+        { "name": "Russland", "value": 40 }
+      ]
+    }
+  ];
+  
+  const political_data_updated = [
+    {
+      "name": "Landwirtschaft",
+      "data": [
+        { "name": "Veganismus", "value": 10 },
+        { "name": "Bio", "value": 40 },
+        { "name": "Dürre", "value": 60 },
+        { "name": "Glyphosat", "value": 20 },
+      ]
+    },
+    {
+      "name": "Justiz",
+      "data": [
+        { "name": "Staatsanwalt", "value": 10 }
+      ]
+    },
+    {
+      "name": "Wirtschaft",
+      "data": [
+        { "name": "Börsenkrise", "value": 30 },
+        { "name": "Leitzins", "value": 50 },
+        { "name": "EZB", "value": 20 },
+        { "name": "Inflation", "value": 10 }
+      ]
+    },
+    {
+      "name": "Gesundheit",
+      "data": [
+        { "name": "Pflegekräfte", "value": 70 }
+      ]
+    },
+    {
+      "name": "Verkehr",
+      "data": [
+        { "name": "Fahrradstrecken", "value": 50 },
+        { "name": "ÖPNV", "value": 30 },
+        { "name": "Bahn", "value": 20 }
+      ]
+    },
+    {
+      "name": "Arbeit",
+      "data": [
+        { "name": "Verteilung", "value": 20 },
+        { "name": "Reiche", "value": 10 },
+        { "name": "Arbeitslosigkeit", "value": 10 }
+      ]
+    },
+    {
+      "name": "Finanzen",
+      "data": [
+        { "name": "Euro", "value": 20 },
+        { "name": "Steuer", "value": 30 },
+        { "name": "Erbschaft", "value": 40 }
+      ]
+    },
+    {
+      "name": "Wohnungen und Bau",
+      "data": [
+        { "name": "Obdachlose", "value": 40 },
+        { "name": "Sozialwohnungen", "value": 40 }
+      ]
+    },
+    {
+      "name": "Familie",
+      "data": [
+        { "name": "Kindergarten", "value": 40 },
+        { "name": "Rentner", "value": 40 }
+      ]
+    },
+    {
+      "name": "Verteidigung",
+      "data": [
+        { "name": "Bundeswehr", "value": 40 },
+        { "name": "Krieg", "value": 60 },
+        { "name": "Verteidigung", "value": 40 }
+      ]
+    },
+    {
+      "name": "Innenpolitik",
+      "data": [
+        { "name": "Rechtsextremismus", "value": 40 },
+        { "name": "Berlin", "value": 60 },
+        { "name": "Bayern", "value": 40 }
+      ]
+    },
+    {
+      "name": "Digitalisierung",
+      "data": [
+        { "name": "Digitalisierung", "value": 40 },
+        { "name": "Künstliche Intelligenz", "value": 40 }
+      ]
+    },
+    {
+      "name": "Umwelt",
+      "data": [
+        { "name": "Klimawandel", "value": 40 },
+        { "name": "Wasserverschmutzung", "value": 40 },
+        { "name": "Hitze", "value": 40 }
+      ]
+    },
+    {
+      "name": "Bildung und Forschung",
+      "data": [
+        { "name": "G8", "value": 40 },
+        { "name": "Lehrer", "value": 40 },
+        { "name": "NC", "value": 40 }
+      ]
+    },
+    {
+      "name": "Außenpolitik",
+      "data": [
+        { "name": "Syrien", "value": 40 },
+        { "name": "Libyen", "value": 40 },
+        { "name": "Krim", "value": 40 },
+        { "name": "Russland", "value": 40 }
+      ]
+    }
+  ];
 
 
-class CustomBubbleChart extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      // To avoid unnecessary update keep all options in the state.
-      chartOptions: {
-        chart: {
-          type: 'packedbubble',
-          height: (1/2 * 100) + '%'
-
-        },
-        legend: {
-          align: 'right',
-          verticalAlign: 'top',
-          layout: 'vertical'
-        },
-        title: {
-          text: "Current Topics",
-        },
-
-        plotOptions: {
-          packedbubble: {
-            events: {
-              click: function (event) {
-                alert(
-                  this.name + ' clicked\n' +
-                  'Alt: ' + event.altKey + '\n' +
-                  'Control: ' + event.ctrlKey + '\n' +
-                  'Meta: ' + event.metaKey + '\n' +
-                  'Shift: ' + event.shiftKey
-                );
-              }
-            },
-            draggable: false,
-            // https://api.highcharts.com/highcharts/series.packedbubble.layoutAlgorithm
-            // Dokumentation der folgenden Optionen
-            layoutAlgorithm: {
-              //gravitationalConstant: 0.05,
-              // friction = 0 friert die Animation ein 
-              //friction: -0.7,
-              splitSeries: true,
-              seriesInteraction: false,
-              dragBetweenSeries: false,
-              parentNodeLimit: true,
-              enableSimulation: false, //disables the annoying simulation#,
-              allowPointSelect: true
-            },
-
-            // minSize: '30%',
-            // maxSize: '45%',
-            dataLabels: {
-              enabled: true,
-              format: '{point.name}',
-            },
+  const [chartOptions, setChartOptions] = useState({
+    chart: {
+      type: 'packedbubble',
+      height: (1 / 2 * 100) + '%',
+    },
+    legend: {
+      align: 'right',
+      verticalAlign: 'top',
+      layout: 'vertical',
+    },
+    title: {
+      text: 'Current Topics',
+    },
+    plotOptions: {
+      packedbubble: {
+        events: {
+          click: function (event) {
+            /*alert(
+              this.name + ' clicked\n' +
+              'Alt: ' + event.altKey + '\n' +
+              'Control: ' + event.ctrlKey + '\n' +
+              'Meta: ' + event.metaKey + '\n' +
+              'Shift: ' + event.shiftKey
+            );*/
+            navigate("/votes", { state: { category: this.name } })
           },
         },
-        series: political_data,
-        credits: {
-          enabled: false,
+        draggable: false,
+        layoutAlgorithm: {
+          splitSeries: true,
+          seriesInteraction: false,
+          dragBetweenSeries: false,
+          parentNodeLimit: true,
+          enableSimulation: false,
+          allowPointSelect: true,
         },
-      }
-    };
-  }
+        dataLabels: {
+          enabled: true,
+          format: '{point.name}',
+        },
+      },
+    },
+    series: political_data, 
+    credits: {
+      enabled: false,
+    },
+  });
 
-
-
-  updateSeries = () => {
+  const updateSeries = () => {
     // The chart is updated only with new options.
-    this.setState({
-      chartOptions: {
-        series: political_data_updated
-      }
+    setChartOptions({
+      ...chartOptions,
+      series: political_data_updated,
     });
-  }
+  };
 
-  render() {
-    const { chartOptions } = this.state;
-
-    return (
-      <div>
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={chartOptions}
-        />
-        <Box sx={{ width: 600, padding: 30 }}>
-          <h5>Zeitspanne</h5>
+  return (
+    <div>
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={chartOptions}
+      />
+      <Box sx={{ width: 600, padding: 30 }}>
+        <h5>Zeitspanne</h5>
 
 
-          {/* <Slider
+        {/* <Slider
 
-            aria-label="Custom marks"
-            defaultValue={20}
-            getAriaValueText={valuetext}
-            step={10}
-            valueLabelDisplay="auto"
-            marks={marks_spanne}
-            onChange={this.updateSeries.bind(this)}
-          /> */}
-          <FormControl>
-            <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-            >
-              <FormControlLabel value="Monat"  control={<Radio onClick={this.updateSeries.bind(this)}  />} label="Monat" />
-              <FormControlLabel value="Jahr" control={<Radio onClick={this.updateSeries.bind(this)} />} label="Jahr" />
-              <FormControlLabel value="Legislaturperiode" control={<Radio onClick={this.updateSeries.bind(this)} />} label="Legislaturperiode" />
+          aria-label="Custom marks"
+          defaultValue={20}
+          getAriaValueText={valuetext}
+          step={10}
+          valueLabelDisplay="auto"
+          marks={marks_spanne}
+          onChange={this.updateSeries.bind(this)}
+        /> */}
+        <FormControl>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+            <FormControlLabel value="Monat"  control={<Radio onClick={updateSeries} />} label="Monat" />
+            <FormControlLabel value="Jahr" control={<Radio onClick={updateSeries} />} label="Jahr" />
+            <FormControlLabel value="Legislaturperiode" control={<Radio onClick={updateSeries} />} label="Legislaturperiode" />
 
-            </RadioGroup>
-          </FormControl>
+          </RadioGroup>
+        </FormControl>
 
-          <h5>Zeitraum</h5>
-          <RangeSlider></RangeSlider>
-        </Box>
-      </div>
-    )
-  }
+        <h5>Zeitraum</h5>
+        <RangeSlider></RangeSlider>
+      </Box>
+    </div>
+  )
 }
 
-export default CustomBubbleChart;
+export default CustomBubbleChart

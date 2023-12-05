@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import PollCard from '../poll/poll_card';
 import { Accordion, AccordionDetails, AccordionSummary, Checkbox, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const Voting = () => {
-    const [selectedCategories, setSelectedCategories] = useState([]);
+
+    const {state} = useLocation();
+    const { category } = state ? state : ""; // Read values passed on state
+    const initialSelectedCategories = category ? [category] : [];
+    const [selectedCategories, setSelectedCategories] = useState(initialSelectedCategories);
     const [expanded, setExpanded] = useState(false);
 
     const handleCategoryToggle = (category) => {
@@ -27,7 +32,7 @@ const Voting = () => {
             result: 'accepted',
             party: 'Example Party',
             additionalInfo: 'Additional information about the voting...',
-            category: 'Finance',
+            category: 'Innenpolitik',
         },
         {
             id: 2,
@@ -36,7 +41,7 @@ const Voting = () => {
             result: 'rejected',
             party: 'Another Party',
             additionalInfo: 'More details about the voting...',
-            category: 'Inner politics',
+            category: 'Digitalisierung',
         },
     ];
 
