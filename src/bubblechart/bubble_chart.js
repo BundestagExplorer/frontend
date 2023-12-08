@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import _ from 'lodash';
@@ -31,71 +31,22 @@ HighchartsMore(Highcharts);
 //https://www.highcharts.com/docs/chart-and-series-types/packed-bubble
 //https://stackblitz.com/edit/react-hketvd?file=index.js (programatically update the highchart component)
 
-function valuetext(value) {
-  return `${value}°C`;
-}
 
-
-
-const marks_spanne = [
-  {
-    value: 0,
-    label: 'Monat',
-  },
-  {
-    value: 20,
-    label: 'Jahr',
-  },
-  {
-    value: 40,
-    label: 'Legislaturperiode',
-  }
-];
-
-const marks_zeitraum = [
-  {
-    value: [0, 10],
-    label: '1999',
-  },
-  {
-    value: 20,
-    label: '2000',
-  },
-  {
-    value: 40,
-    label: '2001',
-  },
-  {
-    value: 60,
-    label: '2002',
-  },
-];
-
-
-//https://mui.com/material-ui/react-slider/
-function RangeSlider() {
-  const [value, setValue] = React.useState([20, 37]);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  return (
-    <Box sx={{ width: 300 }}>
-      <Slider
-        getAriaLabel={() => 'Temperature range'}
-        value={value}
-        onChange={handleChange}
-        valueLabelDisplay="auto"
-        getAriaValueText={valuetext}
-        marks={marks_zeitraum}
-      />
-    </Box>
-  );
-}
 
 const CustomBubbleChart = () => {
   const navigate = useNavigate()
+
+   const [chartData, setChartData] = useState({
+    "name": "Sorry :/",
+    "data": [
+      { "name": "Data could not be loaded", "value": 100 },
+      { "name": "Bio", "value": 40 },
+      { "name": "Dürre", "value": 40 },
+      { "name": "Glyphosat", "value": 40 },
+    ]
+   });
+
+
   const political_data = [
     {
       "name": "Landwirtschaft",
@@ -214,7 +165,7 @@ const CustomBubbleChart = () => {
       ]
     }
   ];
-  
+
   const political_data_updated = [
     {
       "name": "Landwirtschaft",
@@ -338,7 +289,7 @@ const CustomBubbleChart = () => {
   const [chartOptions, setChartOptions] = useState({
     chart: {
       type: 'packedbubble',
-      height: (1 / 2 * 100) + '%',
+      height: (1 / 3 * 100) + '%',
     },
     legend: {
       align: 'right',
@@ -377,13 +328,119 @@ const CustomBubbleChart = () => {
         },
       },
     },
-    series: political_data, 
+    series: political_data,
     credits: {
       enabled: false,
     },
   });
 
+  function valuetext(value) {
+    return `${value}°C`;
+  }
+
+
+ //todo: make the marks adaptive with respect to the previously choosen granularity level
+  const marks_spanne = [
+    {
+      value: 0,
+      label: 'Jan 23',
+    },
+    {
+      value: 10,
+      label: 'Feb 23',
+    },
+    {
+      value: 20,
+      label: 'Mär 23',
+    },
+    {
+      value: 30,
+      label: 'Apr 23',
+    },
+    {
+      value: 40,
+      label: 'Mai 23',
+    },
+    {
+      value: 50,
+      label: 'Jun 23',
+    },
+    {
+      value: 60,
+      label: 'Jul 23',
+    },
+    {
+      value: 70,
+      label: 'Aug 23',
+    },
+    {
+      value: 80,
+      label: 'Sep 23',
+    },
+    {
+      value: 90,
+      label: 'Okt 23',
+    },
+    {
+      value: 100,
+      label: 'Nov 23',
+    }
+  ];
+
+  // const marks_zeitraum = [
+  //   {
+  //     value: [0, 10],
+  //     label: '1999',
+  //   },
+  //   {
+  //     value: 20,
+  //     label: '2000',
+  //   },
+  //   {
+  //     value: 40,
+  //     label: '2001',
+  //   },
+  //   {
+  //     value: 60,
+  //     label: '2002',
+  //   },
+  // ];
+
+
+  // //https://mui.com/material-ui/react-slider/
+  // function RangeSlider() {
+  //   const [value, setValue] = React.useState([20, 37]);
+
+  //   const handleChange = (event, newValue) => {
+  //     setValue(newValue);
+  //   };
+
+  //   return (
+  //     <Box sx={{ width: 300 }}>
+  //       <Slider
+  //         getAriaLabel={() => 'Temperature range'}
+  //         value={value}
+  //         onChange={handleChange}
+  //         valueLabelDisplay="auto"
+  //         getAriaValueText={valuetext}
+  //         marks={marks_zeitraum}
+  //       />
+  //     </Box>
+  //   );
+  // }
+
+  const updateSliders = () => {
+    // Code for updating the markings on the time-slider
+
+  }
+
   const updateSeries = () => {
+    //Load the words for the current month after first loading the site
+
+    //ToDo:
+    //1. Get arguments from the FormControl Component to call the api
+    //2. Call the API (asynchronously?)
+    //3. Update the page and display the new Values
     // The chart is updated only with new options.
     setChartOptions({
       ...chartOptions,
@@ -391,41 +448,70 @@ const CustomBubbleChart = () => {
     });
   };
 
+
+
+
+  // https://dev.to/wanguiwaweru/fetch-api-data-on-button-click-in-react-513i
+  // code for making api calls on startup
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`/api/v1/bundestag_top_topics/?month=10&year=2023`, {
+        method: "GET",
+        mode: "cors"
+      })  // Change the mode to CORS  )
+      const newData = await response.json()
+      setData(newData)
+    };
+
+    fetchData();
+  }, [])
+
+  if (data) {
+    console.log(data)
+    //return <div className='App'>{data.title}</div>;
+  } else {
+    return null;
+  }
+
+
+
   return (
     <div>
       <HighchartsReact
         highcharts={Highcharts}
         options={chartOptions}
       />
-      <Box sx={{ width: 600, padding: 30 }}>
+      <Box sx={{ width: 600, paddingLeft: 10 }}>
+
         <h5>Zeitspanne</h5>
-
-
-        {/* <Slider
-
-          aria-label="Custom marks"
-          defaultValue={20}
-          getAriaValueText={valuetext}
-          step={10}
-          valueLabelDisplay="auto"
-          marks={marks_spanne}
-          onChange={this.updateSeries.bind(this)}
-        /> */}
         <FormControl>
           <RadioGroup
             row
             aria-labelledby="demo-row-radio-buttons-group-label"
             name="row-radio-buttons-group"
           >
-            <FormControlLabel value="Monat"  control={<Radio onClick={updateSeries} />} label="Monat" />
-            <FormControlLabel value="Jahr" control={<Radio onClick={updateSeries} />} label="Jahr" />
-            <FormControlLabel value="Legislaturperiode" control={<Radio onClick={updateSeries} />} label="Legislaturperiode" />
+            <FormControlLabel value="Monat" control={<Radio onClick={updateSliders} />} label="Monat" checked />
+            <FormControlLabel value="Jahr" control={<Radio onClick={updateSliders} />} label="Jahr" disabled />
+            <FormControlLabel value="Legislaturperiode" control={<Radio onClick={updateSliders}  />} label="Legislaturperiode" disabled/>
 
           </RadioGroup>
-        </FormControl>
+        
 
+
+        </FormControl>
         <h5>Zeitraum</h5>
-        <RangeSlider></RangeSlider>
+        <Slider
+          aria-label="Custom marks"
+          defaultValue={10}
+          getAriaValueText={valuetext}
+          step={10}
+          valueLabelDisplay="off"
+          marks={marks_spanne}
+        //onChange={this.updateSeries.bind(this)}
+          onChange={updateSeries}
+        />
       </Box>
     </div>
   )
