@@ -69,6 +69,7 @@ const CustomBubbleChart = () => {
         dataLabels: {
           enabled: true,
           format: '{point.name}',
+          style: {fontSize: '12px'}
         },
       },
     },
@@ -77,6 +78,8 @@ const CustomBubbleChart = () => {
       enabled: false,
     },
   });
+
+  const [initialSliderValue, setInitialSliderValue] = useState(10); // Set the initial value here
 
 
   //todo: make the marks adaptive with respect to the previously choosen granularity level
@@ -196,6 +199,11 @@ const CustomBubbleChart = () => {
     }
     return transformed_data
   }
+
+  useEffect(() => {
+    // Code to run when the component mounts
+    updateSeries(initialSliderValue);
+  }, []);
 
   return (
     <div>
