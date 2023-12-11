@@ -14,15 +14,15 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 
-const pages = [{title : 'Overview', path: '/'}, 
-{title : 'Voting', path: "/votes"}, 
-{title : 'Them-o-meter', path: "/them-o-meter"}];
+const pages = [{ title: 'Overview', path: '/' },
+{ title: 'Voting', path: "/votes" },
+{ title: 'Them-o-meter', path: "/them-o-meter" }];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  let navigate = useNavigate(); 
+  let navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -33,8 +33,8 @@ function Navbar() {
 
   const handleCloseNavMenu = (path) => {
     setAnchorElNav(null);
-    if (path){
-        navigate(path);
+    if (path) {
+      navigate(path);
     }
   };
 
@@ -84,7 +84,7 @@ function Navbar() {
               ))}
             </Menu>
           </Box>
-          <HowToVoteIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 , flexGrow: 20}} />
+          <HowToVoteIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, flexGrow: 20 }} />
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button

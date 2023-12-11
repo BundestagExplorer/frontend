@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useRef, useEffect } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import _ from 'lodash';
@@ -12,7 +12,9 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { Config } from '../config';
 
 HighchartsExporting(Highcharts);
 HighchartsAccessibility(Highcharts);
@@ -20,15 +22,19 @@ HighchartsMore(Highcharts);
 
 //https://www.highcharts.com/docs/chart-and-series-types/packed-bubble
 //https://stackblitz.com/edit/react-hketvd?file=index.js (programatically update the highchart component)
-const CustomBubbleChart = () => {
-  const navigate = useNavigate()
 
-  const [chartData, setChartData] = useState([{
-    "name": "Error",
-    "data": [
-      { "name": "An error occured while loading the visualization data.", "value": 100 }
-    ]
-  }]);
+const BT_TOP_TOPIC_ENDPOINT = 'bundestag_top_topics/';
+
+const CustomBubbleChart = () => {
+  const navigate = useNavigate();
+
+
+  const updateOptions = (newData) => {
+    setChartOptions({ series: newData });
+    // const newOptions = _.cloneDeep(chartOptions);
+    // newOptions.series = newData;
+    // setChartOptions(newOptions);
+  };
 
   const [chartOptions, setChartOptions] = useState({
     chart: {
@@ -54,7 +60,7 @@ const CustomBubbleChart = () => {
               'Meta: ' + event.metaKey + '\n' +
               'Shift: ' + event.shiftKey
             );*/
-            navigate("/votes", { state: { category: this.name } })
+            navigate("/votes", { state: { ressort: this.name } })
           },
         },
         draggable: false,
@@ -69,17 +75,30 @@ const CustomBubbleChart = () => {
         dataLabels: {
           enabled: true,
           format: '{point.name}',
-          style: {fontSize: '12px'}
+          style: { fontSize: '12px' }
         },
       },
     },
-    series: chartData,
+    series: {
+      data: {
+        name: 'Ressort',
+        color: '#000000',
+        dataLabels: {
+          color: '#000000',
+          style: { fontSize: '12px' }
+        }
+      }
+    },
     credits: {
       enabled: false,
     },
   });
 
-  const [initialSliderValue, setInitialSliderValue] = useState(10); // Set the initial value here
+
+
+  const sliderDefaultValue = 100;
+
+  const [sliderValue, setSliderValue] = useState(sliderDefaultValue); // Set the initial value here
 
 
   //todo: make the marks adaptive with respect to the previously choosen granularity level
@@ -132,50 +151,33 @@ const CustomBubbleChart = () => {
 
   const updateSliders = () => {
     // Code for updating the markings on the time-slider
-
   }
 
   const updateSeries = (slider_val) => {
-
     let month = (slider_val / 10) + 1;
 
-    fetch('/api/v1/bundestag_top_topics/?month=' + month + '&year=2023'
 
+    fetch(Config.API_URL + BT_TOP_TOPIC_ENDPOINT + '?' + new URLSearchParams({
+      month: month,
+      year: 2023
+    })
       , {
-
         headers: {
-
           'Content-Type': 'application/json',
-
           'Accept': 'application/json'
-
         }
-
       }
-
-    )
-
-      .then(function (response) {
-
-        console.log(response)
-
-        return response.json();
-
-      })
-
+    ).then(function (response) {
+      return response.json();
+    })
       .then(function (myJson) {
-
         return data_parser(myJson)
-
       })
       .then(function (data) {
-
-        setChartOptions({
-          ...chartOptions,
-          series: data,
-        })
-
+        updateOptions(data);
       });
+
+
 
   };
 
@@ -202,17 +204,19 @@ const CustomBubbleChart = () => {
 
   useEffect(() => {
     // Code to run when the component mounts
-    updateSeries(initialSliderValue);
-  }, []);
+    updateSeries(sliderValue);
+  }, [sliderValue]);
 
   return (
     <div>
+
       <HighchartsReact
         highcharts={Highcharts}
         options={chartOptions}
       />
-      <Box sx={{ width: 600, paddingLeft: 10 }}>
 
+
+      <Box sx={{ width: 600, paddingLeft: 10 }}>
         <h5>Zeitspanne</h5>
         <FormControl>
           <RadioGroup
@@ -228,12 +232,12 @@ const CustomBubbleChart = () => {
         <h5>Zeitraum</h5>
         <Slider
           aria-label="Custom marks"
-          defaultValue={10}
+          defaultValue={sliderDefaultValue}
           step={10}
           valueLabelDisplay="off"
           marks={marks_spanne}
           //onChange={this.updateSeries.bind(this)}
-          onChangeCommitted={(e, val) => updateSeries(val)}
+          onChangeCommitted={(e, val) => setSliderValue(val)}
         />
       </Box>
     </div>
