@@ -3,12 +3,57 @@ import { useLocation } from 'react-router-dom';
 import PollCard from '../poll/poll_card';
 import { Accordion, AccordionDetails, AccordionSummary, Checkbox, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Config } from '../config';
+import { useEffect } from 'react';
+
+const BT_ABSTIMMUNGEN_ENDPOINT = 'abstimmung/';
+
+
+
 
 const Voting = () => {
 
-    const {state} = useLocation();
-    const { category } = state ? state : ""; // Read values passed on state
-    const initialSelectedCategories = category ? [category] : [];
+    const [votingData, setVotingData] = useState([[]])
+    const getVotingData = () => {
+        fetch(Config.API_URL + BT_ABSTIMMUNGEN_ENDPOINT + '?' + new URLSearchParams({
+            limit: 30,
+            date_min: '2023-01-01',
+            date_max: '2023-12-31'
+        })
+            , {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }
+        ).then(function (response) {
+            return response.json();
+        }).then(function (abstimmungJson) {
+            return abstimmungJson.map((item) => {
+                return {
+                    id: item.id,
+                    date: item.abstimmung_datum,
+                    title: item.titel,
+                    result: item.akzeptiert ? 'accepted' : 'rejected',
+                    party: 'Nothing',  // TODO: Add initiative partie(s) => item.initiative
+                    additionalInfo: "abstract" in item ? item.abstract : 'No abstract',
+                    category: "category" in item ? item.category : 'No category',
+                }
+            }).sort(
+                (a, b) => new Date(b.date) - new Date(a.date)
+            )
+        }).then(function (data) {
+            setVotingData(data)
+        });
+    }
+
+    useEffect(() => {
+        getVotingData()
+    }, [])
+
+    const { state } = useLocation();
+    const { ressort } = state ? state : ""; // Read values passed on state
+    const initialSelectedCategories = ressort ? [ressort] : [];
     const [selectedCategories, setSelectedCategories] = useState(initialSelectedCategories);
     const [expanded, setExpanded] = useState(false);
 
@@ -24,37 +69,19 @@ const Voting = () => {
         setExpanded(!expanded);
     };
 
-    const votingData = [
-        {
-            id: 1,
-            date: '2023-12-04',
-            title: 'Electoral Voting Title',
-            result: 'accepted',
-            party: 'Example Party',
-            additionalInfo: 'Additional information about the voting...',
-            category: 'Innenpolitik',
-        },
-        {
-            id: 2,
-            date: '2023-12-04',
-            title: 'Another Voting Title',
-            result: 'rejected',
-            party: 'Another Party',
-            additionalInfo: 'More details about the voting...',
-            category: 'Digitalisierung',
-        },
-    ];
+
+
 
     const filteredVotingData = selectedCategories.length
         ? votingData.filter((item) => selectedCategories.includes(item.category))
         : votingData;
 
     return (
-        <div style={{ maxWidth: '80%', margin: '0 auto', padding: '2vh' }}>
+        <div style={{ maxWidth: '80%', margin: '0 auto', padding: '2vh' }} >
             <h1>Welcome to the Voting page</h1>
 
             {/* Category filter accordion */}
-            <Accordion style={{ marginBottom: '2vh'}} expanded={expanded} onChange={handleAccordionChange}>
+            < Accordion style={{ marginBottom: '2vh' }} expanded={expanded} onChange={handleAccordionChange} >
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography>Filter by Category</Typography>
                 </AccordionSummary>
@@ -76,21 +103,23 @@ const Voting = () => {
                         ))}
                     </div>
                 </AccordionDetails>
-            </Accordion>
+            </Accordion >
 
             {/* Display filtered voting cards */}
-            {filteredVotingData.map((item) => (
-                <PollCard
-                    key={item.id}
-                    date={item.date}
-                    title={item.title}
-                    result={item.result}
-                    party={item.party}
-                    additionalInfo={item.additionalInfo}
-                    category={item.category}
-                />
-            ))}
-        </div>
+            {
+                filteredVotingData.map((item) => (
+                    <PollCard
+                        key={item.id}
+                        date={item.date}
+                        title={item.title}
+                        result={item.result}
+                        party={item.party}
+                        additionalInfo={item.additionalInfo}
+                        category={item.category}
+                    />
+                ))
+            }
+        </div >
     );
 };
 
