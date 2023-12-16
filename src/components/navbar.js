@@ -14,6 +14,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 
+import logo from '../assets/logo.png';
+
 const pages = [{ title: 'Overview', path: '/' },
 { title: 'Voting', path: "/votes" },
 { title: 'Them-o-meter', path: "/them-o-meter" }];
@@ -45,8 +47,10 @@ function Navbar() {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <HowToVoteIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+        <Toolbar disableGutters sx={{
+          justifyContent: "space-between"
+        }}>
+          <Box component={"img"} src={logo} sx={{ width: 50, height: 50, marginRight: 2 }}></Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -84,7 +88,6 @@ function Navbar() {
               ))}
             </Menu>
           </Box>
-          <HowToVoteIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, flexGrow: 20 }} />
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button

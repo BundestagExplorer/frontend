@@ -14,7 +14,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { Config } from '../config';
+import { Config } from '../../../config';
 
 HighchartsExporting(Highcharts);
 HighchartsAccessibility(Highcharts);
@@ -47,7 +47,7 @@ const CustomBubbleChart = () => {
       layout: 'vertical',
     },
     title: {
-      text: 'Current Topics',
+      text: 'Aktuelle Themen im Bundestag',
     },
     plotOptions: {
       packedbubble: {
@@ -168,13 +168,29 @@ const CustomBubbleChart = () => {
         }
       }
     ).then(function (response) {
-      return response.json();
+      if (response.ok) {
+        return response.json()
+      }
+      return Promise.reject(response);
     })
       .then(function (myJson) {
         return data_parser(myJson)
       })
       .then(function (data) {
         updateOptions(data);
+      })
+      .catch(function (error) {
+        console.log(error);
+        updateOptions([
+          {
+            data: [
+              {
+                name: 'No data available',
+                value: 0,
+              },
+            ],
+          },
+        ]);
       });
 
 

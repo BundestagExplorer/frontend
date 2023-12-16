@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import PollCard from '../poll/poll_card';
+import PollCard from './poll_card/poll_card';
 import { Accordion, AccordionDetails, AccordionSummary, Checkbox, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Config } from '../config';
+import { Config } from '../../config';
 import { useEffect } from 'react';
 
 const BT_ABSTIMMUNGEN_ENDPOINT = 'abstimmung/';
-
-
-
 
 const Voting = () => {
 
@@ -27,7 +24,11 @@ const Voting = () => {
                 }
             }
         ).then(function (response) {
-            return response.json();
+            if (response.ok) {
+                return response.json();
+            }
+            return Promise.reject(response);
+
         }).then(function (abstimmungJson) {
             return abstimmungJson.map((item) => {
                 return {
@@ -44,6 +45,19 @@ const Voting = () => {
             )
         }).then(function (data) {
             setVotingData(data)
+        }).catch(function (error) {
+            console.log(error);
+            setVotingData(
+                [{
+                    id: 1,
+                    date: '2023-01-01',
+                    title: 'No data available',
+                    result: 'accepted',
+                    party: 'Nothing',
+                    additionalInfo: 'No data available',
+                    category: 'No data available',
+                }]
+            )
         });
     }
 
