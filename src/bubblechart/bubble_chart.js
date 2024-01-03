@@ -30,6 +30,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
+import Image from './Wolfsburg_VW-Werk-50_opacity.jpg'; // Import using relative path
+
 HighchartsExporting(Highcharts);
 HighchartsAccessibility(Highcharts);
 HighchartsMore(Highcharts);
@@ -258,10 +260,15 @@ const BT_TOP_TOPIC_ENDPOINT = 'bundestag_top_topics/';
 //   )
 // }
 
+//https://stackoverflow.com/questions/47145075/background-image-in-react-component
+//use a background image for mui components
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
+  backgroundImage:  `url(${Image})`,
+  backgroundSize: 'contain',
+  backgroundRepeat: 'no-repeat',
+  ...theme.typography.body1,
   padding: theme.spacing(1),
   textAlign: 'center',
   color: theme.palette.text.secondary,
@@ -287,15 +294,15 @@ const CustomBubbleChart = () => {
                 Wirtschaft
               </Typography>
 
-              <List>
+              <List disablePadding>
                 <ListItem disablePadding>
-                  <ListItemButton>
+                  <ListItemButton disablePadding>
 
                     <ListItemText primary="100 Schuldenbremse" />
                   </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                  <ListItemButton>
+                  <ListItemButton disablePadding>
 
                     <ListItemText primary="50 Investition" />
                   </ListItemButton>
@@ -366,7 +373,7 @@ const CustomBubbleChart = () => {
             </Item>
           </Grid>
           <Grid md={2.4}>
-            <Item>
+            <Item >
               <Typography variant='h5'>
                 Wirtschaft
               </Typography>
