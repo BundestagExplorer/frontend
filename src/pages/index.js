@@ -40,7 +40,10 @@ const Home = () => {
     <div>
       <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} showDrawer = {() => setDrawerExtented(true)}/>
       <CustomCardGrid agg_data= {agg_data}/>
-      <Drawer drawerExtended = {drawerExtended} setDrawerState = { state => setDrawerExtented(state)}/>
+      <Drawer drawerExtended = {drawerExtended}
+       setDrawerState = { state => setDrawerExtented(state)} 
+       setYear = {year => setSelectedYear(year)}
+       setMonth = {month => setSelectedMonth(month)}/>
 
     </div>
   );

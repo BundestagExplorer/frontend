@@ -12,7 +12,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 
 
-export default function TemporaryDrawer({drawerExtended, setDrawerState}) {
+export default function TemporaryDrawer({drawerExtended, setDrawerState, setYear, setMonth}) {
 
 
   const sliderDefaultValue = 100;
@@ -74,7 +74,7 @@ export default function TemporaryDrawer({drawerExtended, setDrawerState}) {
       
 
      <Box sx={{ display:'flex', paddingRight: 10, flexDirection: 'row'}}>
-        <h5>Zeitspanne</h5>
+        <h5>Aggregationslevel</h5>
         <FormControl>
           <RadioGroup
             row
@@ -92,6 +92,7 @@ export default function TemporaryDrawer({drawerExtended, setDrawerState}) {
           step={10}
           valueLabelDisplay="off"
           marks={marks_spanne}
+          onChangeCommitted={(event, value) => {setYear(value); setMonth(value);}}
         />
       </Box> 
     </Box>
@@ -108,6 +109,7 @@ export default function TemporaryDrawer({drawerExtended, setDrawerState}) {
             anchor={'top'}
             open={drawerExtended}
             onClose={() => setDrawerState(false)}
+            BackdropProps={{ invisible: true }}
           >
             {list('top')}
           </Drawer>
