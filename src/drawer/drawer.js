@@ -1,44 +1,20 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
 
 import Slider from '@mui/material/Slider';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import { CircularProgress } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { Config } from '../config';
 
-export default function TemporaryDrawer() {
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
 
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
+export default function TemporaryDrawer({drawerExtended, setDrawerState}) {
 
-    setState({ ...state, [anchor]: open });
-  };
+
   const sliderDefaultValue = 100;
   const marks_spanne = [
     {
@@ -91,10 +67,9 @@ export default function TemporaryDrawer() {
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+
     >
-     /* <Box sx={{ width: 600, paddingRight: 10}}>
+     <Box sx={{ width: 600, paddingRight: 10}}>
         <h5>Zeitspanne</h5>
         <FormControl>
           <RadioGroup
@@ -115,24 +90,22 @@ export default function TemporaryDrawer() {
           valueLabelDisplay="off"
           marks={marks_spanne}
         />
-      </Box> */
+      </Box> 
     </Box>
   );
 
   return (
     <div>
-        <Box sx={{ '& > :not(style)': { m: 1 } }}>
-      <Fab color="primary" aria-label="add">
-        <AddIcon onClick={toggleDrawer('bottom', true)}/>
-      </Fab>
+        <Box sx={{ '& > :not(style)': { m: 1 } }}>x
     </Box>
-      {['left', 'right', 'top', 'bottom'].map((anchor) => (
+      {['top'].map((anchor) => (
         <React.Fragment key={anchor}>
 
           <Drawer
             anchor={anchor}
-            open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
+            //open={state[anchor]}
+            open={drawerExtended}
+            onClose={() => setDrawerState(false)}
           >
             {list(anchor)}
           </Drawer>
