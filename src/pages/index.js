@@ -7,6 +7,7 @@ import Drawer from '../drawer/drawer';
 
 
 
+
 var agg_data = 
 [
  {extended: false, ressort_name : "Wirtschaft", values : ["value1", "value2", "value3", "value4", "value5"]},

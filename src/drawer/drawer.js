@@ -11,6 +11,8 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 
+import TimeSlider from '../timeslider/time_slider'
+
 
 export default function TemporaryDrawer({drawerExtended, setDrawerState, setYear, setMonth}) {
 
@@ -70,31 +72,8 @@ export default function TemporaryDrawer({drawerExtended, setDrawerState, setYear
 
     >
 
-      
-      
+        <TimeSlider setYear={setYear} setMonth={setMonth}/>
 
-     <Box sx={{ display:'flex', paddingRight: 10, flexDirection: 'row'}}>
-        <h5>Aggregationslevel</h5>
-        <FormControl>
-          <RadioGroup
-            row
-            aria-labelledby="demo-row-radio-buttons-group-label"
-            name="row-radio-buttons-group"
-          >
-            <FormControlLabel value="Monat" control={<Radio />} label="Monat" checked />
-            <FormControlLabel value="Jahr" control={<Radio />} label="Jahr" disabled />
-          </RadioGroup>
-        </FormControl>
-        <h5>Zeitraum</h5>
-        <Slider
-          aria-label="Custom marks"
-          defaultValue={sliderDefaultValue}
-          step={10}
-          valueLabelDisplay="off"
-          marks={marks_spanne}
-          onChangeCommitted={(event, value) => {setYear(value); setMonth(value);}}
-        />
-      </Box> 
     </Box>
   );
 
