@@ -1,6 +1,6 @@
 import React from 'react';
 import DenseAppBar from '../appbar/appbar';
-import CustomCardGrid from '../cardgrid/card_grid';
+import CircularCardLayout from '../cardLayout/circular_layout';
 import Drawer from '../drawer/drawer';
 
 var agg_data = 
@@ -27,7 +27,7 @@ const Home = () => {
   return (
     <div>
       <DenseAppBar></DenseAppBar>
-      <CustomCardGrid agg_data= {agg_data}/>
+      <CircularCardLayout agg_data= {agg_data}/>
 
     </div>
   );
