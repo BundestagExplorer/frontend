@@ -69,7 +69,11 @@ export default function TemporaryDrawer({drawerExtended, setDrawerState}) {
       role="presentation"
 
     >
-     <Box sx={{ width: 600, paddingRight: 10}}>
+
+      
+      
+
+     <Box sx={{ display:'flex', paddingRight: 10, flexDirection: 'row'}}>
         <h5>Zeitspanne</h5>
         <FormControl>
           <RadioGroup
@@ -79,7 +83,6 @@ export default function TemporaryDrawer({drawerExtended, setDrawerState}) {
           >
             <FormControlLabel value="Monat" control={<Radio />} label="Monat" checked />
             <FormControlLabel value="Jahr" control={<Radio />} label="Jahr" disabled />
-            <FormControlLabel value="Legislaturperiode" control={<Radio />} label="Legislaturperiode" disabled />
           </RadioGroup>
         </FormControl>
         <h5>Zeitraum</h5>
@@ -98,19 +101,18 @@ export default function TemporaryDrawer({drawerExtended, setDrawerState}) {
     <div>
         <Box sx={{ '& > :not(style)': { m: 1 } }}>x
     </Box>
-      {['top'].map((anchor) => (
-        <React.Fragment key={anchor}>
+  
+        <React.Fragment key={'top'}>
 
           <Drawer
-            anchor={anchor}
-            //open={state[anchor]}
+            anchor={'top'}
             open={drawerExtended}
             onClose={() => setDrawerState(false)}
           >
-            {list(anchor)}
+            {list('top')}
           </Drawer>
         </React.Fragment>
-      ))}
+
     </div>
   );
 }

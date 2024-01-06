@@ -33,7 +33,7 @@ const Home = () => {
   const [selectedMonth, setSelectedMonth] = useState(12);
   const [extendedViewActive, setExtendedViewActive] = useState(false);
 
-  const [drawerExtended, setDrawerExtented] = useState(true);
+  const [drawerExtended, setDrawerExtented] = useState(false);
 
 
   return (
