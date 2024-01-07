@@ -5,15 +5,17 @@ import { styled } from '@mui/material/styles';
 import { List, ListItemButton, ListItemText } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
+import CustomListText from './customlisttext';
+
 import WirtschaftImage from './images/wirtschaftimage.jpg'; // Import using relative path
 import FinanzenImage from './images/finanzenimage.jpg'; // Import using relative path
+
 
 
 //ToDo: Display the image based on the currrent card in the CustomCardGrid
 const Item = styled(Paper)(({ theme, ressort_name }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    backgroundImage:  `url(${WirtschaftImage})`,
-    //backgroundImage:  `url(${ressort_name})`,
+    backgroundImage:  `url(${FinanzenImage})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     ...theme.typography.body1,
@@ -63,9 +65,12 @@ export default function CustomCardGrid({agg_data, extended}){
                     {data.data.map(topic =>
 
                     <ListItemButton onClick={handleClicked}>
-                        <ListItemText>
+                        {/* <ListItemText>
                             {topic.name}
-                        </ListItemText>
+                        </ListItemText> */}
+                        <CustomListText display_text ={topic.name}>
+
+                        </CustomListText>
                     </ListItemButton>
                         
                         )}
