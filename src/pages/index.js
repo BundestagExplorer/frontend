@@ -1,7 +1,7 @@
 import React, { Component, useState, useRef, useEffect } from 'react';
 import DenseAppBar from '../appbar/appbar';
 import CustomCardGrid from '../cardgrid/card_grid';
-import Drawer from '../drawer/drawer';
+import TemporaryDrawer from '../drawer/drawer';
 
 
 
@@ -31,21 +31,26 @@ var agg_data =
 const Home = () => {
 
   const [selectedYear, setSelectedYear] = useState(2024);
-  const [selectedMonth, setSelectedMonth] = useState(12);
+  const [selectedMonth, setSelectedMonth] = useState(3);
   const [extendedViewActive, setExtendedViewActive] = useState(false);
 
   const [drawerExtended, setDrawerExtented] = useState(false);
+  const [aggregationLevel, setAggregationLevel] = useState('Monat');
 
 
   return (
     <div>
-      <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} showDrawer = {() => setDrawerExtented(true)}/>
+      <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel = {aggregationLevel} showDrawer = {() => setDrawerExtented(true)}/>
       <CustomCardGrid agg_data= {agg_data}/>
-      <Drawer drawerExtended = {drawerExtended}
+      <TemporaryDrawer drawerExtended = {drawerExtended}
        setDrawerState = { state => setDrawerExtented(state)} 
        setYear = {year => setSelectedYear(year)}
-       setMonth = {month => setSelectedMonth(month)}/>
-
+       setMonth = {month => setSelectedMonth(month)}
+       setAggregationLevel = {level => setAggregationLevel(level)}
+       aggregationLevel = {aggregationLevel}
+       year = {selectedYear}
+       month = {selectedMonth}/>
+       
     </div>
   );
 };

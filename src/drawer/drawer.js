@@ -14,56 +14,9 @@ import FormControl from '@mui/material/FormControl';
 import TimeSlider from '../timeslider/time_slider'
 
 
-export default function TemporaryDrawer({drawerExtended, setDrawerState, setYear, setMonth}) {
+export default function TemporaryDrawer({drawerExtended, setDrawerState, setAggregationLevel, aggregationLevel, setYear, setMonth, year, month}) {
 
 
-  const sliderDefaultValue = 100;
-  const marks_spanne = [
-    {
-      value: 0,
-      label: 'Jan 23',
-    },
-    {
-      value: 10,
-      label: 'Feb 23',
-    },
-    {
-      value: 20,
-      label: 'Mär 23',
-    },
-    {
-      value: 30,
-      label: 'Apr 23',
-    },
-    {
-      value: 40,
-      label: 'Mai 23',
-    },
-    {
-      value: 50,
-      label: 'Jun 23',
-    },
-    {
-      value: 60,
-      label: 'Jul 23',
-    },
-    {
-      value: 70,
-      label: 'Aug 23',
-    },
-    {
-      value: 80,
-      label: 'Sep 23',
-    },
-    {
-      value: 90,
-      label: 'Okt 23',
-    },
-    {
-      value: 100,
-      label: 'Nov 23',
-    }
-  ]
 
   const list = (anchor) => (
     <Box
@@ -72,7 +25,7 @@ export default function TemporaryDrawer({drawerExtended, setDrawerState, setYear
 
     >
 
-        <TimeSlider setYear={setYear} setMonth={setMonth}/>
+        <TimeSlider  aggregationLevel={aggregationLevel} year={year} month={month} setYear={setYear} setMonth={setMonth} setAggregationLevel={setAggregationLevel}/>
 
     </Box>
   );

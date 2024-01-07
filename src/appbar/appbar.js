@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
-export default function DenseAppBar({displayYear, displayMonth, showDrawer}) {
+export default function DenseAppBar({displayYear, displayMonth, showDrawer, aggregationLevel}) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="grey">
@@ -15,7 +15,7 @@ export default function DenseAppBar({displayYear, displayMonth, showDrawer}) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" component="div">
-            {displayMonth}-{displayYear} 
+            {displayMonth}-{displayYear}-{aggregationLevel}
           </Typography>
         </Toolbar>
       </AppBar>
