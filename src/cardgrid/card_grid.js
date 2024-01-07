@@ -3,9 +3,13 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import { List, ListItemButton, ListItemText } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 import WirtschaftImage from './Wolfsburg_VW-Werk-50_opacity.jpg'; // Import using relative path
 import FinanzenImage from './Euro_coins_and_banknotes-50_opacity.jpg'; // Import using relative path
+
+
+
 
 
 //ToDo: Display the image based on the currrent card in the CustomCardGrid
@@ -36,6 +40,13 @@ export default function CustomCardGrid({agg_data, extended}){
         }
         return transformed_data
     })
+
+
+    let navigate = useNavigate();
+    function handleClicked() {
+        console.log("firstList Clicked");
+        navigate("/votes");
+    }
     
     
     return(
@@ -54,7 +65,7 @@ export default function CustomCardGrid({agg_data, extended}){
                     
                     {data.values.map(topic =>
 
-                    <ListItemButton>
+                    <ListItemButton onClick={handleClicked}>
                         <ListItemText>
                             {topic}
                         </ListItemText>
