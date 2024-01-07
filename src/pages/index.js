@@ -2,13 +2,12 @@ import React, { Component, useState, useRef, useEffect } from 'react';
 import DenseAppBar from '../appbar/appbar';
 import CustomCardGrid from '../cardgrid/card_grid';
 import TemporaryDrawer from '../drawer/drawer';
+import { Config } from '../config';
+
+const BT_TOP_TOPIC_ENDPOINT = 'bundestag_top_topics/';
 
 
-
-
-
-
-var agg_data = 
+var default_agg_data = 
 [
  {extended: false, ressort_name : "Wirtschaft", values : ["value1", "value2", "value3", "value4", "value5"]},
  {extended: false, ressort_name : "Finanzen", values : ["value1", "value2", "value3", "value4", "value5"]},
@@ -24,8 +23,6 @@ var agg_data =
  {extended: false, ressort_name : "Finanzen", values : ["value1", "value2", "value3", "value4", "value5"]},
  {extended: false, ressort_name : "Wirtschaft", values : ["value1", "value2", "value3", "value4", "value5"]},
  {extended: false, ressort_name : "Finanzen", values : ["value1", "value2", "value3", "value4", "value5"]},
-
-
 ]
 
 const Home = () => {
@@ -37,11 +34,70 @@ const Home = () => {
   const [drawerExtended, setDrawerExtented] = useState(false);
   const [aggregationLevel, setAggregationLevel] = useState('Monat');
 
+  const [aggData, setAggData] = useState(default_agg_data);
+
+
+  //// code for updating the values in the grid in response to change in time selection
+
+  const updateSeries = (selectedMonth, selectedYear) => {
+  
+    fetch(Config.API_URL + BT_TOP_TOPIC_ENDPOINT + '?' + new URLSearchParams({
+      month: selectedMonth,
+      year: selectedYear
+    })
+      , {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      }
+    ).then(function (response) {
+      return response.json();
+    })
+      .then(function (myJson) {
+        return data_parser(myJson)
+      })
+      .then(function (data) {
+        setAggData(data)
+      });
+  
+  
+  
+  };
+  
+  function data_parser(data) {
+    // transforms the json from the api endpoint to a matching format for the word-cloud
+    let transformed_data = []
+  
+    for (var resort_title in data["top_topics"]) {
+      let bubble = {}
+      bubble["name"] = resort_title
+  
+      let bubble_list = []
+      for (var element in data["top_topics"][resort_title]) {
+        let sub_item = {}
+        sub_item["name"] = data["top_topics"][resort_title][element][0]
+        sub_item["value"] = data["top_topics"][resort_title][element][1]
+        bubble_list.push(sub_item)
+      }
+      bubble["data"] = bubble_list
+      transformed_data.push(bubble)
+    }
+    return transformed_data
+  }
+  
+  
+  //specifies a listener that gets called every time selectedMonth or
+  //selectedYear is updated
+  useEffect(() => {
+    updateSeries(selectedMonth, selectedYear);
+  }, [selectedMonth, selectedYear]);
+
 
   return (
     <div>
       <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel = {aggregationLevel} showDrawer = {() => setDrawerExtented(true)}/>
-      <CustomCardGrid agg_data= {agg_data}/>
+      <CustomCardGrid agg_data= {aggData}/>
       <TemporaryDrawer drawerExtended = {drawerExtended}
        setDrawerState = { state => setDrawerExtented(state)} 
        setYear = {year => setSelectedYear(year)}
