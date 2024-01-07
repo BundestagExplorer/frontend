@@ -105,7 +105,9 @@ const Home = () => {
   return (
     <div>
       <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel = {aggregationLevel} showDrawer = {() => setDrawerExtented(true)}/>
+      <div style={{ padding: 20 }}>
       <CustomCardGrid agg_data= {aggData}/>
+      </div>
       <TemporaryDrawer drawerExtended = {drawerExtended}
        setDrawerState = { state => setDrawerExtented(state)} 
        setYear = {year => setSelectedYear(year)}
