@@ -27,10 +27,10 @@ const Item = styled(Paper)(({ theme, ressort_name }) => ({
 
 export default function CustomCardGrid({agg_data, extended}){
 
-    extended = true
-    if (extended) {
-        agg_data.splice(6,1,{extended: true, ressort_name : "Themen des Tages", values : ["Sehr", "wichtige", "Themen", "foo", "bar"]})
-    }
+    // extended = true
+    // if (extended) {
+    //     agg_data.splice(6,1,{extended: true, ressort_name : "Themen des Tages", values : ["Sehr", "wichtige", "Themen", "foo", "bar"]})
+    // }
 
     let new_data = agg_data.map(data => {
         var transformed_data = data
@@ -57,17 +57,17 @@ export default function CustomCardGrid({agg_data, extended}){
                 <Item ressort_name>
 
                 <Typography variant='h5'>
-                {data.ressort_name}
+                {data.name}
                 </Typography>
                     
 
                     <List dense={true}>
                     
-                    {data.values.map(topic =>
+                    {data.data.map(topic =>
 
                     <ListItemButton onClick={handleClicked}>
                         <ListItemText>
-                            {topic}
+                            {topic.name}
                         </ListItemText>
                     </ListItemButton>
                         

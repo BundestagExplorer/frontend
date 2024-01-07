@@ -9,20 +9,16 @@ const BT_TOP_TOPIC_ENDPOINT = 'bundestag_top_topics/';
 
 var default_agg_data = 
 [
- {extended: false, ressort_name : "Wirtschaft", values : ["value1", "value2", "value3", "value4", "value5"]},
- {extended: false, ressort_name : "Finanzen", values : ["value1", "value2", "value3", "value4", "value5"]},
- {extended: false, ressort_name : "Wirtschaft", values : ["value1", "value2", "value3", "value4", "value5"]},
- {extended: false, ressort_name : "Finanzen", values : ["value1", "value2", "value3", "value4", "value5"]},
- {extended: false, ressort_name : "Wirtschaft", values : ["value1", "value2", "value3", "value4", "value5"]},
- {extended: false, ressort_name : "Finanzen", values : ["value1", "value2", "value3", "value4", "value5"]},
- {extended: false, ressort_name : "Wirtschaft", values : ["value1", "value2", "value3", "value4", "value5"]},
- {extended: false, ressort_name : "Finanzen", values : ["value1", "value2", "value3", "value4", "value5"]},
- {extended: false, ressort_name : "Wirtschaft", values : ["value1", "value2", "value3", "value4", "value5"]},
- {extended: false, ressort_name : "Finanzen", values : ["value1", "value2", "value3", "value4", "value5"]},
- {extended: false, ressort_name : "Wirtschaft", values : ["value1", "value2", "value3", "value4", "value5"]},
- {extended: false, ressort_name : "Finanzen", values : ["value1", "value2", "value3", "value4", "value5"]},
- {extended: false, ressort_name : "Wirtschaft", values : ["value1", "value2", "value3", "value4", "value5"]},
- {extended: false, ressort_name : "Finanzen", values : ["value1", "value2", "value3", "value4", "value5"]},
+  {
+    "name": "Ein Fehler ist aufgetreten :(",
+    "data": [
+      {
+        "name": "Die aktuellen Themen konnten nicht geladen werden.",
+        "value": 5
+      }
+    ],
+    "md": 2.4
+  }
 ]
 
 const Home = () => {
@@ -41,10 +37,20 @@ const Home = () => {
 
   const updateSeries = (selectedMonth, selectedYear) => {
   
-    fetch(Config.API_URL + BT_TOP_TOPIC_ENDPOINT + '?' + new URLSearchParams({
-      month: selectedMonth,
-      year: selectedYear
-    })
+    // fetch(Config.API_URL + BT_TOP_TOPIC_ENDPOINT + '?' + new URLSearchParams({
+    //   month: selectedMonth,
+    //   year: selectedYear
+    // })
+    //   , {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json'
+    //     }
+    //   }
+    // )
+    
+    //sample api access only for debugging purposes
+    fetch("http://localhost:3000/23_11.json"
       , {
         headers: {
           'Content-Type': 'application/json',
@@ -58,6 +64,7 @@ const Home = () => {
         return data_parser(myJson)
       })
       .then(function (data) {
+        console.log(data)
         setAggData(data)
       });
   
@@ -83,6 +90,7 @@ const Home = () => {
       bubble["data"] = bubble_list
       transformed_data.push(bubble)
     }
+
     return transformed_data
   }
   
