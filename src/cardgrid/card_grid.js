@@ -11,7 +11,6 @@ import FinanzenImage from './Euro_coins_and_banknotes-50_opacity.jpg'; // Import
 
 
 
-
 //ToDo: Display the image based on the currrent card in the CustomCardGrid
 const Item = styled(Paper)(({ theme, ressort_name }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
