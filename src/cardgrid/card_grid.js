@@ -5,10 +5,8 @@ import { styled } from '@mui/material/styles';
 import { List, ListItemButton, ListItemText } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
-import WirtschaftImage from './Wolfsburg_VW-Werk-50_opacity.jpg'; // Import using relative path
-import FinanzenImage from './Euro_coins_and_banknotes-50_opacity.jpg'; // Import using relative path
-
-
+import WirtschaftImage from './images/wirtschaftimage.jpg'; // Import using relative path
+import FinanzenImage from './images/finanzenimage.jpg'; // Import using relative path
 
 
 //ToDo: Display the image based on the currrent card in the CustomCardGrid
@@ -49,7 +47,7 @@ export default function CustomCardGrid({agg_data, extended}){
     
     
     return(
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid container spacing={1}>
             {agg_data.map( data =>
                 
                 <Grid item key={data} md={data.md}>
