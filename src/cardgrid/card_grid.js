@@ -13,7 +13,7 @@ import FinanzenImage from './images/finanzenimage.jpg'; // Import using relative
 
 
 //ToDo: Display the image based on the currrent card in the CustomCardGrid
-const Item = styled(Paper)(({ theme, ressort_name }) => ({
+var Item = styled(Paper)(({ theme, ressort_name, diameter }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     backgroundImage:  `url(${FinanzenImage})`,
     backgroundSize: 'cover',
@@ -21,6 +21,10 @@ const Item = styled(Paper)(({ theme, ressort_name }) => ({
     ...theme.typography.body1,
     textAlign: 'center',
     color: theme.palette.text.secondary,
+    borderRadius: '50%',
+    width: 300,
+    height: 300
+
   }));
 
 
@@ -60,7 +64,7 @@ export default function CustomCardGrid({agg_data, extended}){
                 </Typography>
                     
 
-                    <List dense={true}>
+                    <List dense={true} diameter={300}>
                     
                     {data.data.map(topic =>
 
