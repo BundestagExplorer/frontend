@@ -38,18 +38,17 @@ export default function CustomCardGrid({agg_data, extended}){
     
     
     return(
-        <Grid container spacing={1}>
+        <Grid container spacing={5}>
             {agg_data.map( data =>
                 
                 <Grid item key={data} md={data.md}>
-                <CustomCard>
-      
+                <CustomCard ressort_name={data.name}>
                 <Typography variant='h5'>
                 {data.name}
                 </Typography>
                     
 
-                    <List dense={true} diameter={300}>
+                    <List dense={true} >
                     
                     {data.data.map(topic =>
 

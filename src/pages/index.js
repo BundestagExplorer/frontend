@@ -89,13 +89,20 @@ const Home = () => {
       bubble["name"] = resort_title
   
       let bubble_list = []
+
+      var value_sum = 0
       for (var element in data["top_topics"][resort_title]) {
         let sub_item = {}
         sub_item["name"] = data["top_topics"][resort_title][element][0]
         sub_item["value"] = data["top_topics"][resort_title][element][1]
+        value_sum = value_sum + sub_item["value"]
+
         bubble_list.push(sub_item)
       }
       bubble["data"] = bubble_list
+
+      bubble["value_sum"] = value_sum
+
       transformed_data.push(bubble)
     }
 

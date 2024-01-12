@@ -21,7 +21,7 @@ import FinanzenImage from './images/finanzenimage.jpg'; // Import using relative
 
 //   }));
 
-export default function CustomCard({children}){
+export default function CustomCard({children, ressort_name}){
 
 
     return(
