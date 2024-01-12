@@ -7,25 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 import CustomListText from './customlisttext';
 
+import CustomCard from './custom_card';
+
 import WirtschaftImage from './images/wirtschaftimage.jpg'; // Import using relative path
 import FinanzenImage from './images/finanzenimage.jpg'; // Import using relative path
-
-
-
-//ToDo: Display the image based on the currrent card in the CustomCardGrid
-var Item = styled(Paper)(({ theme, ressort_name, diameter }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    backgroundImage:  `url(${FinanzenImage})`,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    ...theme.typography.body1,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    borderRadius: '50%',
-    width: 300,
-    height: 300
-
-  }));
 
 
 export default function CustomCardGrid({agg_data, extended}){
@@ -57,8 +42,8 @@ export default function CustomCardGrid({agg_data, extended}){
             {agg_data.map( data =>
                 
                 <Grid item key={data} md={data.md}>
-                <Item ressort_name>
-
+                <CustomCard>
+      
                 <Typography variant='h5'>
                 {data.name}
                 </Typography>
@@ -69,9 +54,7 @@ export default function CustomCardGrid({agg_data, extended}){
                     {data.data.map(topic =>
 
                     <ListItemButton onClick={handleClicked}>
-                        {/* <ListItemText>
-                            {topic.name}
-                        </ListItemText> */}
+
                         <CustomListText display_text ={topic.name}>
 
                         </CustomListText>
@@ -79,7 +62,8 @@ export default function CustomCardGrid({agg_data, extended}){
                         
                         )}
                     </List>
-                    </Item>
+
+                    </CustomCard>
                 </Grid>
                 )}
         </Grid>
