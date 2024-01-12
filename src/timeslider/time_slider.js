@@ -6,6 +6,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import { func } from 'prop-types';
+import { Typography } from '@mui/material';
 
 
 export default function TimeSlider({setAggregationLevel, setYear, setMonth, year, month, aggregationLevel }) {
@@ -147,8 +148,7 @@ export default function TimeSlider({setAggregationLevel, setYear, setMonth, year
 
 
     return (
-        <Box sx={{ display:'flex', paddingRight: 10, flexDirection: 'row'}}>
-        <h5>Aggregationslevel</h5>
+        <Box sx={{ display:'flex', padding:1, flexDirection: 'row', width: '90%'}}>
         <FormControl>
           <RadioGroup
             row
@@ -156,17 +156,14 @@ export default function TimeSlider({setAggregationLevel, setYear, setMonth, year
             name="row-radio-buttons-group"
             onChange={(event, value) => {setAggregationLevel(value); setAggregationLevel(value)}}
           >
-            <FormControlLabel value="Monat" control={<Radio />} label="Monat" defaultChecked />
-            <FormControlLabel value="Jahr" control={<Radio />} label="Jahr"  />
+            <FormControlLabel value="Monat" control={<Radio />} label="Nach Monat aggregieren" defaultChecked />
+            <FormControlLabel value="Jahr" control={<Radio />} label="Nach Jahr aggregieren"  />
           </RadioGroup >
         </FormControl>
-        <h5>Zeitraum</h5>
-
-         <Slider
+         <Slider 
           aria-label="Custom marks"
           defaultValue={sliderDefaultValue}
           step={1}
-
           min={getMin(aggregationLevel)}
           max={getMax(aggregationLevel)}
         
