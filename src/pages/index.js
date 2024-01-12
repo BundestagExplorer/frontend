@@ -36,11 +36,17 @@ const Home = () => {
   //// code for updating the values in the grid in response to change in time selection
 
   const updateSeries = (selectedMonth, selectedYear) => {
+
+    var search_params = {}
+    if(aggregationLevel === 'Jahr'){
+      search_params = {year: selectedYear}
+    }
+    if(aggregationLevel === 'Monat'){
+      search_params = {year: selectedYear, 
+                       month: selectedMonth}
+    }
   
-    fetch(Config.API_URL + BT_TOP_TOPIC_ENDPOINT + '?' + new URLSearchParams({
-      month: selectedMonth,
-      year: selectedYear
-    })
+    fetch(Config.API_URL + BT_TOP_TOPIC_ENDPOINT + '?' + new URLSearchParams(search_params)
       , {
         headers: {
           'Content-Type': 'application/json',
