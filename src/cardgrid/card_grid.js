@@ -38,7 +38,7 @@ export default function CustomCardGrid({agg_data, extended}){
     
     
     return(
-        <Grid container spacing={5}>
+        <Grid container spacing={1}>
             {agg_data.map( data =>
                 
                 <Grid item key={data} md={data.md}>
