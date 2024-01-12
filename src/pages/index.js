@@ -37,10 +37,20 @@ const Home = () => {
 
   const updateSeries = (selectedMonth, selectedYear) => {
   
-    // fetch(Config.API_URL + BT_TOP_TOPIC_ENDPOINT + '?' + new URLSearchParams({
-    //   month: selectedMonth,
-    //   year: selectedYear
-    // })
+    fetch(Config.API_URL + BT_TOP_TOPIC_ENDPOINT + '?' + new URLSearchParams({
+      month: selectedMonth,
+      year: selectedYear
+    })
+      , {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      }
+    )
+    
+    //sample api access only for debugging purposes
+    // fetch("http://localhost:3000/23_11.json"
     //   , {
     //     headers: {
     //       'Content-Type': 'application/json',
@@ -49,15 +59,7 @@ const Home = () => {
     //   }
     // )
     
-    //sample api access only for debugging purposes
-    fetch("http://localhost:3000/23_11.json"
-      , {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
-      }
-    ).then(function (response) {
+    .then(function (response) {
       return response.json();
     })
       .then(function (myJson) {
