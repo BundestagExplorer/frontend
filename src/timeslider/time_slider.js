@@ -187,7 +187,7 @@ export default function TimeSlider({setAggregationLevel, setYear, setMonth, year
 
           valueLabelDisplay="off"
           marks={generateMarks(aggregationLevel, year)}
-          onChangeCommitted={(event, value) => {
+          onChange={(event, value) => {
             if(aggregationLevel === "Jahr")
             {setYear(value)}; 
             if(aggregationLevel === "Monat")
