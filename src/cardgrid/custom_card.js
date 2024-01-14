@@ -37,10 +37,11 @@ export default function CustomCard({children, importance_val}){
             width:  importance_val,
             height: importance_val,
             borderRadius: '50%',
-            left: '0',
-            top: '0',
+            left: '50%',
+            top: '50%',
             position: 'absolute',
-            zIndex: 0
+            zIndex: 0,
+            transform: "translate(-50%, -50%)"
         
           }}>
             {children}

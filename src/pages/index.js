@@ -134,7 +134,7 @@ const Home = () => {
     let new_transformed_data = []
     for (var index in transformed_data) {
       let bubble = transformed_data[index]
-      bubble["value_sum"] = normalize(min_val, max_val, 100, 150, bubble["value_sum"])
+      bubble["value_sum"] = normalize(min_val, max_val, 25, 175, bubble["value_sum"])
       console.log("bubble")
       console.log(bubble)
       new_transformed_data.push(bubble)

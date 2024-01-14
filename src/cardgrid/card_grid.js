@@ -41,7 +41,7 @@ export default function CustomCardGrid({agg_data, extended}){
         <Grid container spacing={1}>
             {agg_data.map( data =>
                 
-                <Grid item key={data} md={data.md } sx={{position:'relative'}}>
+                <Grid item key={data} md={data.md } sx={{position:'relative', width:'200px'}}>
                 <CustomCard ressort_name={data.name} importance_val={data.value_sum}/>
                 
                 <Typography variant='h5' sx={{position: 'relative'}}>

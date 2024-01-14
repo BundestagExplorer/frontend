@@ -22,7 +22,7 @@ const Item = styled(Paper)(({ theme, ressort_name, css }) => ({
     ...theme.typography.body1,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    width: 150,
+    width: 135,
     transform: "rotate("+ (css?.rotate || 0) +"deg) translate("+ (css?.radius || 0) +"px) rotate("+ (css?.rotateReverse || 0) +"deg)",
     position: 'absolute',
     left:0
@@ -107,7 +107,7 @@ export default function CircularCardLayout({agg_data, extended}){
                     
                     <Item ressort_name css={square[index]} >
                         <CustomCard ressort_name={data.name} importance_val={data.value_sum}/>
-                        <Typography variant='h5' sx={{position: 'relative'}}>
+                        <Typography variant='h6' sx={{position: 'relative'}}>
                             {data.name}
                         </Typography>
                             
