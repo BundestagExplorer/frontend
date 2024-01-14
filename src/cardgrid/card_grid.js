@@ -42,7 +42,7 @@ export default function CustomCardGrid({agg_data, extended}){
             {agg_data.map( data =>
                 
                 <Grid item key={data} md={data.md}>
-                <CustomCard ressort_name={data.name}>
+                <CustomCard ressort_name={data.name} importance_val={data.value_sum}>
                 <Typography variant='h5'>
                 {data.name}
                 </Typography>

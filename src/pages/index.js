@@ -99,6 +99,7 @@ const Home = () => {
 
         bubble_list.push(sub_item)
       }
+
       bubble["data"] = bubble_list
 
       bubble["value_sum"] = value_sum
@@ -106,7 +107,41 @@ const Home = () => {
       transformed_data.push(bubble)
     }
 
-    return transformed_data
+    console.log("transformed_data")
+    console.log(transformed_data)
+
+    var values = []
+    for (var index in transformed_data) {
+        values.push(transformed_data[index].value_sum)
+    }
+    console.log("values")
+    console.log(values)
+ 
+    var min_val = Math.min.apply(Math, values) 
+    var max_val = Math.max.apply(Math, values) 
+
+
+    console.log("min")
+    console.log(min_val)
+    console.log("max")
+    console.log(max_val)
+
+
+    let new_transformed_data = []
+    for (var index in transformed_data) {
+      let bubble = transformed_data[index]
+      bubble["value_sum"] = normalize(min_val, max_val, 100, 250, bubble["value_sum"])
+      console.log("bubble")
+      console.log(bubble)
+      new_transformed_data.push(bubble)
+  }
+
+    return new_transformed_data
+  }
+
+
+  function normalize(min_val, max_val, min_transformed, max_transformed, actual_value){
+    return ((actual_value - min_val) / (max_val - min_val))*(max_transformed - min_transformed) + min_transformed
   }
   
   

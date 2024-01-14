@@ -22,7 +22,7 @@ import { wrap } from 'highcharts';
 
 //   }));
 
-export default function CustomCard({children, ressort_name}){
+export default function CustomCard({children, importance_val}){
 
 
     return(
@@ -34,8 +34,9 @@ export default function CustomCard({children, ressort_name}){
             //...theme.typography.body1,
             textAlign: 'center',
             //color: theme.palette.text.secondary,
-            width: 'auto',
-            width: 'auto'
+            width:  importance_val,
+            height: importance_val,
+            borderRadius: '50%'
         
           }}>
             {children}
