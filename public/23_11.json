@@ -1,0 +1,183 @@
+{
+  "month": 11,
+  "year": 2023,
+  "election_period": null,
+  "top_topics": {
+    "Justiz": [
+      [
+        "Bundesverfassungsgerichts",
+        5
+      ],
+      [
+        "Gerichte",
+        5
+      ],
+      [
+        "Bundeswehr",
+        5
+      ],
+      [
+        "Bundesländer",
+        5
+      ],
+      [
+        "Betreuungsvereine",
+        4
+      ]
+    ],
+    "Wohnungsbau": [
+      [
+        "Wärmenetze",
+        8
+      ],
+      [
+        "Sozialgesetzbuch",
+        5
+      ],
+      [
+        "Jüdisches",
+        5
+      ],
+      [
+        "Transformationsfonds",
+        4
+      ],
+      [
+        "Büros",
+        4
+      ]
+    ],
+    "Finanzen": [
+      [
+        "Sondervermögen",
+        6
+      ]
+    ],
+    "Bildung": [
+      [
+        "Verringerung",
+        4
+      ]
+    ],
+    "Verkehr": [
+      [
+        "Kraftfahrzeuge",
+        7
+      ],
+      [
+        "Verkehr",
+        5
+      ],
+      [
+        "Kraftfahrzeuganhänger",
+        4
+      ]
+    ],
+    "Digitalisierung": [
+      [
+        "Dekarbonisierung",
+        5
+      ],
+      [
+        "Herausforderungen",
+        4
+      ],
+      [
+        "Anstieg",
+        4
+      ]
+    ],
+    "Arbeit": [
+      [
+        "Verantwortung",
+        6
+      ],
+      [
+        "Einbindung",
+        5
+      ],
+      [
+        "Betreuer",
+        5
+      ],
+      [
+        "Projekte",
+        5
+      ],
+      [
+        "Möglichkeiten",
+        4
+      ]
+    ],
+    "Landwirtschaft": [
+      [
+        "Subventionspolitik",
+        4
+      ],
+      [
+        "Energieversorgung",
+        4
+      ]
+    ],
+    "Gesundheit": [
+      [
+        "Leben",
+        6
+      ],
+      [
+        "Gesundheit",
+        4
+      ]
+    ],
+    "Verteidingung": [
+      [
+        "Wärmeplanung",
+        5
+      ],
+      [
+        "Datum",
+        5
+      ],
+      [
+        "Tierarztvorbehalt",
+        4
+      ],
+      [
+        "Nummer",
+        4
+      ]
+    ],
+    "Wirtschaft": [
+      [
+        "Wirtschaft",
+        9
+      ]
+    ],
+    "Außenpolitik": [
+      [
+        "Ukraine",
+        10
+      ],
+      [
+        "Israel",
+        6
+      ],
+      [
+        "Hamas",
+        4
+      ]
+    ],
+    "Umwelt": [
+      [
+        "Klimaschutz",
+        7
+      ]
+    ],
+    "Familie": [
+      [
+        "Italien",
+        4
+      ]
+    ]
+  }
+}
