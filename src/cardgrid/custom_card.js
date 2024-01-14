@@ -37,8 +37,8 @@ export default function CustomCard({children, importance_val}){
             width:  importance_val,
             height: importance_val,
             borderRadius: '50%',
-            left: '10%',
-            top: '10%',
+            left: '0',
+            top: '0',
             position: 'absolute',
             zIndex: 0
         

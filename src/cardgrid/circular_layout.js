@@ -7,23 +7,22 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import { List, ListItemButton, ListItemText } from '@mui/material';
 import { css } from '@emotion/react';
-
-import WirtschaftImage from '../cardgrid/Wolfsburg_VW-Werk-50_opacity.jpg'; // Import using relative path
-import FinanzenImage from '../cardgrid/Euro_coins_and_banknotes-50_opacity.jpg'; // Import using relative path
 import { orange } from '@mui/material/colors';
+import { useNavigate } from "react-router-dom";
+import CustomListText from './customlisttext';
+import CustomCard from './custom_card';
 
 
 //ToDo: Display the image based on the currrent card in the CustomCardGrid
 const Item = styled(Paper)(({ theme, ressort_name, css }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    backgroundImage:  `url(${WirtschaftImage})`,
     //backgroundImage:  `url(${ressort_name})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     ...theme.typography.body1,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    width: 125,
+    width: 150,
     transform: "rotate("+ (css?.rotate || 0) +"deg) translate("+ (css?.radius || 0) +"px) rotate("+ (css?.rotateReverse || 0) +"deg)",
     position: 'absolute',
     left:0
@@ -52,12 +51,18 @@ export default function CircularCardLayout({agg_data, extended}){
         window.removeEventListener('resize', handleResize);
         };
     }, []);
+
+    let navigate = useNavigate();
+    function handleClicked() {
+        console.log("firstList Clicked");
+        navigate("/votes");
+    }
     
     const buildCircle = () => {
         const num = agg_data.length; //Number of Square to be generate
         const type = 1;
-        let radiusX = 2.6* viewportWidth/8 - 50; // distance from center along the horizontal axis
-        let radiusY = 1.7* viewportWidth/8 - 50; // distance from center along the vertical axis
+        let radiusX = 3.4* viewportWidth/8 - 50; // distance from center along the horizontal axis
+        let radiusY = 1.9* viewportWidth/8 - 50; // distance from center along the vertical axis
         let start = -90 + (360 * type) / num / 2; // shift start from 0
         let slice = (360 * type) / num;
 
@@ -92,7 +97,7 @@ export default function CircularCardLayout({agg_data, extended}){
     const CircleHolder = styled('div')({
         position: 'absolute',
         left: 3*viewportWidth/8 - 50,
-        top: viewportHeight/4 - 100,
+        top: viewportHeight/4 - 25,
     });
     
     return(
@@ -101,22 +106,16 @@ export default function CircularCardLayout({agg_data, extended}){
                 {agg_data.map( (data,index) =>
                     
                     <Item ressort_name css={square[index]} >
-
-                        <Typography variant='h5'>
-                            {data.ressort_name}
+                        <CustomCard ressort_name={data.name} importance_val={data.value_sum}/>
+                        <Typography variant='h5' sx={{position: 'relative'}}>
+                            {data.name}
                         </Typography>
-                        
-
-                        <List dense={true}>
-                        
-                        {data.values.map(topic =>
-
-                        <ListItemButton>
-                            <ListItemText>
-                                {topic}
-                            </ListItemText>
-                        </ListItemButton>
                             
+                        <List dense={true} >
+                            {data.data.map(topic =>
+                                <ListItemButton onClick={handleClicked}>
+                                    <CustomListText display_text ={topic.name}></CustomListText>
+                                </ListItemButton>
                             )}
                         </List>
                     </Item>

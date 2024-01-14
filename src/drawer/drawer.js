@@ -14,7 +14,7 @@ import FormControl from '@mui/material/FormControl';
 import TimeSlider from '../timeslider/time_slider'
 
 
-export default function TemporaryDrawer({drawerExtended, setDrawerState, setAggregationLevel, aggregationLevel, setYear, setMonth, year, month}) {
+export default function TemporaryDrawer({drawerExtended, setDrawerState, setAggregationLevel, aggregationLevel, setCircularLayout, circularLayout, setYear, setMonth, year, month}) {
 
 
 
@@ -25,7 +25,7 @@ export default function TemporaryDrawer({drawerExtended, setDrawerState, setAggr
 
     >
 
-        <TimeSlider  aggregationLevel={aggregationLevel} year={year} month={month} setYear={setYear} setMonth={setMonth} setAggregationLevel={setAggregationLevel}/>
+        <TimeSlider  aggregationLevel={aggregationLevel} circularLayout={circularLayout} year={year} month={month} setYear={setYear} setMonth={setMonth} setAggregationLevel={setAggregationLevel} setCircularLayout={setCircularLayout}/>
 
     </Box>
   );

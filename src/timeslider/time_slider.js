@@ -3,13 +3,14 @@ import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
+import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import { func } from 'prop-types';
 import { Typography } from '@mui/material';
 
 
-export default function TimeSlider({setAggregationLevel, setYear, setMonth, year, month, aggregationLevel }) {
+export default function TimeSlider({setAggregationLevel, circularLayout, setYear, setMonth, year, month, aggregationLevel, setCircularLayout }) {
 
     //const [aggregationLevelinternal, setAggregationLevelinternal] = useState('month');
 
@@ -148,50 +149,58 @@ export default function TimeSlider({setAggregationLevel, setYear, setMonth, year
 
 
     return (
-        <Box sx={{ display:'flex', padding:1, flexDirection: 'row', width: '90%'}}>
-        <FormControl>
-          <RadioGroup
-            row
-            aria-labelledby="demo-row-radio-buttons-group-label"
-            name="row-radio-buttons-group"
-            onChange={(event, value) => {setAggregationLevel(value); setAggregationLevel(value)}}
-          >
-            <FormControlLabel value="Monat" control={<Radio />} label="Nach Monat aggregieren" defaultChecked />
-            <FormControlLabel value="Jahr" control={<Radio />} label="Nach Jahr aggregieren"  />
-          </RadioGroup >
-        </FormControl>
-         <Slider 
-          aria-label="Custom marks"
-          defaultValue={sliderDefaultValue}
-          step={1}
-          min={getMin(aggregationLevel)}
-          max={getMax(aggregationLevel)}
-        
+        <div>
+            <Box sx={{ display:'flex', padding:1, flexDirection: 'row', width: '90%'}}>
+            <FormControl>
+            <RadioGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="row-radio-buttons-group"
+                onChange={(event, value) => {setAggregationLevel(value); setAggregationLevel(value)}}
+            >
+                <FormControlLabel value="Monat" control={<Radio />} label="Nach Monat aggregieren" defaultChecked />
+                <FormControlLabel value="Jahr" control={<Radio />} label="Nach Jahr aggregieren"  />
+            </RadioGroup >
+            </FormControl>
+            <Slider 
+            aria-label="Custom marks"
+            defaultValue={sliderDefaultValue}
+            step={1}
+            min={getMin(aggregationLevel)}
+            max={getMax(aggregationLevel)}
+            
 
 
-        //   max={ () => {
-        //         if(aggregationLevel === 'Monat'){ 
-        //             return 12;}
-                
-        //         if(aggregationLevel === 'Jahr'){ 
-        //             return 2024;}
-        //         else{
-        //             return 1;
-        //         }
-        //         }
-        //   }
+            //   max={ () => {
+            //         if(aggregationLevel === 'Monat'){ 
+            //             return 12;}
+                    
+            //         if(aggregationLevel === 'Jahr'){ 
+            //             return 2024;}
+            //         else{
+            //             return 1;
+            //         }
+            //         }
+            //   }
 
 
-          valueLabelDisplay="off"
-          marks={generateMarks(aggregationLevel, year)}
-          onChange={(event, value) => {
-            if(aggregationLevel === "Jahr")
-            {setYear(value)}; 
-            if(aggregationLevel === "Monat")
-            {setMonth(value)}; 
-            }}
-        /> 
-      </Box> 
-
+            valueLabelDisplay="off"
+            marks={generateMarks(aggregationLevel, year)}
+            onChange={(event, value) => {
+                if(aggregationLevel === "Jahr")
+                {setYear(value)}; 
+                if(aggregationLevel === "Monat")
+                {setMonth(value)}; 
+                }}
+            /> 
+        </Box> 
+        <FormControlLabel
+        control={
+            <Switch checked={circularLayout} onChange={(event, value) => {setCircularLayout(value)}} inputProps={{ 'aria-label': 'controlled' }}/>
+        }
+        label={circularLayout ? 'Circular layout' : 'Grid layout'}
+        style={{ marginLeft: '0.5vw' }}
+      />
+    </div>
     );
 }

@@ -1,6 +1,6 @@
 import React, { Component, useState, useRef, useEffect } from 'react';
 import DenseAppBar from '../appbar/appbar';
-import CircularCardLayout from '../cardLayout/circular_layout';
+import CircularCardLayout from '../cardgrid/circular_layout';
 import Drawer from '../drawer/drawer';
 import CustomCardGrid from '../cardgrid/card_grid';
 import TemporaryDrawer from '../drawer/drawer';
@@ -31,6 +31,8 @@ const Home = () => {
 
   const [drawerExtended, setDrawerExtented] = useState(false);
   const [aggregationLevel, setAggregationLevel] = useState('Monat');
+
+  const [circularViewActive, setCircularViewActive] = useState(false);
 
   const [aggData, setAggData] = useState(default_agg_data);
 
@@ -132,7 +134,7 @@ const Home = () => {
     let new_transformed_data = []
     for (var index in transformed_data) {
       let bubble = transformed_data[index]
-      bubble["value_sum"] = normalize(min_val, max_val, 100, 250, bubble["value_sum"])
+      bubble["value_sum"] = normalize(min_val, max_val, 100, 150, bubble["value_sum"])
       console.log("bubble")
       console.log(bubble)
       new_transformed_data.push(bubble)
@@ -158,10 +160,11 @@ const Home = () => {
     <div>
       <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel = {aggregationLevel} showDrawer = {() => setDrawerExtented(true)}/>
       <div style={{ padding: 20 }}>
-      <CustomCardGrid agg_data= {aggData}/>
-      {/* <DenseAppBar></DenseAppBar>
-      <CircularCardLayout agg_data= {agg_data}/>
-      */}
+      {circularViewActive ? (
+        <CircularCardLayout agg_data= {aggData}/>
+      ) : (
+        <CustomCardGrid agg_data= {aggData}/>
+      )}
       </div>
       <TemporaryDrawer drawerExtended = {drawerExtended}
        setDrawerState = { state => setDrawerExtented(state)} 
@@ -170,7 +173,9 @@ const Home = () => {
        setAggregationLevel = {level => setAggregationLevel(level)}
        aggregationLevel = {aggregationLevel}
        year = {selectedYear}
-       month = {selectedMonth}/>
+       month = {selectedMonth}
+       setCircularLayout={ level => setCircularViewActive(level)}
+       circularLayout={circularViewActive}/>
        
     </div>
   );
