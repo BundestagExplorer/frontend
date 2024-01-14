@@ -2,7 +2,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import { List, ListItemButton, ListItemText } from '@mui/material';
+import { Box, List, ListItemButton, ListItemText } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
 import CustomListText from './customlisttext';
@@ -41,9 +41,10 @@ export default function CustomCardGrid({agg_data, extended}){
         <Grid container spacing={1}>
             {agg_data.map( data =>
                 
-                <Grid item key={data} md={data.md}>
-                <CustomCard ressort_name={data.name} importance_val={data.value_sum}>
-                <Typography variant='h5'>
+                <Grid item key={data} md={data.md } sx={{position:'relative'}}>
+                <CustomCard ressort_name={data.name} importance_val={data.value_sum}/>
+                
+                <Typography variant='h5' sx={{position: 'relative'}}>
                 {data.name}
                 </Typography>
                     
@@ -61,8 +62,10 @@ export default function CustomCardGrid({agg_data, extended}){
                         
                         )}
                     </List>
-
-                    </CustomCard>
+                    
+                    
+                    
+                
                 </Grid>
                 )}
         </Grid>

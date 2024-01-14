@@ -26,7 +26,7 @@ export default function CustomCard({children, importance_val}){
 
 
     return(
-        <Paper style={{
+        <div style={{
             backgroundColor: '#e0f7fa',
             // backgroundImage:  `url(${FinanzenImage})`,
             // backgroundSize: 'cover',
@@ -36,11 +36,15 @@ export default function CustomCard({children, importance_val}){
             //color: theme.palette.text.secondary,
             width:  importance_val,
             height: importance_val,
-            borderRadius: '50%'
+            borderRadius: '50%',
+            left: '10%',
+            top: '10%',
+            position: 'absolute',
+            zIndex: 0
         
           }}>
             {children}
         
-        </Paper>
+        </div>
     )
 }
