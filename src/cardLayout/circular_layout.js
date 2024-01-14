@@ -23,7 +23,7 @@ const Item = styled(Paper)(({ theme, ressort_name, css }) => ({
     ...theme.typography.body1,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    width: 100,
+    width: 125,
     transform: "rotate("+ (css?.rotate || 0) +"deg) translate("+ (css?.radius || 0) +"px) rotate("+ (css?.rotateReverse || 0) +"deg)",
     position: 'absolute',
     left:0
@@ -56,8 +56,8 @@ export default function CircularCardLayout({agg_data, extended}){
     const buildCircle = () => {
         const num = agg_data.length; //Number of Square to be generate
         const type = 1;
-        let radiusX = 3* viewportWidth/8 + 50; // distance from center along the horizontal axis
-        let radiusY = 1* viewportWidth/8 + 50; // distance from center along the vertical axis
+        let radiusX = 2.6* viewportWidth/8 - 50; // distance from center along the horizontal axis
+        let radiusY = 1.7* viewportWidth/8 - 50; // distance from center along the vertical axis
         let start = -90 + (360 * type) / num / 2; // shift start from 0
         let slice = (360 * type) / num;
 
