@@ -113,7 +113,7 @@ export default function CircularCardLayout({agg_data, extended}){
                             
                         <List dense={true} >
                             {data.data.map(topic =>
-                                <ListItemButton onClick={handleClicked}>
+                                <ListItemButton onClick={function (event) {navigate('/votes', { state: { ressort: data.name } })}}>
                                     <CustomListText display_text ={topic.name}></CustomListText>
                                 </ListItemButton>
                             )}

@@ -30,12 +30,7 @@ export default function CustomCardGrid({agg_data, extended}){
     })
 
 
-    let navigate = useNavigate();
-    function handleClicked() {
-        console.log("firstList Clicked");
-        navigate("/votes");
-    }
-    
+    let navigate = useNavigate(); 
     
     return(
         <Grid container spacing={1}>
@@ -53,7 +48,7 @@ export default function CustomCardGrid({agg_data, extended}){
                     
                     {data.data.map(topic =>
 
-                    <ListItemButton onClick={handleClicked}>
+                    <ListItemButton value={data.name} onClick={function (event) {navigate('/votes', { state: { ressort: data.name } })}}>
 
                         <CustomListText display_text ={topic.name}>
 
