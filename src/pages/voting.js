@@ -72,7 +72,6 @@ const Voting = () => {
     }, []);
     
     useEffect(() => {
-        console.log(ressort)
         getVotingData();
     }, [categoryMap]);
 
