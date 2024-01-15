@@ -18,7 +18,7 @@ const PollCard = ({ date, title, yesVotes, noVotes, neutralVotes, notVoted, resu
   return (
     <Card style={{ display: 'flex', width: '100%', margin: '0 auto', marginBottom: '1vh' }}>
     {/* Voting Chart */}
-    <VotingResultsChart yesVotes={yesVotes} noVotes={noVotes} neutralVotes={neutralVotes} notVoted={notVoted} style={{ marginRight: '16px' }} />
+    <VotingResultsChart yesVotes={yesVotes} noVotes={noVotes} neutralVotes={neutralVotes} notVoted={notVoted} style={{ width: '20vw', marginRight: '16px' }} />
 
     {/* Card Content */}
     <div style={{ flex: 1 }}>

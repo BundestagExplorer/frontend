@@ -42,15 +42,14 @@ const Voting = () => {
                     result: item.ja > item.nein ? 'accepted' : 'rejected',
                     party: 'Nothing',  // TODO: Add initiative partie(s) => item.initiative
                     additionalInfo: "abstract" in item ? item.abstract : 'No abstract',
-                    category: "dachzeile" in item ? categoryMap[item.dachzeile] : 'No category',
+                    category: "dachzeile" in item ? categoryMap[item.dachzeile] : 'keine Zuordnung',
                 }
             }).sort(
                 (a, b) => new Date(b.date) - new Date(a.date)
             )
         }).then(function (data) {
             setVotingData(data)
-            console.log(data.filter( (elem) => { return elem.neutralResult != 0}))
-            //console.log(data)
+            //console.log(data.filter( (elem) => { return elem.title === "Bundeswehreinsatz im Irak"}))
         });
     }
 
