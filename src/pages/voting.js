@@ -72,6 +72,7 @@ const Voting = () => {
     }, []);
     
     useEffect(() => {
+        console.log(ressort)
         getVotingData();
     }, [categoryMap]);
 
@@ -116,7 +117,7 @@ const Voting = () => {
                                 categories.push(item.category);
                             }
                             return categories;
-                        }, []).map((category) => (
+                        }, []).sort().map((category) => (
                             <label key={category} style={{ margin: '0.5vh 0' }}>
                                 <Checkbox
                                     checked={selectedCategories.includes(category)}
