@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import VotingResultsChart from './voting_results';
 import Button from '@mui/material/Button';
 
-const PollCard = ({ date, title, yesVotes, noVotes, neutralVotes, result, party, additionalInfo, category }) => {
+const PollCard = ({ date, title, yesVotes, noVotes, neutralVotes, notVoted, result, party, additionalInfo, category }) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -18,7 +18,7 @@ const PollCard = ({ date, title, yesVotes, noVotes, neutralVotes, result, party,
   return (
     <Card style={{ display: 'flex', width: '100%', margin: '0 auto', marginBottom: '1vh' }}>
     {/* Voting Chart */}
-    <VotingResultsChart yesVotes={yesVotes} noVotes={noVotes} neutralVotes={neutralVotes} style={{ width: '100px', marginRight: '16px' }} />
+    <VotingResultsChart yesVotes={yesVotes} noVotes={noVotes} neutralVotes={neutralVotes} notVoted={notVoted} style={{ marginRight: '16px' }} />
 
     {/* Card Content */}
     <div style={{ flex: 1 }}>
@@ -32,9 +32,9 @@ const PollCard = ({ date, title, yesVotes, noVotes, neutralVotes, result, party,
         <Typography variant="body1" color={result === 'accepted' ? 'primary' : 'error'} gutterBottom>
           Result: {result}
         </Typography>
-        <Typography variant="body2" color="textSecondary" gutterBottom>
+        {/*<Typography variant="body2" color="textSecondary" gutterBottom>
           Proposed by: {party}
-        </Typography>
+        </Typography>*/}
         <Typography variant="body2" color="textSecondary" gutterBottom>
           Resort: {category}
         </Typography>

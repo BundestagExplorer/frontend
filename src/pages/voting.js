@@ -33,11 +33,12 @@ const Voting = () => {
             return abstimmungJson.map((item) => {
                 return {
                     id: item.id,
-                    date: item.abstimmung_datum,
+                    date: item.abstimmung_date,
                     title: item.titel,
                     yesResult: item.ja,
                     noResult: item.nein,
-                    neutralResult: item.neutral,
+                    neutralResult: item.enthalten,
+                    noResult: item.nicht_abgegeben,
                     result: item.ja > item.nein ? 'accepted' : 'rejected',
                     party: 'Nothing',  // TODO: Add initiative partie(s) => item.initiative
                     additionalInfo: "abstract" in item ? item.abstract : 'No abstract',
@@ -48,6 +49,8 @@ const Voting = () => {
             )
         }).then(function (data) {
             setVotingData(data)
+            console.log(data.filter( (elem) => { return elem.neutralResult != 0}))
+            //console.log(data)
         });
     }
 
@@ -137,7 +140,8 @@ const Voting = () => {
                         result={item.result}
                         yesVotes={item.yesResult}
                         noVotes={item.noResult}
-                        neutral={item.neutralResult}
+                        neutralVotes={item.neutralResult}
+                        notVoted={item.noResult}
                         party={item.party}
                         additionalInfo={item.additionalInfo}
                         category={item.category}

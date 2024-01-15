@@ -1,22 +1,25 @@
+import { grey, yellow } from '@mui/material/colors';
 import React from 'react';
 import { VictoryPie, VictoryLabel } from 'victory';
 
-const VotingResultsChart = ({ yesVotes, noVotes, neutralVotes }) => {
+const VotingResultsChart = ({ yesVotes, noVotes, neutralVotes, notVoted }) => {
   const data = [
-    { x: 'Yes', y: yesVotes },
-    { x: 'No', y: noVotes },
+    { x: 'Ja', y: yesVotes },
+    { x: 'Nein', y: noVotes },
     { x: 'Neutral', y: neutralVotes },
-  ];
+    { x: 'Nicht abgegeben', y: notVoted }
+  ].filter(Boolean);
 
   return (
-    <svg width={400} height={400}>
+    <svg width={300} height={300}>
       <VictoryPie
         standalone={false}
-        width={400}
-        height={400}
+        width={300}
+        height={300}
         data={data}
-        innerRadius={100}
-        colorScale={['#36A2EB', '#FF6384', '#FFCE56']}
+        innerRadius={65} 
+        colorScale={['#36A2EB', '#FF6384',yellow[800], grey[600]]}
+        labelRadius={({ innerRadius }) => innerRadius + 62 }
         labelComponent={<VictoryLabel textAnchor="middle" verticalAnchor="middle" />}
       />
     </svg>
