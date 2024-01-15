@@ -1,3 +1,3 @@
 export class Config {
-    static API_URL = "http://localhost:8000/api/v1/";
+    static API_URL = "/api/v1/";
 }

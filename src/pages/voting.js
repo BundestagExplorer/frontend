@@ -16,9 +16,9 @@ const Voting = () => {
     const [votingData, setVotingData] = useState([[]])
     const getVotingData = () => {
         fetch(Config.API_URL + BT_ABSTIMMUNGEN_ENDPOINT + '?' + new URLSearchParams({
-            limit: 30,
-            date_min: '2023-01-01',
-            date_max: '2023-12-31'
+            limit: 380,
+            /*date_min: '2023-01-01',
+            date_max: '2023-12-31'*/
         })
             , {
                 headers: {
@@ -37,7 +37,7 @@ const Voting = () => {
                     result: item.akzeptiert ? 'accepted' : 'rejected',
                     party: 'Nothing',  // TODO: Add initiative partie(s) => item.initiative
                     additionalInfo: "abstract" in item ? item.abstract : 'No abstract',
-                    category: "category" in item ? item.category : 'No category',
+                    category: "dachzeile" in item ? item.dachzeile : 'No category',
                 }
             }).sort(
                 (a, b) => new Date(b.date) - new Date(a.date)

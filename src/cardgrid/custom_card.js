@@ -22,10 +22,11 @@ import { wrap } from 'highcharts';
 
 //   }));
 
-export default function CustomCard({children, importance_val}){
+export default function CustomCard({ children, importance_val }) {
 
+    const validImportanceVal = isNaN(importance_val) ? 0 : importance_val;
 
-    return(
+    return (
         <div style={{
             backgroundColor: '#e0f7fa',
             // backgroundImage:  `url(${FinanzenImage})`,
@@ -34,18 +35,18 @@ export default function CustomCard({children, importance_val}){
             //...theme.typography.body1,
             textAlign: 'center',
             //color: theme.palette.text.secondary,
-            width:  importance_val,
-            height: importance_val,
+            width: validImportanceVal,
+            height: validImportanceVal,
             borderRadius: '50%',
             left: '50%',
             top: '50%',
             position: 'absolute',
             zIndex: 0,
             transform: "translate(-50%, -50%)"
-        
-          }}>
+
+        }}>
             {children}
-        
+
         </div>
     )
 }

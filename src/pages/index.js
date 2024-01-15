@@ -1,7 +1,6 @@
-import React, { Component, useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import DenseAppBar from '../appbar/appbar';
 import CircularCardLayout from '../cardgrid/circular_layout';
-import Drawer from '../drawer/drawer';
 import CustomCardGrid from '../cardgrid/card_grid';
 import TemporaryDrawer from '../drawer/drawer';
 import { Config } from '../config';
@@ -25,8 +24,8 @@ var default_agg_data =
 
 const Home = () => {
 
-  const [selectedYear, setSelectedYear] = useState(2024);
-  const [selectedMonth, setSelectedMonth] = useState(3);
+  const [selectedYear, setSelectedYear] = useState(2023);
+  const [selectedMonth, setSelectedMonth] = useState(12);
   const [extendedViewActive, setExtendedViewActive] = useState(false);
 
   const [drawerExtended, setDrawerExtented] = useState(false);

@@ -62,7 +62,7 @@ export default function CircularCardLayout({agg_data, extended}){
         const num = agg_data.length; //Number of Square to be generate
         const type = 1;
         let radiusX = 3.4* viewportWidth/8 - 50; // distance from center along the horizontal axis
-        let radiusY = 1.9* viewportWidth/8 - 50; // distance from center along the vertical axis
+        let radiusY = 3.4* viewportHeight/8 - 50; // distance from center along the vertical axis
         let start = -90 + (360 * type) / num / 2; // shift start from 0
         let slice = (360 * type) / num;
 
@@ -96,7 +96,7 @@ export default function CircularCardLayout({agg_data, extended}){
 
     const CircleHolder = styled('div')({
         position: 'absolute',
-        left: 3*viewportWidth/8 - 50,
+        left: 3*viewportWidth/8 - 100,
         top: viewportHeight/4 - 25,
     });
     

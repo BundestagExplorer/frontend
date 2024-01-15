@@ -15,7 +15,7 @@ export default function DenseAppBar({displayYear, displayMonth, showDrawer, aggr
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" component="div">
-            {displayMonth}-{displayYear}-{aggregationLevel}
+            {aggregationLevel === "Monat" ? `${displayMonth}/${displayYear}` : displayYear}
           </Typography>
         </Toolbar>
       </AppBar>
