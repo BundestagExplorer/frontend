@@ -5,9 +5,10 @@ import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import VotingResultsChart from './voting_results';
 import Button from '@mui/material/Button';
 
-const PollCard = ({ date, title, result, party, additionalInfo, category }) => {
+const PollCard = ({ date, title, yesVotes, noVotes, neutralVotes, notVoted, result, party, additionalInfo, category }) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -15,7 +16,12 @@ const PollCard = ({ date, title, result, party, additionalInfo, category }) => {
   };
 
   return (
-    <Card style={{ width: '100%', margin: '0 auto', marginBottom: '1vh' }}>
+    <Card style={{ display: 'flex', width: '100%', margin: '0 auto', marginBottom: '1vh' }}>
+    {/* Voting Chart */}
+    <VotingResultsChart yesVotes={yesVotes} noVotes={noVotes} neutralVotes={neutralVotes} notVoted={notVoted} style={{ width: '20vw', marginRight: '16px' }} />
+
+    {/* Card Content */}
+    <div style={{ flex: 1 }}>
       <CardContent>
         <Typography variant="body2" color="textSecondary" align="right">
           {date}
@@ -26,9 +32,9 @@ const PollCard = ({ date, title, result, party, additionalInfo, category }) => {
         <Typography variant="body1" color={result === 'accepted' ? 'primary' : 'error'} gutterBottom>
           Result: {result}
         </Typography>
-        <Typography variant="body2" color="textSecondary" gutterBottom>
+        {/*<Typography variant="body2" color="textSecondary" gutterBottom>
           Proposed by: {party}
-        </Typography>
+        </Typography>*/}
         <Typography variant="body2" color="textSecondary" gutterBottom>
           Resort: {category}
         </Typography>
@@ -58,7 +64,8 @@ const PollCard = ({ date, title, result, party, additionalInfo, category }) => {
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-    </Card>
+    </div>
+  </Card>
   );
 };
 
