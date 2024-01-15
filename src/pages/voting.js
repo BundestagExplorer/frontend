@@ -38,7 +38,7 @@ const Voting = () => {
                     yesResult: item.ja,
                     noResult: item.nein,
                     neutralResult: item.enthalten,
-                    noResult: item.nicht_abgegeben,
+                    notResult: item.nicht_abgegeben,
                     result: item.ja > item.nein ? 'accepted' : 'rejected',
                     party: 'Nothing',  // TODO: Add initiative partie(s) => item.initiative
                     additionalInfo: "abstract" in item ? item.abstract : 'No abstract',
@@ -102,22 +102,22 @@ const Voting = () => {
 
     return (
         <div style={{ maxWidth: '80%', margin: '0 auto', padding: '2vh' }} >
-            <h1>Welcome to the Voting page</h1>
+            <h1>Abstimmungen im Bundestag</h1>
 
             {/* Category filter accordion */}
             < Accordion style={{ marginBottom: '2vh' }} expanded={expanded} onChange={handleAccordionChange} >
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>Filter by Category</Typography>
+                    <Typography>Filter</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
                         {votingData.reduce((categories, item) => {
                             if (!categories.includes(item.category)) {
                                 categories.push(item.category);
                             }
                             return categories;
                         }, []).sort().map((category) => (
-                            <label key={category} style={{ margin: '0.5vh 0' }}>
+                            <label key={category} style={{ margin: '0.5vh 1vw', flex: '0 0 20%' }}>
                                 <Checkbox
                                     checked={selectedCategories.includes(category)}
                                     onChange={() => handleCategoryToggle(category)}
@@ -140,7 +140,7 @@ const Voting = () => {
                         yesVotes={item.yesResult}
                         noVotes={item.noResult}
                         neutralVotes={item.neutralResult}
-                        notVoted={item.noResult}
+                        notVoted={item.notResult}
                         party={item.party}
                         additionalInfo={item.additionalInfo}
                         category={item.category}

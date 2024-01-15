@@ -1,128 +1,131 @@
-import React, { Component, useState, useRef, useEffect } from 'react';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import { List, ListItemButton, ListItemText } from '@mui/material';
-import { css } from '@emotion/react';
-import { orange } from '@mui/material/colors';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import CustomListText from './customlisttext';
-import CustomCard from './custom_card';
+import Tooltip from '@mui/material/Tooltip';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
 
-
-//ToDo: Display the image based on the currrent card in the CustomCardGrid
-const Item = styled(Paper)(({ theme, ressort_name, css }) => ({
+const Item = styled('div')(({ theme, css, middle }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    //backgroundImage:  `url(${ressort_name})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     ...theme.typography.body1,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    width: 135,
-    transform: "rotate("+ (css?.rotate || 0) +"deg) translate("+ (css?.radius || 0) +"px) rotate("+ (css?.rotateReverse || 0) +"deg)",
+    width: middle ? 450 : 100,
+    transform: middle ? 'translateY(-16vh) translateX(-8vw)' : `rotate(${css?.rotate || 0}deg) translate(${css?.radius || 0}px) rotate(${css?.rotateReverse || 0}deg)`,
     position: 'absolute',
-    left:0
-  }));
+    left: 0,
+    '&:hover': {
+        cursor: middle ? 'pointer' : 'default',
+    },
+}));
 
+const Circle = styled('div')({
+    width: '75vw',
+    height: '50vh',
+    borderRadius: '50%',
+    margin: '150px auto 40px',
+    position: 'relative',
+});
 
-export default function CircularCardLayout({agg_data, extended}){
+const CircleHolder = styled('div')(({ viewportWidth, viewportHeight }) => ({
+    position: 'absolute',
+    left: 3 * viewportWidth / 8 - 100,
+    top: viewportHeight / 4 - 25,
+}));
 
+export default function CircularCardLayout({ agg_data, aggregationLevel }) {
     const [square, setSquare] = useState([]);
     const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
     const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
     useEffect(() => {
-        // Function to update viewport height when the window is resized
         const handleResize = () => {
             setViewportHeight(window.innerHeight);
             setViewportWidth(window.innerWidth);
             buildCircle();
         };
 
-        // Add event listener for window resize
         window.addEventListener('resize', handleResize);
 
-        // Cleanup the event listener on component unmount
         return () => {
-        window.removeEventListener('resize', handleResize);
+            window.removeEventListener('resize', handleResize);
         };
     }, []);
 
-    let navigate = useNavigate();
-    function handleClicked() {
-        console.log("firstList Clicked");
-        navigate("/votes");
-    }
-    
+    useEffect(() => {
+        buildCircle();
+    }, [agg_data, viewportWidth, viewportHeight]);
+
     const buildCircle = () => {
-        const num = agg_data.length; //Number of Square to be generate
+        const num = agg_data.length;
         const type = 1;
-        let radiusX = 3.4* viewportWidth/8 - 50; // distance from center along the horizontal axis
-        let radiusY = 3.4* viewportHeight/8 - 50; // distance from center along the vertical axis
-        let start = -90 + (360 * type) / num / 2; // shift start from 0
+        let radiusX = 3.5 * viewportWidth / 8 - 50;
+        let radiusY = 3 * viewportHeight / 8 - 50;
+        let start = -90 + (360 * type) / num / 2;
         let slice = (360 * type) / num;
 
         let items = [];
         for (let i = 0; i < num; i++) {
-        let angle = ((slice * i + start) * Math.PI) / 180; // Convert to radians
-        let radius = (radiusX * radiusY) / Math.sqrt(Math.pow(radiusY * Math.cos(angle), 2) + Math.pow(radiusX * Math.sin(angle), 2));
+            let angle = ((slice * i + start) * Math.PI) / 180;
+            let radius = (radiusX * radiusY) / Math.sqrt(Math.pow(radiusY * Math.cos(angle), 2) + Math.pow(radiusX * Math.sin(angle), 2));
 
-        items.push({
-            radius: radius,
-            rotate: slice * i + start,
-            rotateReverse: (slice * i + start) * -1
-        });
+            items.push({
+                radius: radius,
+                rotate: slice * i + start,
+                rotateReverse: (slice * i + start) * -1,
+            });
         }
         setSquare(items);
     };
 
-    useEffect(() => {
-        // Uncomment the line below if you want to show on load
-        buildCircle();
-      }, []);
+    let navigate = useNavigate();
 
-    const Circle = styled('div')({
-        //background: 'orange',
-        width: '75vw',
-        height: '50vh',
-        borderRadius: '50%',
-        margin: '150px auto 40px',
-        position: 'relative',
-    });
-
-    const CircleHolder = styled('div')({
-        position: 'absolute',
-        left: 3*viewportWidth/8 - 100,
-        top: viewportHeight/4 - 25,
-    });
-    
-    return(
+    return (
         <Circle>
-            <CircleHolder>
-                {agg_data.map( (data,index) =>
-                    
-                    <Item ressort_name css={square[index]} >
-                        <CustomCard ressort_name={data.name} importance_val={data.value_sum}/>
-                        <Typography variant='h6' sx={{position: 'relative'}}>
-                            {data.name}
-                        </Typography>
-                            
-                        <List dense={true} >
-                            {data.data.map(topic =>
-                                <ListItemButton onClick={handleClicked}>
-                                    <CustomListText display_text ={topic.name}></CustomListText>
-                                </ListItemButton>
-                            )}
-                        </List>
-                    </Item>
-                )}
+            <CircleHolder viewportWidth={viewportWidth} viewportHeight={viewportHeight}>
+                {agg_data.map((data, index) => (
+                    <div>
+                        <Tooltip key={index} title={
+                            <div>
+                                <Typography variant="h6">Wichtigste Themen:</Typography>
+                                <List dense={true}>
+                                    {data.data.map(topic =>
+                                        <ListItemButton key={topic.name}>
+                                            <CustomListText display_text={topic.name}></CustomListText>
+                                        </ListItemButton>)}
+                                </List>
+                            </div>} placement="top">
+                            <Item css={square[index]} onClick={() => navigate("/votes", { state: { ressort: data.name } })}>
+                                <Typography style={{ fontSize: isNaN(data.value_sum) ? 12 : data.value_sum }} sx={{ position: 'relative' }}>
+                                    {data.name}
+                                </Typography>
+                            </Item>
+                        </Tooltip>
+                        {data.max_value ?
+                            <Item middle={true}>
+                                <Typography variant="h4">
+                                    <b>Brennpunkt des {aggregationLevel === "Monat" ? "Monats" : "Jahres"}:</b><br />
+                                </Typography>
+                                <Typography variant="h5">
+                                    {data.name}:<br />
+                                </Typography>
+                                
+                                <List dense={true} style={{ textAlign: 'center' }}>
+                                    {data.data.map(topic =>
+                                        <ListItemButton key={topic.name}>
+                                            <CustomListText display_text={topic.name}></CustomListText>
+                                        </ListItemButton>)}
+                                </List>
+                            </Item>
+                            : <div></div>
+                        }
+                    </div>
+                ))}
             </CircleHolder>
         </Circle>
-    )
+    );
 }
-
-

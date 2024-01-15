@@ -1,4 +1,4 @@
-import React, { Component, useState, useRef, useEffect } from 'react';
+import React from 'react';
 import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
 import Radio from '@mui/material/Radio';
@@ -6,8 +6,6 @@ import RadioGroup from '@mui/material/RadioGroup';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import { func } from 'prop-types';
-import { Typography } from '@mui/material';
 
 
 export default function TimeSlider({setAggregationLevel, circularLayout, setYear, setMonth, year, month, aggregationLevel, setCircularLayout }) {

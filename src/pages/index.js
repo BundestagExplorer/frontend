@@ -131,9 +131,12 @@ const Home = () => {
 
 
     let new_transformed_data = []
+    let max_found = false
     for (var index in transformed_data) {
       let bubble = transformed_data[index]
-      bubble["value_sum"] = normalize(min_val, max_val, 25, 175, bubble["value_sum"])
+      bubble["max_value"] = bubble["value_sum"] === max_val && !max_found && max_val != 0
+      max_found = bubble["value_sum"] === max_val && !max_found
+      bubble["value_sum"] = normalize(min_val, max_val, circularViewActive ? 12 : 25, circularViewActive ? 28 : 175, bubble["value_sum"])
       console.log("bubble")
       console.log(bubble)
       new_transformed_data.push(bubble)
@@ -152,7 +155,7 @@ const Home = () => {
   //selectedYear is updated
   useEffect(() => {
     updateSeries(selectedMonth, selectedYear);
-  }, [selectedMonth, selectedYear]);
+  }, [selectedMonth, selectedYear, circularViewActive]);
 
 
   return (
@@ -160,7 +163,7 @@ const Home = () => {
       <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel = {aggregationLevel} showDrawer = {() => setDrawerExtented(true)}/>
       <div style={{ padding: 20 }}>
       {circularViewActive ? (
-        <CircularCardLayout agg_data= {aggData}/>
+        <CircularCardLayout agg_data= {aggData} aggregationLevel={aggregationLevel}/>
       ) : (
         <CustomCardGrid agg_data= {aggData}/>
       )}
