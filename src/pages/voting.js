@@ -7,14 +7,15 @@ import { Config } from '../config';
 import { useEffect } from 'react';
 
 const BT_ABSTIMMUNGEN_ENDPOINT = 'abstimmung/';
-
-
+const categoryMapPath = '/data/dachzeileToTopics.json'
 
 
 const Voting = () => {
 
     const [votingData, setVotingData] = useState([[]])
-    const getVotingData = () => {
+    const [categoryMap, setCategoryMap] = useState({});
+
+    const getVotingData = async () => {
         fetch(Config.API_URL + BT_ABSTIMMUNGEN_ENDPOINT + '?' + new URLSearchParams({
             limit: 380,
             /*date_min: '2023-01-01',
@@ -34,10 +35,13 @@ const Voting = () => {
                     id: item.id,
                     date: item.abstimmung_datum,
                     title: item.titel,
-                    result: item.akzeptiert ? 'accepted' : 'rejected',
+                    yesResult: item.ja,
+                    noResult: item.nein,
+                    neutralResult: item.neutral,
+                    result: item.ja > item.nein ? 'accepted' : 'rejected',
                     party: 'Nothing',  // TODO: Add initiative partie(s) => item.initiative
                     additionalInfo: "abstract" in item ? item.abstract : 'No abstract',
-                    category: "dachzeile" in item ? item.dachzeile : 'No category',
+                    category: "dachzeile" in item ? categoryMap[item.dachzeile] : 'No category',
                 }
             }).sort(
                 (a, b) => new Date(b.date) - new Date(a.date)
@@ -47,9 +51,27 @@ const Voting = () => {
         });
     }
 
+    const fetchCategoryMap = async () => {
+        try {
+          const response = await fetch(categoryMapPath);
+          const jsonData = await response.json();
+          setCategoryMap(jsonData);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+    };
+
     useEffect(() => {
-        getVotingData()
-    }, [])
+        const fetchData = async () => {
+          await fetchCategoryMap();
+        };
+    
+        fetchData();
+    }, []);
+    
+    useEffect(() => {
+        getVotingData();
+    }, [categoryMap]);
 
     const { state } = useLocation();
     const { ressort } = state ? state : ""; // Read values passed on state
@@ -113,6 +135,9 @@ const Voting = () => {
                         date={item.date}
                         title={item.title}
                         result={item.result}
+                        yesVotes={item.yesResult}
+                        noVotes={item.noResult}
+                        neutral={item.neutralResult}
                         party={item.party}
                         additionalInfo={item.additionalInfo}
                         category={item.category}
