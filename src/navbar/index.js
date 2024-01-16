@@ -13,9 +13,10 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
+
 import logo from '../assets/logo.png';
-const pages = [{ title: 'Overview', path: '/' },
-{ title: 'Voting', path: "/votes" },
+const pages = [{ title: 'Übersicht', path: '/' },
+{ title: 'Abstimmungen', path: "/votes" },
 { title: 'Them-o-meter', path: "/them-o-meter" }];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
