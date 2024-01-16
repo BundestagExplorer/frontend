@@ -8,7 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 
 
-export default function TimeSlider({setAggregationLevel, circularLayout, setYear, setMonth, year, month, aggregationLevel, setCircularLayout }) {
+export default function TimeSlider({setAggregationLevel, expertModeActive, setYear, setMonth, year, month, aggregationLevel, setExpertModeActive }) {
 
     //const [aggregationLevelinternal, setAggregationLevelinternal] = useState('month');
 
@@ -194,9 +194,9 @@ export default function TimeSlider({setAggregationLevel, circularLayout, setYear
         </Box> 
         <FormControlLabel
         control={
-            <Switch checked={circularLayout} onChange={(event, value) => {setCircularLayout(value)}} inputProps={{ 'aria-label': 'controlled' }}/>
+            <Switch checked={expertModeActive} onChange={(event, value) => {setExpertModeActive(value)}} inputProps={{ 'aria-label': 'controlled' }}/>
         }
-        label={circularLayout ? 'Circular layout' : 'Grid layout'}
+        label={expertModeActive ? 'Standart mode' : 'Expert mode'}
         style={{ marginLeft: '0.5vw' }}
       />
     </div>

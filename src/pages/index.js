@@ -18,7 +18,7 @@ var default_agg_data =
         "value": 5
       }
     ],
-    "md": 2.4
+    "md": 4
   }
 ]
 
@@ -31,7 +31,7 @@ const Home = () => {
   const [drawerExtended, setDrawerExtented] = useState(false);
   const [aggregationLevel, setAggregationLevel] = useState('Monat');
 
-  const [circularViewActive, setCircularViewActive] = useState(false);
+  const [expertModeActive, setExpertModeActive] = useState(false);
 
   const [aggData, setAggData] = useState(default_agg_data);
 
@@ -136,7 +136,7 @@ const Home = () => {
       let bubble = transformed_data[index]
       bubble["max_value"] = bubble["value_sum"] === max_val && !max_found && max_val != 0
       max_found = bubble["value_sum"] === max_val && !max_found
-      bubble["value_sum"] = normalize(min_val, max_val, circularViewActive ? 12 : 25, circularViewActive ? 28 : 175, bubble["value_sum"])
+      bubble["value_sum"] = normalize(min_val, max_val, !expertModeActive ? 12 : 25, !expertModeActive ? 28 : 175, bubble["value_sum"])
       console.log("bubble")
       console.log(bubble)
       new_transformed_data.push(bubble)
@@ -155,17 +155,17 @@ const Home = () => {
   //selectedYear is updated
   useEffect(() => {
     updateSeries(selectedMonth, selectedYear);
-  }, [selectedMonth, selectedYear, circularViewActive]);
+  }, [selectedMonth, selectedYear, expertModeActive]);
 
 
   return (
     <div>
       <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel = {aggregationLevel} showDrawer = {() => setDrawerExtented(true)}/>
       <div style={{ padding: 20 }}>
-      {circularViewActive ? (
-        <CircularCardLayout agg_data= {aggData} aggregationLevel={aggregationLevel}/>
-      ) : (
+      {expertModeActive ? (
         <CustomCardGrid agg_data= {aggData}/>
+      ) : (
+        <CircularCardLayout agg_data= {aggData} aggregationLevel={aggregationLevel}/>
       )}
       </div>
       <TemporaryDrawer drawerExtended = {drawerExtended}
@@ -176,8 +176,8 @@ const Home = () => {
        aggregationLevel = {aggregationLevel}
        year = {selectedYear}
        month = {selectedMonth}
-       setCircularLayout={ level => setCircularViewActive(level)}
-       circularLayout={circularViewActive}/>
+       setExpertModeActive={ level => setExpertModeActive(level)}
+       expertModeActive={expertModeActive}/>
        
     </div>
   );

@@ -11,6 +11,7 @@ import CustomCard from './custom_card';
 
 import WirtschaftImage from './images/wirtschaftimage.jpg'; // Import using relative path
 import FinanzenImage from './images/finanzenimage.jpg'; // Import using relative path
+import IconSelector from './iconSelector';
 
 
 export default function CustomCardGrid({ agg_data, extended }) {
@@ -37,18 +38,20 @@ export default function CustomCardGrid({ agg_data, extended }) {
         <Grid container spacing={1}>
             {agg_data.map(data =>
 
-                <Grid item key={data} md={data.md} sx={{ position: 'relative', width: '200px' }}>
-                    <Card style={{padding: '0.8vw'}}>
+                <Grid item key={data} xs={4} sx={{ position: 'relative', width: '200px' }}>
+                    <Card style={{ padding: '0.8vw' }}>
                         <CustomCard ressort_name={data.name} importance_val={data.value_sum} />
 
-                        <Typography 
-                            variant='h5' 
-                            sx={{ position: 'relative' }}
-                            onClick={() => navigate("/votes", { state: { ressort: data.name } })}
-                            style={{cursor: 'pointer'}}>
-                            {data.name}
-                        </Typography>
-
+                        <div style={{ display: 'flex', flexDirection: 'row', marginLeft:'1vw' }}>
+                            <IconSelector iconName={data.name} style={{margin : '0.2vw'}}></IconSelector>
+                            <Typography
+                                variant='h5'
+                                sx={{ position: 'relative' }}
+                                onClick={() => navigate("/votes", { state: { ressort: data.name } })}
+                                style={{ cursor: 'pointer', marginLeft: '0.3 vw' }}>
+                                {data.name}
+                            </Typography>
+                        </div>
 
                         <List dense={true} >
 
