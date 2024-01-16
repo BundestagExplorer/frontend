@@ -1,7 +1,8 @@
 export const ressorts = [
     {
         id: 1,
-        name: "Wirtschaft und Klimaschutz",
+        name: "Wirtschaft",
+
     },
     {
         id: 2,
@@ -9,11 +10,11 @@ export const ressorts = [
     },
     {
         id: 3,
-        name: "Inneres und Heimat",
+        name: "Innenpolitik",
     },
     {
         id: 4,
-        name: "Auswärtiges",
+        name: "Außenpolitik",
     },
     {
         id: 5,
@@ -21,7 +22,7 @@ export const ressorts = [
     },
     {
         id: 6,
-        name: "Arbeit und Soziales",
+        name: "Arbeit",
     },
     {
         id: 7,
@@ -29,11 +30,11 @@ export const ressorts = [
     },
     {
         id: 8,
-        name: "Ernährung und Landwirtschaft",
+        name: "Landwirtschaft",
     },
     {
         id: 9,
-        name: "Familie, Senioren, Frauen und Jugend",
+        name: "Familie",
     },
     {
         id: 10,
@@ -41,11 +42,11 @@ export const ressorts = [
     },
     {
         id: 11,
-        name: "Digitales und Verkehr",
+        name: "Verkehr und Digitalisierung",
     },
     {
         id: 12,
-        name: "Umwelt, Natur, Nuklearsicherheit und Verbraucherschutz",
+        name: "Umwelt",
     },
     {
         id: 13,
@@ -53,10 +54,10 @@ export const ressorts = [
     },
     {
         id: 14,
-        name: "Wirtschaftliche Zusammenarbeit und Entwicklung",
+        name: "Entwicklung",
     },
     {
         id: 15,
-        name: "Wohnen, Stadtentwicklung, Bau",
+        name: "Wohnungsbau",
     },
 ]
