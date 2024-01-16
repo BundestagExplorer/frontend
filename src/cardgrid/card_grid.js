@@ -1,8 +1,8 @@
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
-import { Box, List, ListItemButton, ListItemText } from '@mui/material';
+import { List, ListItemButton } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
 import CustomListText from './customlisttext';
@@ -13,7 +13,7 @@ import WirtschaftImage from './images/wirtschaftimage.jpg'; // Import using rela
 import FinanzenImage from './images/finanzenimage.jpg'; // Import using relative path
 
 
-export default function CustomCardGrid({agg_data, extended}){
+export default function CustomCardGrid({ agg_data, extended }) {
 
     // extended = true
     // if (extended) {
@@ -23,7 +23,7 @@ export default function CustomCardGrid({agg_data, extended}){
     let new_data = agg_data.map(data => {
         var transformed_data = data
         transformed_data.md = 2.4
-        if (transformed_data.extended){
+        if (transformed_data.extended) {
             transformed_data.md = 7.2
         }
         return transformed_data
@@ -31,39 +31,41 @@ export default function CustomCardGrid({agg_data, extended}){
 
 
     let navigate = useNavigate();
-    
-    
-    return(
+
+
+    return (
         <Grid container spacing={1}>
-            {agg_data.map( data =>
-                
-                <Grid item key={data} md={data.md } sx={{position:'relative', width:'200px'}}>
-                <CustomCard ressort_name={data.name} importance_val={data.value_sum}/>
-                
-                <Typography variant='h5' sx={{position: 'relative'}}>
-                {data.name}
-                </Typography>
-                    
+            {agg_data.map(data =>
 
-                    <List dense={true} >
-                    
-                    {data.data.map(topic =>
+                <Grid item key={data} md={data.md} sx={{ position: 'relative', width: '200px' }}>
+                    <Card style={{padding: '0.8vw'}}>
+                        <CustomCard ressort_name={data.name} importance_val={data.value_sum} />
 
-                    <ListItemButton onClick={() => navigate("/votes", { state: { ressort: data.name } })}>
+                        <Typography 
+                            variant='h5' 
+                            sx={{ position: 'relative' }}
+                            onClick={() => navigate("/votes", { state: { ressort: data.name } })}
+                            style={{cursor: 'pointer'}}>
+                            {data.name}
+                        </Typography>
 
-                        <CustomListText display_text ={topic.name}>
 
-                        </CustomListText>
-                    </ListItemButton>
-                        
-                        )}
-                    </List>
-                    
-                    
-                    
-                
+                        <List dense={true} >
+
+                            {data.data.map(topic =>
+
+                                <ListItemButton>
+
+                                    <CustomListText display_text={topic.name}>
+
+                                    </CustomListText>
+                                </ListItemButton>
+
+                            )}
+                        </List>
+                    </Card>
                 </Grid>
-                )}
+            )}
         </Grid>
     )
 }
