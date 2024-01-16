@@ -71,7 +71,7 @@ export default function SelectTopicForm({ setActiveStep, setSelectedRessorts }) 
         </Grid>
         <Grid item container md={12}>
             <Grid item md={12} sx={{ justifyContent: 'center', display: 'flex' }}>
-                <FormControl error={!atLeastOneRessortSelected} component="fieldset" sx={{ marginLeft: '10%' }}>
+                <FormControl error={!atLeastOneRessortSelected} component="fieldset" sx={{ marginLeft: '5%' }}>
                     <FormGroup>
                         {
                             ressortCheckboxState.map(
