@@ -19,7 +19,7 @@ const Item = styled('div')(({ theme, css, middle }) => ({
     position: 'absolute',
     left: 0,
     '&:hover': {
-        cursor: middle ? 'pointer' : 'default',
+        cursor: middle ? 'defualt' : 'pointer',
     },
 }));
 
@@ -116,7 +116,7 @@ export default function CircularCardLayout({ agg_data, aggregationLevel }) {
                                 
                                 <List dense={true} style={{ textAlign: 'center' }}>
                                     {data.data.map(topic =>
-                                        <ListItemButton key={topic.name}>
+                                        <ListItemButton key={topic.name} style={{display:'flex', justifyContent:'center'}}>
                                             <CustomListText display_text={topic.name}></CustomListText>
                                         </ListItemButton>)}
                                 </List>
