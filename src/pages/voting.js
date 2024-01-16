@@ -5,15 +5,14 @@ import { Accordion, AccordionDetails, AccordionSummary, Checkbox, Typography } f
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Config } from '../config';
 import { useEffect } from 'react';
+import { dachzeileToRessort } from '../common/dachzeileToRessort';
 
 const BT_ABSTIMMUNGEN_ENDPOINT = 'abstimmung/';
-const categoryMapPath = '/data/dachzeileToTopics.json'
 
 
 const Voting = () => {
 
-    const [votingData, setVotingData] = useState([[]])
-    const [categoryMap, setCategoryMap] = useState({});
+    const [votingData, setVotingData] = useState([[]]);
 
     const getVotingData = async () => {
         fetch(Config.API_URL + BT_ABSTIMMUNGEN_ENDPOINT + '?' + new URLSearchParams({
@@ -42,7 +41,7 @@ const Voting = () => {
                     result: item.ja > item.nein ? 'accepted' : 'rejected',
                     party: 'Nothing',  // TODO: Add initiative partie(s) => item.initiative
                     additionalInfo: "abstract" in item ? item.abstract : 'No abstract',
-                    category: "dachzeile" in item ? categoryMap[item.dachzeile] : 'keine Zuordnung',
+                    category: "dachzeile" in item ? dachzeileToRessort[item.dachzeile] : 'keine Zuordnung',
                 }
             }).sort(
                 (a, b) => new Date(b.date) - new Date(a.date)
@@ -53,27 +52,10 @@ const Voting = () => {
         });
     }
 
-    const fetchCategoryMap = async () => {
-        try {
-          const response = await fetch(categoryMapPath);
-          const jsonData = await response.json();
-          setCategoryMap(jsonData);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-    };
 
     useEffect(() => {
-        const fetchData = async () => {
-          await fetchCategoryMap();
-        };
-    
-        fetchData();
-    }, []);
-    
-    useEffect(() => {
         getVotingData();
-    }, [categoryMap]);
+    }, [dachzeileToRessort]);
 
     const { state } = useLocation();
     const { ressort } = state ? state : ""; // Read values passed on state
