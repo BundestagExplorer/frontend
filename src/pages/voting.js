@@ -23,7 +23,7 @@ const Voting = () => {
 
     const getVotingData = async () => {
         fetch(Config.API_URL + BT_ABSTIMMUNGEN_ENDPOINT + '?' + new URLSearchParams({
-            limit: 400,
+            limit: 300,
             /*date_min: '2023-01-01',
             date_max: '2023-12-31'*/
         })

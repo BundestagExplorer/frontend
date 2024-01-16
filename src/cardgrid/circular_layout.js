@@ -15,7 +15,7 @@ const Item = styled('div')(({ theme, css, middle }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
     width: middle ? 450 : 100,
-    transform: middle ? 'translateY(-16vh) translateX(-8vw)' : `rotate(${css?.rotate || 0}deg) translate(${css?.radius || 0}px) rotate(${css?.rotateReverse || 0}deg)`,
+    transform: middle ? 'translateY(-8vh) translateX(-9.5vw)' : `rotate(${css?.rotate || 0}deg) translate(${css?.radius || 0}px) rotate(${css?.rotateReverse || 0}deg)`,
     position: 'absolute',
     left: 0,
     '&:hover': {
@@ -63,8 +63,8 @@ export default function CircularCardLayout({ agg_data, aggregationLevel }) {
     const buildCircle = () => {
         const num = agg_data.length;
         const type = 1;
-        let radiusX = 3.5 * viewportWidth / 8 - 50;
-        let radiusY = 3 * viewportHeight / 8 - 50;
+        let radiusX = 3.4 * viewportHeight / 8 - 50;
+        let radiusY = 3.4 * viewportHeight / 8 - 50;
         let start = -90 + (360 * type) / num / 2;
         let slice = (360 * type) / num;
 
@@ -115,7 +115,7 @@ export default function CircularCardLayout({ agg_data, aggregationLevel }) {
                                 </Typography>
                                 
                                 <List dense={true} style={{ textAlign: 'center' }}>
-                                    {data.data.map(topic =>
+                                    {data.data.slice(0, 2).map(topic =>
                                         <ListItemButton key={topic.name} style={{display:'flex', justifyContent:'center'}}>
                                             <CustomListText display_text={topic.name}></CustomListText>
                                         </ListItemButton>)}

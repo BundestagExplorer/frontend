@@ -162,7 +162,7 @@ export default function TimeSlider({setAggregationLevel, circularLayout, setYear
             </FormControl>
             <Slider 
             aria-label="Custom marks"
-            defaultValue={sliderDefaultValue}
+            defaultValue={aggregationLevel === "Jahr" ? year : month}
             step={1}
             min={getMin(aggregationLevel)}
             max={getMax(aggregationLevel)}
