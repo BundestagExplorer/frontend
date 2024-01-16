@@ -2,7 +2,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import { List, ListItemButton } from '@mui/material';
+import { List, ListItemButton, ListItemText } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
 import CustomListText from './customlisttext';
@@ -14,7 +14,7 @@ import FinanzenImage from './images/finanzenimage.jpg'; // Import using relative
 import IconSelector from './iconSelector';
 
 
-export default function CustomCardGrid({ agg_data, extended }) {
+export default function CustomCardGrid({ agg_data, totalSize, extended }) {
 
     // extended = true
     // if (extended) {
@@ -42,24 +42,27 @@ export default function CustomCardGrid({ agg_data, extended }) {
                     <Card style={{ padding: '0.8vw' }}>
                         <CustomCard ressort_name={data.name} importance_val={data.value_sum} />
 
-                        <div style={{ display: 'flex', flexDirection: 'row', marginLeft:'1vw' }}>
-                            <IconSelector iconName={data.name} style={{margin : '0.2vw'}}></IconSelector>
-                            <Typography
-                                variant='h5'
-                                sx={{ position: 'relative' }}
-                                onClick={() => navigate("/votes", { state: { ressort: data.name } })}
-                                style={{ cursor: 'pointer', marginLeft: '0.3 vw' }}>
-                                {data.name}
-                            </Typography>
+                        <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '1vw' }}>
+                            <IconSelector iconName={data.name} style={{ margin: '0.2vw' }} />
+                            <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '0.1vw', marginRight: '0.1vw' }}>
+                                <Typography
+                                    variant='h5'
+                                    sx={{ position: 'relative' }}
+                                    onClick={() => navigate("/votes", { state: { ressort: data.name } })}
+                                    style={{ cursor: 'pointer', marginLeft: '0.3 vw' }}>
+                                    {data.name}
+                                </Typography>
+                                <ListItemText style={{ alignSelf: "flex-end", position: 'absolute', right: 15 }}>{Math.round(data.value_sum_raw / totalSize * 10000) / 100}%</ListItemText>
+                            </div>
                         </div>
 
                         <List dense={true} >
 
-                            {data.data.map(topic =>
+                            {data.data.sort((a, b) => a.value < b.value ? 1 : -1).map(topic =>
 
                                 <ListItemButton onClick={() => navigate("/votes", { state: { ressort: data.name } })}>
 
-                                    <CustomListText display_text={topic.name}>
+                                    <CustomListText display_text={topic.name} value={Math.round(topic.value / totalSize * 10000) / 100}>
 
                                     </CustomListText>
                                 </ListItemButton>

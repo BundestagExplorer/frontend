@@ -34,6 +34,7 @@ const Home = () => {
   const [expertModeActive, setExpertModeActive] = useState(false);
 
   const [aggData, setAggData] = useState(default_agg_data);
+  const [totalSize, setTotalSize] = useState(0)
 
 
   //// code for updating the values in the grid in response to change in time selection
@@ -86,6 +87,7 @@ const Home = () => {
   function data_parser(data) {
     // transforms the json from the api endpoint to a matching format for the word-cloud
     let transformed_data = []
+    let total = 0
   
     for (var resort_title in data["top_topics"]) {
       let bubble = {}
@@ -106,9 +108,12 @@ const Home = () => {
       bubble["data"] = bubble_list
 
       bubble["value_sum"] = value_sum
+      total += value_sum
 
       transformed_data.push(bubble)
     }
+
+    setTotalSize(total)
 
     console.log("transformed_data")
     console.log(transformed_data)
@@ -136,6 +141,7 @@ const Home = () => {
       let bubble = transformed_data[index]
       bubble["max_value"] = bubble["value_sum"] === max_val && !max_found && max_val != 0
       max_found = bubble["value_sum"] === max_val && !max_found
+      bubble["value_sum_raw"] = bubble["value_sum"]
       bubble["value_sum"] = normalize(min_val, max_val, !expertModeActive ? 12 : 25, !expertModeActive ? 28 : 175, bubble["value_sum"])
       console.log("bubble")
       console.log(bubble)
@@ -163,7 +169,7 @@ const Home = () => {
       <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel = {aggregationLevel} showDrawer = {() => setDrawerExtented(true)}/>
       <div style={{ padding: 20 }}>
       {expertModeActive ? (
-        <CustomCardGrid agg_data= {aggData}/>
+        <CustomCardGrid agg_data= {aggData} totalSize={totalSize}/>
       ) : (
         <CircularCardLayout agg_data= {aggData} aggregationLevel={aggregationLevel}/>
       )}
