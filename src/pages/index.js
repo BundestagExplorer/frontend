@@ -114,31 +114,31 @@ const Home = () => {
 
     setTotalSize(total)
 
-    console.log("transformed_data")
-    console.log(transformed_data)
+    //console.log("transformed_data")
+    //console.log(transformed_data)
 
     var values = []
     for (var index in transformed_data) {
         values.push(transformed_data[index].value_sum)
     }
-    console.log("values")
-    console.log(values)
+    //console.log("values")
+    //console.log(values)
  
     var min_val = Math.min.apply(Math, values) 
     var max_val = Math.max.apply(Math, values) 
 
 
-    console.log("min")
-    console.log(min_val)
-    console.log("max")
-    console.log(max_val)
+    //console.log("min")
+    //console.log(min_val)
+    //console.log("max")
+    //console.log(max_val)
 
 
     let new_transformed_data = []
     let max_found = false
-    for (var index in transformed_data) {
-      let bubble = transformed_data[index]
-      bubble["max_value"] = bubble["value_sum"] === max_val && !max_found && max_val != 0
+    for (var idx in transformed_data) {
+      let bubble = transformed_data[idx]
+      bubble["max_value"] = bubble["value_sum"] === max_val && !max_found && max_val !== 0
       max_found = bubble["value_sum"] === max_val && !max_found
       bubble["value_sum_raw"] = bubble["value_sum"]
       bubble["value_sum"] = normalize(min_val, max_val, !expertModeActive ? 12 : 25, !expertModeActive ? 28 : 175, bubble["value_sum"])

@@ -1,6 +1,6 @@
-import { List, ListItemButton, ListItemText } from '@mui/material';
-import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
+import { ListItemText } from '@mui/material';
+//import Popover from '@mui/material/Popover';
+//import Typography from '@mui/material/Typography';
 import * as React from 'react';
 
 
@@ -8,7 +8,7 @@ import * as React from 'react';
 export default function CustomListText({ display_text, value }) {
 
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  /*const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -18,14 +18,14 @@ export default function CustomListText({ display_text, value }) {
     setAnchorEl(null);
   };
 
-  const open = Boolean(anchorEl);
+  const open = Boolean(anchorEl);*/
 
   return (
     <div>
       <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '0.1vw', marginRight: '0.1vw'}}>
         <ListItemText
-          onMouseEnter={handlePopoverOpen}
-          onMouseLeave={handlePopoverClose}
+          //onMouseEnter={handlePopoverOpen}
+          //onMouseLeave={handlePopoverClose}
         >
           {display_text}
         </ListItemText>
