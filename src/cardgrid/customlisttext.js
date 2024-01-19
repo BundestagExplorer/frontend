@@ -29,10 +29,10 @@ export default function CustomListText({ display_text, value }) {
         >
           {display_text}
         </ListItemText>
-        <ListItemText style={{ alignSelf: "flex-end" , position:'absolute' , right:5 }}>{value}%</ListItemText>
+        <ListItemText style={{ alignSelf: "flex-end" , position:'absolute' , right:5 }}>{value}{value ? "%" : ""}</ListItemText>
       </div>
 
-      <Popover
+      {/*<Popover
         id="mouse-over-popover"
         sx={{
           pointerEvents: 'none',
@@ -51,7 +51,7 @@ export default function CustomListText({ display_text, value }) {
         disableRestoreFocus
       >
         <Typography sx={{ p: 1 }}>Hier könnten weitere Informationen zu dem Card stehen.</Typography>
-      </Popover>
+      </Popover>*/}
 
     </div>
   )

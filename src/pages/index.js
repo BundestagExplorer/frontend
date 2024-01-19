@@ -26,7 +26,6 @@ const Home = () => {
 
   const [selectedYear, setSelectedYear] = useState(2023);
   const [selectedMonth, setSelectedMonth] = useState(12);
-  const [extendedViewActive, setExtendedViewActive] = useState(false);
 
   const [drawerExtended, setDrawerExtented] = useState(false);
   const [aggregationLevel, setAggregationLevel] = useState('Monat');
@@ -161,7 +160,7 @@ const Home = () => {
   //selectedYear is updated
   useEffect(() => {
     updateSeries(selectedMonth, selectedYear);
-  }, [selectedMonth, selectedYear, expertModeActive]);
+  }, [selectedMonth, selectedYear, expertModeActive, aggregationLevel]);
 
 
   return (
