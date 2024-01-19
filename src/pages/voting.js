@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import PollCard from '../poll/poll_card';
 import { Accordion, AccordionDetails, AccordionSummary, Button, Checkbox, Typography } from '@mui/material';
-import { FormControl, InputLabel, MenuItem, Select, IconButton } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Config } from '../config';
 import { useEffect } from 'react';
 import { dachzeileToRessort } from '../common/dachzeileToRessort';
+import TemporaryDrawer from '../drawer/drawer';
+import DenseAppBar from '../appbar/appbar';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
@@ -16,16 +18,34 @@ const BT_ABSTIMMUNGEN_ENDPOINT = 'abstimmung/';
 const Voting = () => {
 
     const [votingData, setVotingData] = useState([[]]);
+    const [selectedYear, setSelectedYear] = useState(2023);
+    const [selectedMonth, setSelectedMonth] = useState(12);
+    const [drawerExtended, setDrawerExtented] = useState(false);
+
+    const [aggregationLevel, setAggregationLevel] = useState('Monat');
+
     const [sortBy, setSortBy] = useState('Datum');
     const [sortOrder, setSortOrder] = useState('desc');
 
     const sortOptions = ["Datum", "Resultat", "Resort", "Stimmen: Ja", "Stimmen: Nein", "Stimmen: Neutral", "Stimmen: Nicht abgegeben"]
 
-    const getVotingData = async () => {
-        fetch(Config.API_URL + BT_ABSTIMMUNGEN_ENDPOINT + '?' + new URLSearchParams({
+    const convertToResort = (dachzeile) => {
+        return dachzeileToRessort[dachzeile] ? dachzeileToRessort[dachzeile] : 'keine Zuordnung'
+    }
+
+    const getVotingData = async (selectedMonth, selectedYear) => {
+        //use padded month, as database needs leading zero
+        const paddedMonth = String(selectedMonth).padStart(2, '0');
+        //get the correct date of the last day in the month
+        const lastDayOfMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+
+        const date_min = aggregationLevel === "Jahr" ? selectedYear+"-01-01" : selectedYear+"-"+paddedMonth+"-01"
+        const date_max = aggregationLevel === "Jahr" ? selectedYear+"-12-31" : selectedYear+"-"+paddedMonth+"-"+lastDayOfMonth
+
+        await fetch(Config.API_URL + BT_ABSTIMMUNGEN_ENDPOINT + '?' + new URLSearchParams({
             limit: 300,
-            /*date_min: '2023-01-01',
-            date_max: '2023-12-31'*/
+            date_min: date_min,
+            date_max: date_max
         })
             , {
                 headers: {
@@ -48,21 +68,20 @@ const Voting = () => {
                     result: item.ja > item.nein ? 'accepted' : 'rejected',
                     party: 'Nothing',  // TODO: Add initiative partie(s) => item.initiative
                     additionalInfo: "abstract" in item ? item.abstract : 'No abstract',
-                    category: "dachzeile" in item ? dachzeileToRessort[item.dachzeile] : 'keine Zuordnung',
+                    category: "dachzeile" in item ? convertToResort(item.dachzeile) : 'keine Zuordnung',
                 }
             }).sort(
                 (a, b) => new Date(b.date) - new Date(a.date)
             )
         }).then(function (data) {
             setVotingData(data)
-            console.log(data.filter( (elem) => { return elem.title === "Präimplantationsdiagnostikgesetz"}))
+            //console.log(data.filter((elem) => { return elem.title === "Deutsch-französisches Parlamentsabkommen" }))
         });
     }
-
-
+  
     useEffect(() => {
-        getVotingData();
-    }, [dachzeileToRessort]);
+        getVotingData(selectedMonth, selectedYear)
+    }, [selectedMonth, selectedYear, aggregationLevel])
 
     const { state } = useLocation();
     const { ressort } = state ? state : ""; // Read values passed on state
@@ -102,6 +121,8 @@ const Voting = () => {
                 return a.neutralResult < b.neutralResult ? -1 : (a.neutralResult > b.neutralResult ? 1 : 0)
             case "Stimmen: Nicht abgegeben":
                 return a.notResult < b.notResult ? -1 : (a.notResult > b.notResult ? 1 : 0)
+            default:
+                return 0
         }
     }
 
@@ -119,76 +140,90 @@ const Voting = () => {
     }
 
     return (
-        <div style={{ maxWidth: '80%', margin: '0 auto', padding: '2vh' }} >
-            <h1>Abstimmungen im Bundestag</h1>
+        <div>
+            <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel={aggregationLevel} showDrawer={() => setDrawerExtented(true)} />
+            <div style={{ maxWidth: '80%', margin: '0 auto', padding: '2vh' }} >
+                <h1>Abstimmungen im Bundestag</h1>
 
-            <div style={{ display: 'flex', flexDirection: 'row'}}>
-                {/* Category filter accordion */}
-                < Accordion style={{ marginBottom: '2vh', width: '87%' }} expanded={expanded} onChange={handleAccordionChange} >
-                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography>Filter</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-                            {votingData.reduce((categories, item) => {
-                                if (!categories.includes(item.category)) {
-                                    categories.push(item.category);
-                                }
-                                return categories;
-                            }, []).sort().map((category) => (
-                                <label key={category} style={{ margin: '0.5vh 1vw', flex: '0 0 22%' }}>
-                                    <Checkbox
-                                        checked={selectedCategories.includes(category)}
-                                        onChange={() => handleCategoryToggle(category)}
-                                    />
-                                    {category}
-                                </label>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    {/* Category filter accordion */}
+                    < Accordion style={{ marginBottom: '2vh', width: '87%' }} expanded={expanded} onChange={handleAccordionChange} >
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                            <Typography>Filter</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
+                                {votingData.reduce((categories, item) => {
+                                    if (!categories.includes(item.category)) {
+                                        categories.push(item.category);
+                                    }
+                                    return categories;
+                                }, []).sort().map((category) => (
+                                    <label key={category} style={{ margin: '0.5vh 1vw', flex: '0 0 22%' }}>
+                                        <Checkbox
+                                            checked={selectedCategories.includes(category)}
+                                            onChange={() => handleCategoryToggle(category)}
+                                        />
+                                        {category}
+                                    </label>
+                                ))}
+                            </div>
+                        </AccordionDetails>
+                    </Accordion >
+                    <FormControl style={{ marginBottom: '2vh', marginLeft: '1%', width: '7%', height: '100%' }}>
+                        <InputLabel id="sort-label">Sortieren</InputLabel>
+                        <Select
+                            labelId="sort-label"
+                            id="sort-select"
+                            value={sortBy}
+                            label="Sortieren"
+                            onChange={handleSortChange}
+                        >
+                            {sortOptions.map((field) => (
+                                <MenuItem key={field} value={field}>
+                                    {field}
+                                </MenuItem>
                             ))}
-                        </div>
-                    </AccordionDetails>
-                </Accordion >
-                <FormControl style={{ marginBottom: '2vh', marginLeft: '1%', width: '7%', height: '100%' }}>
-                    <InputLabel id="sort-label">Sortieren</InputLabel>
-                    <Select
-                        labelId="sort-label"
-                        id="sort-select"
-                        value={sortBy}
-                        label="Sortieren"
-                        onChange={handleSortChange}
-                    >
-                        {sortOptions.map((field) => (
-                            <MenuItem key={field} value={field}>
-                                {field}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <Button
-                    variant="outlined"
-                    style={{ padding:'1.5vh', height:'100%', marginLeft: '1%' }}
-                    onClick={handleSortOrderChange}>
-                    {sortOrder === "asc" ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
-                </Button>
-            </div>
-            {/* Display filtered voting cards */}
-            {
-                (sortOrder === "asc" ? filteredVotingData : filteredVotingData.reverse()).map((item) => (
-                    <PollCard
-                        key={item.id}
-                        date={item.date}
-                        title={item.title}
-                        result={item.result}
-                        yesVotes={item.yesResult}
-                        noVotes={item.noResult}
-                        neutralVotes={item.neutralResult}
-                        notVoted={item.notResult}
-                        party={item.party}
-                        additionalInfo={item.additionalInfo}
-                        category={item.category}
-                    />
-                ))
-            }
-        </div >
+                        </Select>
+                    </FormControl>
+                    <Button
+                        variant="outlined"
+                        style={{ padding: '1.5vh', height: '100%', marginLeft: '1%' }}
+                        onClick={handleSortOrderChange}>
+                        {sortOrder === "asc" ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
+                    </Button>
+                </div>
+                {/* Display filtered voting cards */}
+                {
+                    (sortOrder === "asc" ? filteredVotingData : filteredVotingData.reverse()).map((item) => (
+                        <PollCard
+                            key={item.id}
+                            date={item.date}
+                            title={item.title}
+                            result={item.result}
+                            yesVotes={item.yesResult}
+                            noVotes={item.noResult}
+                            neutralVotes={item.neutralResult}
+                            notVoted={item.notResult}
+                            party={item.party}
+                            additionalInfo={item.additionalInfo}
+                            category={item.category}
+                        />
+                    ))
+                }
+            </div >
+            <TemporaryDrawer drawerExtended={drawerExtended}
+                setDrawerState={state => setDrawerExtented(state)}
+                setYear={year => setSelectedYear(year)}
+                setMonth={month => setSelectedMonth(month)}
+                setAggregationLevel={level => setAggregationLevel(level)}
+                aggregationLevel={aggregationLevel}
+                year={selectedYear}
+                month={selectedMonth}
+                setExpertModeActive={null}
+                expertModeActive={null} 
+                minYear={2008}/>
+        </div>
     );
 };
 

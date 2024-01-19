@@ -8,14 +8,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 
 
-export default function TimeSlider({ setAggregationLevel, expertModeActive, setYear, setMonth, year, month, aggregationLevel, setExpertModeActive }) {
+export default function TimeSlider({ setAggregationLevel, expertModeActive, setYear, setMonth, year, month, aggregationLevel, setExpertModeActive, minYear = 2014, maxYear = 2024}) {
 
     function getMin(level) {
-        return level === 'Monat' ? 1 : 2014
+        return level === 'Monat' ? 1 : minYear
     }
 
     function getMax(level) {
-        return level === 'Monat' ? 12 : 2024
+        return level === 'Monat' ? 12 : maxYear
     }
 
     function generateMarks(level, selectedYear) {
@@ -72,52 +72,11 @@ export default function TimeSlider({ setAggregationLevel, expertModeActive, setY
             ]
         }
         else if (level === 'Jahr') {
-            return [
-                {
-                    value: 2014,
-                    label: '2014',
-                },
-                {
-                    value: 2015,
-                    label: '2015',
-                },
-                {
-                    value: 2016,
-                    label: '2016',
-                },
-                {
-                    value: 2017,
-                    label: '2017',
-                },
-                {
-                    value: 2018,
-                    label: '2018',
-                },
-                {
-                    value: 2019,
-                    label: '2019',
-                },
-                {
-                    value: 2020,
-                    label: '2020',
-                },
-                {
-                    value: 2021,
-                    label: '2021',
-                },
-                {
-                    value: 2022,
-                    label: '2022',
-                },
-                {
-                    value: 2023,
-                    label: '2023',
-                },
-                {
-                    value: 2024,
-                    label: '2024',
-                }
-            ]
+            var yearMarks = []
+            for (var i=minYear; i <= maxYear; i++){
+                yearMarks.push({value:i, label: i.toString()})
+            }
+            return yearMarks
         }
         else {
             console.log("level must either be 'month' or 'year'");
@@ -155,13 +114,13 @@ export default function TimeSlider({ setAggregationLevel, expertModeActive, setY
                     }}
                 />
             </Box>
-            <FormControlLabel
+            {setExpertModeActive !== null? <FormControlLabel
                 control={
                     <Switch checked={expertModeActive} onChange={(event, value) => { setExpertModeActive(value) }} inputProps={{ 'aria-label': 'controlled' }} />
                 }
                 label={expertModeActive ? 'Standart mode' : 'Expert mode'}
                 style={{ marginLeft: '0.5vw' }}
-            />
+            />: null}
         </div>
     );
 }
