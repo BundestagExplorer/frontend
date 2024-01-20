@@ -80,7 +80,7 @@ const Home = () => {
     setAggData(await fetchData(search_params, false))
 
     //fetch data for minichart
-    if (aggregationLevel === 'Jahr' ){
+    if (aggregationLevel === 'Jahr' && expertModeActive){
       var monthlyData = []
 
       for (var i = 1; i<= 12; i++){

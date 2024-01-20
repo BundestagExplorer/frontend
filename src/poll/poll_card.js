@@ -9,12 +9,16 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import VotingResultsChart from './voting_results';
 import Button from '@mui/material/Button';
 
-const PollCard = ({ date, title, yesVotes, noVotes, neutralVotes, notVoted, result, party, additionalInfo, category }) => {
+const PollCard = ({ date, title, yesVotes, noVotes, neutralVotes, notVoted, result, parties, additionalInfo, category, openDetailView}) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const handleOpenDetailView = () => {
+    openDetailView(parties)
+  }
 
   return (
     <Card style={{ display: 'flex', width: '100%', margin: '0 auto', marginBottom: '1vh' }}>
@@ -62,7 +66,7 @@ const PollCard = ({ date, title, yesVotes, noVotes, neutralVotes, notVoted, resu
             variant="outlined"
             color="primary"
             style={{ marginRight: 'auto', marginLeft: '.5vw', marginBottom: '1vh' }}
-            onClick={() => alert('Read More Clicked')}
+            onClick={handleOpenDetailView}
           >
             Read More
           </Button>

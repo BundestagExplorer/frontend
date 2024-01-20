@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import PollCard from '../poll/poll_card';
+import DetailView from '../poll/poll_detail_view';
 import { Accordion, AccordionDetails, AccordionSummary, Button, Checkbox, Typography } from '@mui/material';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -18,8 +19,13 @@ const BT_ABSTIMMUNGEN_ENDPOINT = 'abstimmung/';
 const Voting = () => {
 
     const [votingData, setVotingData] = useState([[]]);
-    const [selectedYear, setSelectedYear] = useState(2023);
-    const [selectedMonth, setSelectedMonth] = useState(12);
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+    const [selectedYear, setSelectedYear] = useState(currentYear);
+    const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+
     const [drawerExtended, setDrawerExtented] = useState(false);
 
     const [aggregationLevel, setAggregationLevel] = useState('Monat');
@@ -28,6 +34,17 @@ const Voting = () => {
     const [sortOrder, setSortOrder] = useState('desc');
 
     const sortOptions = ["Datum", "Resultat", "Resort", "Stimmen: Ja", "Stimmen: Nein", "Stimmen: Neutral", "Stimmen: Nicht abgegeben"]
+    const [isDetailViewOpen, setIsDetailViewOpen] = useState(false);
+    const [detailViewData, setDetailViewData] = useState([{"fraktion" : "Keine Daten", "ja" : 0, "nein" : 0, "enthalten": 0, "nicht_abgegeben" : 0}])
+
+    const openDetailView = (parties) => {
+        setIsDetailViewOpen(true);
+        parties && setDetailViewData(parties)
+    };
+
+    const closeDetailView = () => {
+        setIsDetailViewOpen(false);
+    };
 
     const convertToResort = (dachzeile) => {
         return dachzeileToRessort[dachzeile] ? dachzeileToRessort[dachzeile] : 'keine Zuordnung'
@@ -39,8 +56,8 @@ const Voting = () => {
         //get the correct date of the last day in the month
         const lastDayOfMonth = new Date(selectedYear, selectedMonth, 0).getDate();
 
-        const date_min = aggregationLevel === "Jahr" ? selectedYear+"-01-01" : selectedYear+"-"+paddedMonth+"-01"
-        const date_max = aggregationLevel === "Jahr" ? selectedYear+"-12-31" : selectedYear+"-"+paddedMonth+"-"+lastDayOfMonth
+        const date_min = aggregationLevel === "Jahr" ? selectedYear + "-01-01" : selectedYear + "-" + paddedMonth + "-01"
+        const date_max = aggregationLevel === "Jahr" ? selectedYear + "-12-31" : selectedYear + "-" + paddedMonth + "-" + lastDayOfMonth
 
         await fetch(Config.API_URL + BT_ABSTIMMUNGEN_ENDPOINT + '?' + new URLSearchParams({
             limit: 300,
@@ -66,7 +83,7 @@ const Voting = () => {
                     neutralResult: item.enthalten,
                     notResult: item.nicht_abgegeben,
                     result: item.ja > item.nein ? 'accepted' : 'rejected',
-                    party: 'Nothing',  // TODO: Add initiative partie(s) => item.initiative
+                    parties: item.fraktionen,
                     additionalInfo: "abstract" in item ? item.abstract : 'No abstract',
                     category: "dachzeile" in item ? convertToResort(item.dachzeile) : 'keine Zuordnung',
                 }
@@ -78,7 +95,7 @@ const Voting = () => {
             //console.log(data.filter((elem) => { return elem.title === "Deutsch-französisches Parlamentsabkommen" }))
         });
     }
-  
+
     useEffect(() => {
         getVotingData(selectedMonth, selectedYear)
     }, [selectedMonth, selectedYear, aggregationLevel])
@@ -205,13 +222,15 @@ const Voting = () => {
                             noVotes={item.noResult}
                             neutralVotes={item.neutralResult}
                             notVoted={item.notResult}
-                            party={item.party}
+                            parties={item.parties}
                             additionalInfo={item.additionalInfo}
                             category={item.category}
+                            openDetailView={openDetailView}
                         />
                     ))
                 }
             </div >
+            <DetailView open={isDetailViewOpen} onClose={closeDetailView} data={detailViewData}/>
             <TemporaryDrawer drawerExtended={drawerExtended}
                 setDrawerState={state => setDrawerExtented(state)}
                 setYear={year => setSelectedYear(year)}
@@ -221,8 +240,8 @@ const Voting = () => {
                 year={selectedYear}
                 month={selectedMonth}
                 setExpertModeActive={null}
-                expertModeActive={null} 
-                minYear={2008}/>
+                expertModeActive={null}
+                minYear={2009} />
         </div>
     );
 };

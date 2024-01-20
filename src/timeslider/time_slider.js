@@ -10,12 +10,15 @@ import FormControl from '@mui/material/FormControl';
 
 export default function TimeSlider({ setAggregationLevel, expertModeActive, setYear, setMonth, year, month, aggregationLevel, setExpertModeActive, minYear = 2014, maxYear = 2024}) {
 
+    const today = new Date()
     function getMin(level) {
         return level === 'Monat' ? 1 : minYear
     }
 
     function getMax(level) {
-        return level === 'Monat' ? 12 : maxYear
+        return level === 'Monat' ? 
+            year === today.getFullYear() ? today.getMonth() +2 : 12
+        : maxYear
     }
 
     function generateMarks(level, selectedYear) {

@@ -84,7 +84,6 @@ const ThemOMeter = () => {
               enthalten: item.enthalten,
               nichtAbgegeben: item.nicht_abgegeben,
               result: item.ja > item.nein ? "accepted" : "rejected",
-              fraktion: "Nothing", // TODO: Add initiative partie(s) => item.initiative
               additionalInfo:
                 "abstract" in item ? item.abstract : "No abstract",
               drucksachen: item.drucksachen,
