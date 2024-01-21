@@ -44,12 +44,9 @@ const PollCard = ({ date, title, yesVotes, noVotes, neutralVotes, notVoted, resu
           <Typography variant="h5" component="div" gutterBottom>
             {title}
           </Typography>
-          <Typography variant="body1" color={result === 'accepted' ? 'primary' : 'error'} gutterBottom>
+          <Typography variant="body1" color={result === 'accepted' ? 'green' : 'error'} gutterBottom>
             Result: {result}
           </Typography>
-          {/*<Typography variant="body2" color="textSecondary" gutterBottom>
-          Proposed by: {party}
-        </Typography>*/}
           <Typography variant="body2" color="textSecondary" gutterBottom>
             Resort: {category}
           </Typography>

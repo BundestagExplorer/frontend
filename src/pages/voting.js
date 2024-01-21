@@ -35,7 +35,7 @@ const Voting = () => {
 
     const sortOptions = ["Datum", "Resultat", "Resort", "Stimmen: Ja", "Stimmen: Nein", "Stimmen: Neutral", "Stimmen: Nicht abgegeben"]
     const [isDetailViewOpen, setIsDetailViewOpen] = useState(false);
-    const [detailViewData, setDetailViewData] = useState([{"fraktion" : "Keine Daten", "ja" : 0, "nein" : 0, "enthalten": 0, "nicht_abgegeben" : 0}])
+    const [detailViewData, setDetailViewData] = useState([{ "fraktion": "Keine Daten", "ja": 0, "nein": 0, "enthalten": 0, "nicht_abgegeben": 0 }])
 
     const openDetailView = (parties) => {
         setIsDetailViewOpen(true);
@@ -230,7 +230,7 @@ const Voting = () => {
                     ))
                 }
             </div >
-            <DetailView open={isDetailViewOpen} onClose={closeDetailView} data={detailViewData}/>
+            <DetailView open={isDetailViewOpen} onClose={closeDetailView} data={detailViewData} />
             <TemporaryDrawer drawerExtended={drawerExtended}
                 setDrawerState={state => setDrawerExtented(state)}
                 setYear={year => setSelectedYear(year)}

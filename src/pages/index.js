@@ -78,21 +78,27 @@ const Home = () => {
 
     //fetch full results for display
     setAggData(await fetchData(search_params, false))
+  };
 
+  const updateMonthlyData = async (selectedYear) => {
+
+    var search_params = {
+      year : selectedYear
+    }
     //fetch data for minichart
-    if (aggregationLevel === 'Jahr' && expertModeActive){
-      var monthlyData = []
+      var monthlyData = {}
 
       for (var i = 1; i<= 12; i++){
         search_params["month"] = i
         //get only short form of parsed data
-        monthlyData.push(await fetchData(search_params, true))
+        let data = await fetchData(search_params, true)
+        //restructure data for use in minichart
+        data.forEach(function (element, i) {
+          monthlyData[element.name] ? monthlyData[element.name].push(element.value_sum) : monthlyData[element.name] = [element.value_sum]
+        });
       }
-
       setAggMonthlyData(monthlyData)
-    }
-
-  };
+  }
 
   function data_parser(data, short=false) {
     // transforms the json from the api endpoint to a matching format for the word-cloud
@@ -165,13 +171,17 @@ const Home = () => {
     updateSeries(selectedMonth, selectedYear);
   }, [selectedMonth, selectedYear, expertModeActive, aggregationLevel]);
 
+  useEffect(() => {
+    updateMonthlyData(selectedYear);
+  }, [selectedYear])
+
 
   return (
     <div>
       <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel={aggregationLevel} showDrawer={() => setDrawerExtented(true)} />
       <div style={{ padding: 20 }}>
         {expertModeActive ? (
-          <CustomCardGrid agg_data={aggData} totalSize={totalSize} />
+          <CustomCardGrid agg_data={aggData} totalSize={totalSize} miniChartData={aggMonthlyData} selectedMonth={aggregationLevel === 'Monat' && selectedMonth}/>
         ) : (
           <CircularCardLayout agg_data={aggData} aggregationLevel={aggregationLevel} />
         )}
@@ -186,7 +196,6 @@ const Home = () => {
         month={selectedMonth}
         setExpertModeActive={level => setExpertModeActive(level)}
         expertModeActive={expertModeActive} />
-
     </div>
   );
 };

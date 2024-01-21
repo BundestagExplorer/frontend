@@ -6,9 +6,10 @@ import { useNavigate } from "react-router-dom";
 import CustomListText from './customlisttext';
 import CustomCard from './custom_card';
 import IconSelector from './iconSelector';
+import MonthlyLineChart from './miniChart';
 
 
-export default function CustomCardGrid({ agg_data, totalSize, extended }) {
+export default function CustomCardGrid({ agg_data, totalSize, miniChartData ,selectedMonth}) {
 
     let navigate = useNavigate();
 
@@ -18,7 +19,10 @@ export default function CustomCardGrid({ agg_data, totalSize, extended }) {
 
                 <Grid item key={data} xs={4} sx={{ position: 'relative', width: '200px' }}>
                     <Card style={{ padding: '0.8vw' }}>
-                        <CustomCard ressort_name={data.name} importance_val={data.value_sum} />
+                        {
+                        // bubble diasbled
+                        //<CustomCard ressort_name={data.name} importance_val={data.value_sum} />
+                        }
 
                         <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '1vw' }}>
                             <IconSelector iconName={data.name} style={{ margin: '0.2vw' }} />
@@ -33,7 +37,6 @@ export default function CustomCardGrid({ agg_data, totalSize, extended }) {
                                 <ListItemText style={{ alignSelf: "flex-end", position: 'absolute', right: 15 }}>{Math.round(data.value_sum_raw / totalSize * 10000) / 100}%</ListItemText>
                             </div>
                         </div>
-
                         <List dense={true} >
 
                             {data.data.sort((a, b) => a.value < b.value ? 1 : -1).map(topic =>
@@ -47,6 +50,11 @@ export default function CustomCardGrid({ agg_data, totalSize, extended }) {
 
                             )}
                         </List>
+
+                        <Typography variant="h6" sx={{ marginTop: '1vw', textAlign: 'center' }}>
+                            Zeitliche Entwicklung
+                        </Typography>
+                        <MonthlyLineChart values ={miniChartData[data.name]} selectedMonth={selectedMonth}></MonthlyLineChart>
                     </Card>
                 </Grid>
             )}
