@@ -7,6 +7,8 @@ import Tooltip from '@mui/material/Tooltip';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import IconSelector from '../common/iconSelector';
+import { red } from '@mui/material/colors';
+import { useTheme } from '@mui/material/styles';
 
 const Item = styled('div')(({ theme, css, middle }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -42,6 +44,7 @@ export default function CircularCardLayout({ agg_data, aggregationLevel, selecte
     const [square, setSquare] = useState([]);
     const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
     const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+    const theme = useTheme();
 
     useEffect(() => {
         const handleResize = () => {
@@ -100,7 +103,7 @@ export default function CircularCardLayout({ agg_data, aggregationLevel, selecte
                                         </ListItemButton>)}
                                 </List>
                             </div>} placement="top">
-                            <Item css={square[index]} onClick={() => navigate("/votes", { state: { ressort: data.name, slider_data: {agg_level: aggregationLevel, selectedYear:selectedYear, selectedMonth:selectedMonth}} })}>
+                            <Item css={square[index]} onClick={() => navigate("/votes", { state: { ressort: data.name, slider_data: { agg_level: aggregationLevel, selectedYear: selectedYear, selectedMonth: selectedMonth } } })}>
                                 <IconSelector iconName={data.name} style={{ margin: '0.2vw' }} />
                                 <Typography style={{ fontSize: isNaN(data.value_sum) ? 12 : data.value_sum }} sx={{ position: 'relative' }}>
                                     {data.name}
@@ -108,23 +111,29 @@ export default function CircularCardLayout({ agg_data, aggregationLevel, selecte
                             </Item>
                         </Tooltip>
                         {data.max_value ?
-                            <Item middle={true}>
+                            <Item middle={true} style={{ border: '2px solid', borderColor: theme.palette.secondary.main, padding: '10px', borderRadius: '5px' }}>
                                 <Typography variant="h4">
                                     <b>Brennpunkt des {aggregationLevel === "Monat" ? "Monats" : "Jahres"}:</b><br />
                                 </Typography>
                                 <Typography variant="h5">
                                     {data.name}:<br />
                                 </Typography>
-                                
+
                                 <List dense={true} style={{ textAlign: 'center' }}>
                                     {data.data.slice(0, 2).map(topic =>
-                                        <ListItemButton key={topic.name} style={{display:'flex', justifyContent:'center'}}>
+                                        <ListItemButton key={topic.name} style={{ display: 'flex', justifyContent: 'center' }}>
                                             <CustomListText display_text={topic.name}></CustomListText>
                                         </ListItemButton>)}
                                 </List>
                             </Item>
                             : <div></div>
                         }
+                        {data.data.length === 0 &&
+                            <Item middle={true} style={{ border: '2px solid', borderColor: theme.palette.secondary.main, padding: '10px', borderRadius: '5px' }}>
+                                <Typography variant="h5">
+                                   Keine Daten für den Zeitraum {aggregationLevel === "Monat" ? `${selectedMonth}/${selectedYear}` : selectedYear}<br />
+                                </Typography>
+                            </Item>}
                     </div>
                 ))}
             </CircleHolder>

@@ -32,7 +32,7 @@ const Voting = () => {
 
     const [drawerExtended, setDrawerExtented] = useState(false);
 
-    const [aggregationLevel, setAggregationLevel] = useState(slider_data && slider_data["agg_level"] ? slider_data["agg_level"] : "Monat");
+    const [aggregationLevel, setAggregationLevel] = useState(slider_data && slider_data["agg_level"] ? slider_data["agg_level"] : "Jahr");
 
     const [sortBy, setSortBy] = useState('Datum');
     const [sortOrder, setSortOrder] = useState('desc');
