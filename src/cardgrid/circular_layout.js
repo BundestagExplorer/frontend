@@ -6,6 +6,7 @@ import CustomListText from './customlisttext';
 import Tooltip from '@mui/material/Tooltip';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
+import IconSelector from '../common/iconSelector';
 
 const Item = styled('div')(({ theme, css, middle }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -14,7 +15,7 @@ const Item = styled('div')(({ theme, css, middle }) => ({
     ...theme.typography.body1,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    width: middle ? 450 : 100,
+    width: middle ? 450 : 140,
     transform: middle ? 'translateY(-8vh) translateX(-9.5vw)' : `rotate(${css?.rotate || 0}deg) translate(${css?.radius || 0}px) rotate(${css?.rotateReverse || 0}deg)`,
     position: 'absolute',
     left: 0,
@@ -100,6 +101,7 @@ export default function CircularCardLayout({ agg_data, aggregationLevel, selecte
                                 </List>
                             </div>} placement="top">
                             <Item css={square[index]} onClick={() => navigate("/votes", { state: { ressort: data.name, slider_data: {agg_level: aggregationLevel, selectedYear:selectedYear, selectedMonth:selectedMonth}} })}>
+                                <IconSelector iconName={data.name} style={{ margin: '0.2vw' }} />
                                 <Typography style={{ fontSize: isNaN(data.value_sum) ? 12 : data.value_sum }} sx={{ position: 'relative' }}>
                                     {data.name}
                                 </Typography>

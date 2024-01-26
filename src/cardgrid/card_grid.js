@@ -5,7 +5,7 @@ import { List, ListItemButton, ListItemText } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import CustomListText from './customlisttext';
 import CustomCard from './custom_card';
-import IconSelector from './iconSelector';
+import IconSelector from '../common/iconSelector';
 import MonthlyLineChart from './miniChart';
 
 

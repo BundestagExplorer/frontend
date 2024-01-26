@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import PollCard from '../poll/poll_card';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import DetailView from '../poll/poll_detail_view';
 import { Accordion, AccordionDetails, AccordionSummary, Button, Checkbox, Typography } from '@mui/material';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
@@ -166,12 +168,12 @@ const Voting = () => {
                         </AccordionSummary>
                         <AccordionDetails>
                             <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-                                {votingData.reduce((categories, item) => {
+                                {[...new Set([...votingData.reduce((categories, item) => {
                                     if (!categories.includes(item.category)) {
                                         categories.push(item.category);
                                     }
                                     return categories;
-                                }, []).sort().map((category) => (
+                                }, []), ...selectedCategories])].sort().map((category) => (
                                     <label key={category} style={{ margin: '0.5vh 1vw', flex: '0 0 22%' }}>
                                         <Checkbox
                                             checked={selectedCategories.includes(category)}
@@ -208,22 +210,34 @@ const Voting = () => {
                 </div>
                 {/* Display filtered voting cards */}
                 {
-                    (sortOrder === "asc" ? filteredVotingData : filteredVotingData.reverse()).map((item) => (
-                        <PollCard
-                            key={item.id}
-                            date={item.date}
-                            title={item.title}
-                            result={item.result}
-                            yesVotes={item.yesResult}
-                            noVotes={item.noResult}
-                            neutralVotes={item.neutralResult}
-                            notVoted={item.notResult}
-                            parties={item.parties}
-                            additionalInfo={item.additionalInfo}
-                            category={item.category}
-                            openDetailView={openDetailView}
-                        />
-                    ))
+                    filteredVotingData.length > 0 ?
+                        (sortOrder === "asc" ? filteredVotingData : filteredVotingData.reverse()).map((item) => (
+                            <PollCard
+                                key={item.id}
+                                date={item.date}
+                                title={item.title}
+                                result={item.result}
+                                yesVotes={item.yesResult}
+                                noVotes={item.noResult}
+                                neutralVotes={item.neutralResult}
+                                notVoted={item.notResult}
+                                parties={item.parties}
+                                additionalInfo={item.additionalInfo}
+                                category={item.category}
+                                openDetailView={openDetailView}
+                            />
+                        ))
+                        :
+                        <Card style={{ display: 'flex', width: '100%', margin: '0 auto', marginBottom: '1vh' }}>
+                            {/* Card Content */}
+                            <div style={{ flex: 1 }}>
+                                <CardContent>
+                                    <Typography variant="h5" component="div" gutterBottom>
+                                        Es gibt keine Abstimmungen für den Zeitraum {aggregationLevel === "Monat" ? `${selectedMonth}/${selectedYear}` : selectedYear} und die gewählten Resorts.
+                                    </Typography>
+                                </CardContent>
+                            </div>
+                        </Card>
                 }
             </div >
             <DetailView open={isDetailViewOpen} onClose={closeDetailView} data={detailViewData} />
