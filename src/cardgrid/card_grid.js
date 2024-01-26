@@ -9,7 +9,7 @@ import IconSelector from './iconSelector';
 import MonthlyLineChart from './miniChart';
 
 
-export default function CustomCardGrid({ agg_data, totalSize, miniChartData ,selectedMonth}) {
+export default function CustomCardGrid({ agg_data, totalSize, miniChartData ,selectedMonth, selectedYear, aggregationLevel}) {
 
     let navigate = useNavigate();
 
@@ -30,7 +30,7 @@ export default function CustomCardGrid({ agg_data, totalSize, miniChartData ,sel
                                 <Typography
                                     variant='h5'
                                     sx={{ position: 'relative' }}
-                                    onClick={() => navigate("/votes", { state: { ressort: data.name } })}
+                                    onClick={() => navigate("/votes", { state: { ressort: data.name, slider_data: {agg_level: aggregationLevel, selectedYear:selectedYear, selectedMonth:selectedMonth}} })}
                                     style={{ cursor: 'pointer', marginLeft: '0.3 vw' }}>
                                     {data.name}
                                 </Typography>
@@ -41,7 +41,7 @@ export default function CustomCardGrid({ agg_data, totalSize, miniChartData ,sel
 
                             {data.data.sort((a, b) => a.value < b.value ? 1 : -1).map(topic =>
 
-                                <ListItemButton onClick={() => navigate("/votes", { state: { ressort: data.name } })}>
+                                <ListItemButton onClick={() => navigate("/votes", { state: { ressort: data.name, slider_data: {agg_level: aggregationLevel, selectedYear:selectedYear, selectedMonth:selectedMonth}} })}>
 
                                     <CustomListText display_text={topic.name} value={Math.round(topic.value / totalSize * 10000) / 100}>
 

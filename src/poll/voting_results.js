@@ -18,7 +18,7 @@ const VotingResultsChart = ({ yesVotes, noVotes, neutralVotes, notVoted }) => {
         height={300}
         data={data}
         innerRadius={65} 
-        colorScale={['#36A2EB', '#FF6384',yellow[800], grey[600]]}
+        colorScale={['#4CAF50', '#F44336',yellow[800], grey[600]]}
         labelRadius={({ innerRadius }) => innerRadius + 62 }
         labelComponent={<VictoryLabel textAnchor="middle" verticalAnchor="middle" />}
       />

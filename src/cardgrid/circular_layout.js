@@ -37,7 +37,7 @@ const CircleHolder = styled('div')(({ viewportWidth, viewportHeight }) => ({
     top: viewportHeight / 4 - 25,
 }));
 
-export default function CircularCardLayout({ agg_data, aggregationLevel }) {
+export default function CircularCardLayout({ agg_data, aggregationLevel, selectedYear, selectedMonth }) {
     const [square, setSquare] = useState([]);
     const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
     const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
@@ -99,7 +99,7 @@ export default function CircularCardLayout({ agg_data, aggregationLevel }) {
                                         </ListItemButton>)}
                                 </List>
                             </div>} placement="top">
-                            <Item css={square[index]} onClick={() => navigate("/votes", { state: { ressort: data.name } })}>
+                            <Item css={square[index]} onClick={() => navigate("/votes", { state: { ressort: data.name, slider_data: {agg_level: aggregationLevel, selectedYear:selectedYear, selectedMonth:selectedMonth}} })}>
                                 <Typography style={{ fontSize: isNaN(data.value_sum) ? 12 : data.value_sum }} sx={{ position: 'relative' }}>
                                     {data.name}
                                 </Typography>

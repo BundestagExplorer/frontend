@@ -18,17 +18,19 @@ const BT_ABSTIMMUNGEN_ENDPOINT = 'abstimmung/';
 
 const Voting = () => {
 
-    const [votingData, setVotingData] = useState([[]]);
+    const { state } = useLocation();
+    const { ressort, slider_data } = state ? state : ""; // Read values passed on state
+    const initialSelectedCategories = ressort ? [ressort] : [];
+    const [selectedCategories, setSelectedCategories] = useState(initialSelectedCategories);
+    const [expanded, setExpanded] = useState(false);
 
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
-    const [selectedYear, setSelectedYear] = useState(currentYear);
-    const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+    const [votingData, setVotingData] = useState([[]]);
+    const [selectedYear, setSelectedYear] = useState(slider_data && slider_data["selectedYear"] ? slider_data["selectedYear"] : 2023);
+    const [selectedMonth, setSelectedMonth] = useState(slider_data && slider_data["selectedMonth"] ? slider_data["selectedMonth"] : 12);
 
     const [drawerExtended, setDrawerExtented] = useState(false);
 
-    const [aggregationLevel, setAggregationLevel] = useState('Monat');
+    const [aggregationLevel, setAggregationLevel] = useState(slider_data && slider_data["agg_level"] ? slider_data["agg_level"] : "Monat");
 
     const [sortBy, setSortBy] = useState('Datum');
     const [sortOrder, setSortOrder] = useState('desc');
@@ -99,12 +101,6 @@ const Voting = () => {
     useEffect(() => {
         getVotingData(selectedMonth, selectedYear)
     }, [selectedMonth, selectedYear, aggregationLevel])
-
-    const { state } = useLocation();
-    const { ressort } = state ? state : ""; // Read values passed on state
-    const initialSelectedCategories = ressort ? [ressort] : [];
-    const [selectedCategories, setSelectedCategories] = useState(initialSelectedCategories);
-    const [expanded, setExpanded] = useState(false);
 
     const handleCategoryToggle = (category) => {
         if (selectedCategories.includes(category)) {

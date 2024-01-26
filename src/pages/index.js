@@ -36,7 +36,7 @@ const Home = () => {
   const [selectedMonth, setSelectedMonth] = useState(12);
 
   const [drawerExtended, setDrawerExtented] = useState(false);
-  const [aggregationLevel, setAggregationLevel] = useState('Monat');
+  const [aggregationLevel, setAggregationLevel] = useState('Jahr');
 
   const [expertModeActive, setExpertModeActive] = useState(false);
 
@@ -181,9 +181,9 @@ const Home = () => {
       <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel={aggregationLevel} showDrawer={() => setDrawerExtented(true)} />
       <div style={{ padding: 20 }}>
         {expertModeActive ? (
-          <CustomCardGrid agg_data={aggData} totalSize={totalSize} miniChartData={aggMonthlyData} selectedMonth={aggregationLevel === 'Monat' && selectedMonth}/>
+          <CustomCardGrid agg_data={aggData} totalSize={totalSize} miniChartData={aggMonthlyData} selectedMonth={selectedMonth} selectedYear={selectedYear} aggregationLevel={aggregationLevel}/>
         ) : (
-          <CircularCardLayout agg_data={aggData} aggregationLevel={aggregationLevel} />
+          <CircularCardLayout agg_data={aggData} aggregationLevel={aggregationLevel} selectedMonth={selectedMonth} selectedYear={selectedYear}/>
         )}
       </div>
       <TemporaryDrawer drawerExtended={drawerExtended}
