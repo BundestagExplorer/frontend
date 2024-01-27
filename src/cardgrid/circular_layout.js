@@ -98,7 +98,7 @@ export default function CircularCardLayout({ agg_data, aggregationLevel, selecte
                                 <Typography variant="h6">Wichtigste Themen:</Typography>
                                 <List dense={true}>
                                     {data.data.map(topic =>
-                                        <ListItemButton key={topic.name}>
+                                        <ListItemButton key={topic.name} onClick={() => navigate("/votes", { state: { ressort: data.name, slider_data: { agg_level: aggregationLevel, selectedYear: selectedYear, selectedMonth: selectedMonth } } })}>
                                             <CustomListText display_text={topic.name}></CustomListText>
                                         </ListItemButton>)}
                                 </List>
@@ -121,7 +121,7 @@ export default function CircularCardLayout({ agg_data, aggregationLevel, selecte
 
                                 <List dense={true} style={{ textAlign: 'center' }}>
                                     {data.data.slice(0, 2).map(topic =>
-                                        <ListItemButton key={topic.name} style={{ display: 'flex', justifyContent: 'center' }}>
+                                        <ListItemButton key={topic.name} style={{ display: 'flex', justifyContent: 'center' }} onClick={() => navigate("/votes", { state: { ressort: data.name, slider_data: { agg_level: aggregationLevel, selectedYear: selectedYear, selectedMonth: selectedMonth } } })}>
                                             <CustomListText display_text={topic.name}></CustomListText>
                                         </ListItemButton>)}
                                 </List>

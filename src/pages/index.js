@@ -121,7 +121,6 @@ const Home = () => {
         value_sum = value_sum + data["top_topics"][resort_title][element][1]
 
         bubble_list.push(sub_item)
-        bubble_list = bubble_list.reverse()
       }
 
       if (!short){bubble["data"] = bubble_list}
