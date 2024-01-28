@@ -1,19 +1,23 @@
 import React from "react";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, CardHeader, Typography } from "@mui/material";
 
-export default function RednerCard() {
-  <Card>
-    <CardContent>
-      <Typography variant="body1">
-        Lorem ipsum odor amet, consectetuer adipiscing elit. Netus risus
-        parturient sodales taciti eget turpis in mus. Amet arcu platea porttitor
-        sollicitudin faucibus ligula. Eros hendrerit metus metus ullamcorper
-        orci bibendum lobortis vehicula. Ligula proin ligula vulputate quis
-        adipiscing nascetur blandit diam consectetur. Convallis est non facilisi
-        vitae potenti. Nibh curabitur imperdiet potenti suscipit libero urna
-        pulvinar augue. Euismod tempor maximus pulvinar lobortis ac conubia
-        fames. Integer torquent nunc ipsum nascetur erat per..
-      </Typography>
-    </CardContent>
-  </Card>;
+export default function RednerCard({ key, full_name, funktion, image_url, reden }) {
+  console.log(key, full_name, funktion, image_url);
+  return (
+    < Card width={"100%"} >
+      <CardContent width={"100%"}>
+
+        <img src={image_url}
+          onError={
+            (event) => {
+              event.onerror = null;
+              event.target.src = "https://www.bundestag.de/static/appdata/includes/images/namentlich/Image3x4_small";
+            }
+          }
+          alt={full_name}
+        />
+        <Typography variant="body1">{full_name}</Typography>
+      </CardContent>
+    </Card >
+  );
 }
