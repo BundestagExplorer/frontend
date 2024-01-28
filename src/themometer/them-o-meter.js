@@ -40,7 +40,7 @@ function shuffle(array) {
 const ThemOMeter = () => {
   const theme = useTheme();
 
-  const totalQuestions = 20;
+  const totalQuestions = 15;
 
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -106,7 +106,7 @@ const ThemOMeter = () => {
 
   useEffect(() => {
     getVotingData();
-  }, []);
+  }, [selectedRessorts]);
 
   const answerQuestion = (answer) => {
     setQuestionAnswers([...questionAnswers, { questionIndex, answer }]);
