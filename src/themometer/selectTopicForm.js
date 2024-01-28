@@ -69,40 +69,46 @@ export default function SelectTopicForm({ setActiveStep, setSelectedRessorts }) 
                 <Typography variant="h6" align='center' color="primary"> Wir zeigen dir dann die <span style={{ color: theme.palette.secondary.main }}> Parteien </span> die dich  am besten vertreten.</Typography>
             </Container>
         </Grid>
-        <Grid item container md={12}>
-            <Grid item md={12} sx={{ justifyContent: 'center', display: 'flex' }}>
-                <FormControl error={!atLeastOneRessortSelected} component="fieldset" sx={{ marginLeft: '5%' }}>
-                    <FormGroup>
+        <Grid item container md={6} alignContent="center" justifyContent="center" padding={3}>
+            <FormControl error={!atLeastOneRessortSelected} component="fieldset">
+                <FormGroup sx={{ alignContent: 'center', alignItems: 'center' }}>
+                    <Grid item container md={6} direction="row" spacing={1} alignContent="center" alignItems={'center'}>
                         {
                             ressortCheckboxState.map(
                                 (ressort, _) => {
                                     return (
-                                        <FormControlLabel key={ressort.id}
-                                            control={<Checkbox checked={ressort.checked}
-                                                onChange={handleCheckboxChange}
-                                                name={ressort.name} />
-                                            }
-                                            label={ressort.name}
-                                        />
+                                        <Grid item container md={6} xs={6} key={ressort.id}>
+                                            <FormControlLabel key={ressort.id}
+                                                control={<Checkbox checked={ressort.checked}
+                                                    onChange={handleCheckboxChange}
+                                                    name={ressort.name} />
+                                                }
+                                                label={ressort.name}
+                                                sx={{ alignItems: 'center' }}
+
+                                            />
+                                        </Grid>
                                     )
                                 }
                             )
                         }
+                    </Grid>
+                    <Grid item container md={12} justifyContent='center'>
+                        <FormHelperText>Bitte wähle mindestens ein Thema aus.</FormHelperText>
+                    </Grid>
+                </FormGroup>
+            </FormControl>
+        </Grid >
+        <Grid item md={12} padding={3}>
+            <Box textAlign={'center'} sx={{ justifyContent: 'center' }}>
+                <FormControl>
+                    <FormGroup sx={{ alignItems: 'center' }}>
+                        <FormControlLabel control={<Checkbox onChange={handleSetAll} />} label="Alle Themen" />
                     </FormGroup>
-                    <FormHelperText>Bitte wähle mindestens ein Thema aus.</FormHelperText>
+                    <Button disabled={!atLeastOneRessortSelected} variant="contained" color="primary" align='center' onClick={handleButton}>Themen bestätigen</Button>
                 </FormControl>
-            </Grid>
-            <Grid item md={12} padding={3}>
-                <Box textAlign={'center'} sx={{ justifyContent: 'center' }}>
-                    <FormControl>
-                        <FormGroup sx={{ alignItems: 'center' }}>
-                            <FormControlLabel control={<Checkbox onChange={handleSetAll} />} label="Alle Themen" />
-                        </FormGroup>
-                        <Button disabled={!atLeastOneRessortSelected} variant="contained" color="primary" align='center' onClick={handleButton}>Themen bestätigen</Button>
-                    </FormControl>
-                </Box>
+            </Box>
 
-            </Grid >
         </Grid >
     </>
 };
