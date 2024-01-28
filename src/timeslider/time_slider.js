@@ -121,7 +121,7 @@ export default function TimeSlider({ setAggregationLevel, expertModeActive, setY
                 control={
                     <Switch checked={expertModeActive} onChange={(event, value) => { setExpertModeActive(value) }} inputProps={{ 'aria-label': 'controlled' }} />
                 }
-                label={expertModeActive ? 'Standart mode' : 'Expert mode'}
+                label={expertModeActive ? 'Standardmodus' : 'Expertenmodus'}
                 style={{ marginLeft: '0.5vw' }}
             />: null}
         </div>

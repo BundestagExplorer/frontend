@@ -52,7 +52,7 @@ export default function CustomCardGrid({ agg_data, totalSize, miniChartData ,sel
                         </List>
 
                         <Typography variant="h6" sx={{ marginTop: '1vw', textAlign: 'center' }}>
-                            Zeitliche Entwicklung
+                            Zeitliche Entwicklung im Jahr {selectedYear}
                         </Typography>
                         <MonthlyLineChart values ={miniChartData[data.name]} selectedMonth={selectedMonth}></MonthlyLineChart>
                     </Card>

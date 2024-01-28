@@ -18,7 +18,7 @@ const Item = styled('div')(({ theme, css, middle }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
     width: middle ? 450 : 140,
-    transform: middle ? 'translateY(-8vh) translateX(-9.5vw)' : `rotate(${css?.rotate || 0}deg) translate(${css?.radius || 0}px) rotate(${css?.rotateReverse || 0}deg)`,
+    transform: middle ? 'translateY(-6.75vh) translateX(-9.25vw)' : `rotate(${css?.rotate || 0}deg) translate(${css?.radius || 0}px) rotate(${css?.rotateReverse || 0}deg)`,
     position: 'absolute',
     left: 0,
     '&:hover': {

@@ -37,7 +37,7 @@ const Voting = () => {
     const [sortBy, setSortBy] = useState('Datum');
     const [sortOrder, setSortOrder] = useState('desc');
 
-    const sortOptions = ["Datum", "Resultat", "Resort", "Stimmen: Ja", "Stimmen: Nein", "Stimmen: Neutral", "Stimmen: Nicht abgegeben"]
+    const sortOptions = ["Datum", "Resultat", "Ministerium", "Stimmen: Ja", "Stimmen: Nein", "Stimmen: Neutral", "Stimmen: Nicht abgegeben"]
     const [isDetailViewOpen, setIsDetailViewOpen] = useState(false);
     const [detailViewData, setDetailViewData] = useState([{ "fraktion": "Keine Daten", "ja": 0, "nein": 0, "enthalten": 0, "nicht_abgegeben": 0 }])
 
@@ -88,7 +88,7 @@ const Voting = () => {
                     notResult: item.nicht_abgegeben,
                     result: item.ja > item.nein ? 'accepted' : 'rejected',
                     parties: item.fraktionen,
-                    additionalInfo: "abstract" in item ? item.abstract : 'No abstract',
+                    additionalInfo: "abstract" in item ? item.abstract : 'Keine Zusammenfassung gefunden',
                     category: "dachzeile" in item ? convertToResort(item.dachzeile) : 'keine Zuordnung',
                 }
             }).sort(
@@ -126,7 +126,7 @@ const Voting = () => {
                 const r1 = a.yesResult > a.noResult
                 const r2 = b.yesResult > b.noResult
                 return r1 && !r2 ? 1 : (!r1 && r2 ? -1 : 0)
-            case "Resort":
+            case "Ministerium":
                 return a.category.localeCompare(b.category)
             case "Stimmen: Ja":
                 return a.yesResult < b.yesResult ? -1 : (a.yesResult > b.yesResult ? 1 : 0)
@@ -158,7 +158,7 @@ const Voting = () => {
         <div>
             <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel={aggregationLevel} showDrawer={() => setDrawerExtented(true)} />
             <div style={{ maxWidth: '80%', margin: '0 auto', padding: '2vh' }} >
-                <h1>Abstimmungen im Bundestag</h1>
+                <h1>Abstimmungen im Bundestag über Gesetzesentwürfe</h1>
 
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                     {/* Category filter accordion */}
