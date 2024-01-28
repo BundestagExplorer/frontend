@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import SelectTopicForm from "./selectTopicForm";
-import AbstimmenQuestions from "./abstimmungQuestions";
+import AbstimmenQuestions from "./abstimmungQuestions/abstimmungQuestions";
 import { Config } from "../config";
 import { dachzeileToRessort } from "../common/dachzeileToRessort";
 import ResultPage from "./resultPage";
