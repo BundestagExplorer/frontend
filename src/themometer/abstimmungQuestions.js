@@ -17,7 +17,7 @@ import RednerCard from "./rednerCard";
 import { Config } from "../config";
 
 
-const BT_ABSTIMMUNG_REDNER_ENDPOINT = "abstimmung_redner";
+const BT_ABSTIMMUNG_REDNER_ENDPOINT = "abstimmung_redner/";
 
 
 
