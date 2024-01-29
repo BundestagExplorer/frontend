@@ -14,7 +14,12 @@ import Thermometer from 'react-thermometer-component';
 export default function CustomCardGrid({ agg_data, totalSize, miniChartData, selectedMonth, selectedYear, aggregationLevel }) {
 
     let navigate = useNavigate();
-
+//Problme mit dem Thermometer
+//1. Thermometer kannn nur daten zwischen 0 - 100 anzeigen
+// --> Verwendung der tatsächlichen Prozentzahlen sieht langweilig aus
+// --> Verwendung von min-max normaliserten Werten denkbar, diese sind aber inkonstisten wenn daneben die tatsächlichen Prozentzahlen angezeigt werden
+//2. Layout noch fixen, insb. sollen die Überschriften der Cards nur eine Zeile belegen, und alle Cards sollen die gleiche Größe haben
+//3. 
     return (
 
         <Grid container spacing={1}>
