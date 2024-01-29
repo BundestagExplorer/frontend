@@ -8,7 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 
 
-export default function TimeSlider({ setAggregationLevel, expertModeActive, setYear, setMonth, year, month, aggregationLevel, setExpertModeActive, minYear = 2014, maxYear = 2024}) {
+export default function TimeSlider({ setAggregationLevel, expertModeActive, setYear, setMonth, year, month, aggregationLevel, setExpertModeActive, minYear = 2020, maxYear = 2024}) {
 
     const today = new Date()
     function getMin(level) {
