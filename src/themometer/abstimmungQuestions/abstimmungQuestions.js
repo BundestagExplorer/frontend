@@ -13,6 +13,7 @@ import {
   Fab,
   AccordionActions,
   CircularProgress,
+  Slide
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import RednerCard from "./rednerCard";
@@ -40,6 +41,10 @@ export default function AbstimmungQuestions({
   const [rednerData, setRednerData] = React.useState([]);
 
   const [allRedner, setAllRedner] = React.useState(false);
+
+  const [slideDirection, setSlideDirection] = React.useState("right");
+
+  const [inState, setInState] = React.useState(true);
 
   const getRednerData = async (abstimmung_id) => {
     let params = new URLSearchParams({
@@ -96,6 +101,25 @@ export default function AbstimmungQuestions({
     }
   };
 
+  const onStepBack = (step) => {
+    setSlideDirection("left")
+    stepBackCallback();
+    setInState(false);
+    setTimeout(() => {
+      setSlideDirection("right")
+      setInState(true);
+    }, 500);
+  }
+
+  const onStepForward = (answer) => {
+    answerQuestionCallback(answer);
+    setInState(false);
+    setTimeout(() => {
+      setInState(true);
+    }, 400);
+  }
+  const containerRef = React.useRef(null);
+
   return votingData ? (
     <>
       <Grid item container md={12} sx={{ display: "flex" }}>
@@ -111,74 +135,76 @@ export default function AbstimmungQuestions({
           />
         </Grid>
         <Grid item md={12} sx={{ justifyContent: "center", p: "3em" }}>
-          <Card
-            elevation={10}
-            sx={{ width: "70%", margin: "0 auto", marginBottom: (theme) => theme.spacing(20) }}
-          >
-            <Button variant={"contained"} onClick={stepBackCallback} startIcon={<ArrowBackIcon />} color={"secondary"}>Zurück</Button>
-            <CardHeader
-              title={votingData.title}
-              subheader={votingData.dachzeile}
-              subheaderTypographyProps={{ color: "secondary" }}
-              sx={{ textAlign: "center" }}
-            />
-            <CardContent>
-              <Typography variant="body1">
-                Lorem ipsum odor amet, consectetuer adipiscing elit. Netus risus
-                parturient sodales taciti eget turpis in mus. Amet arcu platea
-                porttitor sollicitudin faucibus ligula. Eros hendrerit metus metus
-                ullamcorper orci bibendum lobortis vehicula. Ligula proin ligula
-                vulputate quis adipiscing nascetur blandit diam consectetur.
-                Convallis est non facilisi vitae potenti. Nibh curabitur imperdiet
-                potenti suscipit libero urna pulvinar augue. Euismod tempor
-                maximus pulvinar lobortis ac conubia fames. Integer torquent nunc
-                ipsum nascetur erat per..
-              </Typography>
-            </CardContent>
-            <Divider />
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-              >
-                Redner
-              </AccordionSummary>
-              <AccordionDetails sx={{ display: "flex", justifyContent: "center" }}>
-                <Grid item container direction="row" spacing={2} display="flex" width={"100%"} >
-                  {
-                    rednerData.slice(0, allRedner ? rednerData.length : 4).map((item) => {
-                      return (
-                        <Grid item container md={3} justifyContent={"center"} spacing={2}>
-                          <RednerCard
-                            key={item.id}
-                            full_name={item.full_name}
-                            funktion={item.funktion}
-                            image_url={item.image_url}
-                            reden={item.reden}
-                          />
-                        </Grid>
-                      );
+          <Slide direction={slideDirection} in={inState} container={containerRef.current} onEntered={() => setSlideDirection("right")} onExited={() => setSlideDirection("left")} >
+            <Card
+              elevation={10}
+              sx={{ width: "70%", margin: "0 auto", marginBottom: (theme) => theme.spacing(20) }}
+            >
+              <Button variant={"contained"} onClick={onStepBack} startIcon={<ArrowBackIcon />} color={"secondary"}>Zurück</Button>
+              <CardHeader
+                title={votingData.title}
+                subheader={votingData.dachzeile}
+                subheaderTypographyProps={{ color: "secondary" }}
+                sx={{ textAlign: "center" }}
+              />
+              <CardContent>
+                <Typography variant="body1">
+                  Lorem ipsum odor amet, consectetuer adipiscing elit. Netus risus
+                  parturient sodales taciti eget turpis in mus. Amet arcu platea
+                  porttitor sollicitudin faucibus ligula. Eros hendrerit metus metus
+                  ullamcorper orci bibendum lobortis vehicula. Ligula proin ligula
+                  vulputate quis adipiscing nascetur blandit diam consectetur.
+                  Convallis est non facilisi vitae potenti. Nibh curabitur imperdiet
+                  potenti suscipit libero urna pulvinar augue. Euismod tempor
+                  maximus pulvinar lobortis ac conubia fames. Integer torquent nunc
+                  ipsum nascetur erat per..
+                </Typography>
+              </CardContent>
+              <Divider />
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                >
+                  Redner
+                </AccordionSummary>
+                <AccordionDetails sx={{ display: "flex", justifyContent: "center" }}>
+                  <Grid item container direction="row" spacing={2} display="flex" width={"100%"} >
+                    {
+                      rednerData.slice(0, allRedner ? rednerData.length : 4).map((item) => {
+                        return (
+                          <Grid item container md={3} justifyContent={"center"} spacing={2}>
+                            <RednerCard
+                              key={item.id}
+                              full_name={item.full_name}
+                              funktion={item.funktion}
+                              image_url={item.image_url}
+                              reden={item.reden}
+                            />
+                          </Grid>
+                        );
 
 
-                    })
-                  }
+                      })
+                    }
 
-                </Grid>
-              </AccordionDetails>
-              {
-                rednerData.length > 4 &&
-                <AccordionActions sx={{ paddingBottom: 3, paddingRight: 3 }}>
-                  {
-                    allRedner &&
-                    <Button size="large" color={"secondary"} variant="contained" onClick={() => setAllRedner(false)} endIcon={<ArrowUpwardIcon />}>Weniger Redner anzeigen </Button>
-                  }
-                  {
-                    !allRedner &&
-                    <Button size="large" color={"secondary"} variant="contained" onClick={() => setAllRedner(true)} endIcon={<ArrowDownwardIcon />}>Alle Redner anzeigen</Button>
-                  }
-                </AccordionActions>
-              }
-            </Accordion>
-          </Card>
+                  </Grid>
+                </AccordionDetails>
+                {
+                  rednerData.length > 4 &&
+                  <AccordionActions sx={{ paddingBottom: 3, paddingRight: 3 }}>
+                    {
+                      allRedner &&
+                      <Button size="large" color={"secondary"} variant="contained" onClick={() => setAllRedner(false)} endIcon={<ArrowUpwardIcon />}>Weniger Redner anzeigen </Button>
+                    }
+                    {
+                      !allRedner &&
+                      <Button size="large" color={"secondary"} variant="contained" onClick={() => setAllRedner(true)} endIcon={<ArrowDownwardIcon />}>Alle Redner anzeigen</Button>
+                    }
+                  </AccordionActions>
+                }
+              </Accordion>
+            </Card>
+          </Slide>
         </Grid>
       </Grid>
       <Grid item container md={3} row sx={{
@@ -191,19 +217,19 @@ export default function AbstimmungQuestions({
           <Fab
             size="large"
             color="success"
-            onClick={() => answerQuestionCallback("ja")}
+            onClick={() => onStepForward("ja")}
             sx={{ height: "100px", width: "100px" }}
           >
             <CheckIcon fontSize="large" />
           </Fab >
         </Grid>
         <Grid item md={4}>
-          <Fab color="grey" onClick={() => answerQuestionCallback("enthalten")} sx={{ height: "100px", width: "100px" }}>
+          <Fab color="grey" onClick={() => onStepForward("enthalten")} sx={{ height: "100px", width: "100px" }}>
             <NavigateNextIcon fontSize="large" />
           </Fab>
         </Grid>
         <Grid item md={4}>
-          <Fab onClick={() => answerQuestionCallback("nein")} color="error" sx={{ height: "100px", width: "100px" }}>
+          <Fab onClick={() => onStepForward("nein")} color="error" sx={{ height: "100px", width: "100px" }}>
             <ClearIcon fontSize="large" />
           </Fab>
         </Grid>
