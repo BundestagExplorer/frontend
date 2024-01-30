@@ -4,6 +4,7 @@ import CircularCardLayout from '../cardgrid/circular_layout';
 import CustomCardGrid from '../cardgrid/card_grid';
 import TemporaryDrawer from '../drawer/drawer';
 import { Config } from '../config';
+import InfoButton from '../common/infoButton';
 
 const BT_TOP_TOPIC_ENDPOINT = 'bundestag_top_topics/';
 
@@ -196,6 +197,7 @@ const Home = () => {
         aggregationLevel={aggregationLevel}
         year={selectedYear}
         month={selectedMonth}/>
+      <InfoButton/>
     </div>
   );
 };
