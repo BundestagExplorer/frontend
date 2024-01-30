@@ -2,7 +2,6 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { Typography, Box, Grid } from '@mui/material';
 import { Padding } from '@mui/icons-material';
 
-
 export default function ResultChart({ value, result }) {
     return (
 

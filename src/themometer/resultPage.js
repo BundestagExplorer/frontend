@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
-import { Typography, Grid, Tab, Tabs, Paper, Box, Accordion, AccordionSummary, AccordionDetails, Button } from "@mui/material";
+import { Typography, Grid, Tab, Tabs, Paper, Box, Accordion, AccordionSummary, AccordionDetails, Button, Slide } from "@mui/material";
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import ResultChart from "./resultChart";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import IconSelector from "../common/iconSelector";
+
+
 function getResults(votingData, answers) {
 
 
@@ -50,6 +52,8 @@ function getResults(votingData, answers) {
 
 export default function ResultPage({ restartQuestionnaireCallback, votingData, answers, selectedRessorts }) {
   const tab_names = ["Gesamt", "Nach Ressort", "Nach Abstimmung"];
+
+  const containerRef = React.useRef(null);
 
   const [value, setValue] = React.useState(0);
 
@@ -97,69 +101,33 @@ export default function ResultPage({ restartQuestionnaireCallback, votingData, a
           </Typography>
         </Grid>
         <Grid item container md={12} justifyContent={"center"}>
-          <Paper elevation={10} sx={{ width: '80%', justifyContent: 'center' }}>
-            <Grid container direction="row" sx={{ justifyContent: "center" }} spacing={3}>
-              <Grid
-                item
-                md={12}>
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  indicatorColor="secondary"
-                  textColor="secondary"
-                  centered
-                >
-                  <Tab label={tab_names[0]} value={0} />
-                  <Tab label={tab_names[1]} value={1} />
-                  <Tab label={tab_names[2]} value={2} />
-                </Tabs>
-              </Grid>
-              <Grid item container md={12} padding={2} justifyContent={"center"}>
-                {
-                  value === 0 && totalResults !== undefined ? (
-                    <Grid item container direction="row" spacing={2} display={"flex"} width={"100%"} justifyContent={'center'}>
-                      <ResultChart value={0} result={totalResults} />
-                    </Grid>
-                  ) : value === 1 ? (
-                    Object.entries(
-                      ressortResults
-                    ).map(([key, value], i) => {
-                      return (
-                        <Accordion sx={{ width: '100%' }}>
-                          <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1-content"
-                            id="panel1-header"
-                            sx={{
-                              '& .MuiAccordionSummary-content': { alignItems: 'center' },
-                            }}
-                          >
-                            <Typography variant="h6" align="center" paddingRight={1}>
-                              {key}
-                            </Typography>
-                            <IconSelector iconName={key} />
-
-                          </AccordionSummary>
-                          <AccordionDetails sx={{ justifyContent: 'center', display: 'flex', flexDirection: 'column' }}>
-                            <Grid item container direction="row" spacing={2} key={`${value}` + i} display={"flex"} width={"100%"} justifyContent={'center'}>
-                              {
-                                Object.keys(value).length !== 0 ? (
-                                  <ResultChart result={value} key={key} />
-                                ) : (
-                                  <Typography variant="h6" align="center">
-                                    Zu diesem Ressort gab es keine Abstimmungen
-                                  </Typography>
-                                )
-                              }
-                            </Grid>
-                          </AccordionDetails>
-                        </Accordion>
-                      )
-                    })
-                  )
-                    : (
+          <Slide direction="left" in={true} container={containerRef.current} >
+            <Paper elevation={10} sx={{ width: '80%', justifyContent: 'center' }}>
+              <Grid container direction="row" sx={{ justifyContent: "center" }} spacing={3}>
+                <Grid
+                  item
+                  md={12}>
+                  <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="secondary"
+                    textColor="secondary"
+                    centered
+                  >
+                    <Tab label={tab_names[0]} value={0} />
+                    <Tab label={tab_names[1]} value={1} />
+                    <Tab label={tab_names[2]} value={2} />
+                  </Tabs>
+                </Grid>
+                <Grid item container md={12} padding={2} justifyContent={"center"}>
+                  {
+                    value === 0 && totalResults !== undefined ? (
+                      <Grid item container direction="row" spacing={2} display={"flex"} width={"100%"} justifyContent={'center'}>
+                        <ResultChart value={0} result={totalResults} />
+                      </Grid>
+                    ) : value === 1 ? (
                       Object.entries(
-                        abstimmungResults
+                        ressortResults
                       ).map(([key, value], i) => {
                         return (
                           <Accordion sx={{ width: '100%' }}>
@@ -167,20 +135,24 @@ export default function ResultPage({ restartQuestionnaireCallback, votingData, a
                               expandIcon={<ExpandMoreIcon />}
                               aria-controls="panel1-content"
                               id="panel1-header"
+                              sx={{
+                                '& .MuiAccordionSummary-content': { alignItems: 'center' },
+                              }}
                             >
-
-                              <Typography variant="h6" align="center">
-                                {votingData[key].title}
+                              <Typography variant="h6" align="center" paddingRight={1}>
+                                {key}
                               </Typography>
+                              <IconSelector iconName={key} />
+
                             </AccordionSummary>
-                            <AccordionDetails display={'flex'}>
+                            <AccordionDetails sx={{ justifyContent: 'center', display: 'flex', flexDirection: 'column' }}>
                               <Grid item container direction="row" spacing={2} key={`${value}` + i} display={"flex"} width={"100%"} justifyContent={'center'}>
                                 {
                                   Object.keys(value).length !== 0 ? (
                                     <ResultChart result={value} key={key} />
                                   ) : (
                                     <Typography variant="h6" align="center">
-                                      Zu dieser Abstimmung konnte kein Ergebnis gefunden werden
+                                      Zu diesem Ressort gab es keine Abstimmungen
                                     </Typography>
                                   )
                                 }
@@ -190,13 +162,47 @@ export default function ResultPage({ restartQuestionnaireCallback, votingData, a
                         )
                       })
                     )
-                }
+                      : (
+                        Object.entries(
+                          abstimmungResults
+                        ).map(([key, value], i) => {
+                          return (
+                            <Accordion sx={{ width: '100%' }}>
+                              <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1-content"
+                                id="panel1-header"
+                              >
+
+                                <Typography variant="h6" align="center">
+                                  {votingData[key].title}
+                                </Typography>
+                              </AccordionSummary>
+                              <AccordionDetails display={'flex'}>
+                                <Grid item container direction="row" spacing={2} key={`${value}` + i} display={"flex"} width={"100%"} justifyContent={'center'}>
+                                  {
+                                    Object.keys(value).length !== 0 ? (
+                                      <ResultChart result={value} key={key} />
+                                    ) : (
+                                      <Typography variant="h6" align="center">
+                                        Zu dieser Abstimmung konnte kein Ergebnis gefunden werden
+                                      </Typography>
+                                    )
+                                  }
+                                </Grid>
+                              </AccordionDetails>
+                            </Accordion>
+                          )
+                        })
+                      )
+                  }
+                </Grid>
+                <Grid item container md={12} justifyContent={"center"} p={3}>
+                  <Button variant="contained" onClick={restartQuestionnaireCallback} startIcon={<RestartAltIcon />} color="secondary"> Erneut ausfüllen </Button>
+                </Grid>
               </Grid>
-              <Grid item container md={12} justifyContent={"center"} p={3}>
-                <Button variant="contained" onClick={restartQuestionnaireCallback} startIcon={<RestartAltIcon />} color="secondary"> Erneut ausfüllen </Button>
-              </Grid>
-            </Grid>
-          </Paper >
+            </Paper >
+          </Slide>
         </Grid >
       </Grid >
     ) : (
