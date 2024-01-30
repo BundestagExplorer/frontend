@@ -21,7 +21,7 @@ export default function DenseAppBar({displayYear, displayMonth, showDrawer, aggr
           <Typography variant="h6" color="inherit" component="div">
             Ausgewählter Zeitraum: <span style={{color: theme.palette.secondary.main}}>{aggregationLevel === "Monat" ? `${displayMonth}/${displayYear}` : displayYear}</span>
           </Typography>
-          <FormControlLabel
+          {setExpertModeActive && <FormControlLabel
                 control={
                     <Switch 
                     checked={expertModeActive} 
@@ -36,7 +36,7 @@ export default function DenseAppBar({displayYear, displayMonth, showDrawer, aggr
                 }
                 label={expertModeActive ? 'Standardmodus' : 'Expertenmodus'}
                 style={{ marginLeft: 'auto' }}
-          />
+          />}
         </Toolbar>
       </AppBar>
     </Box>

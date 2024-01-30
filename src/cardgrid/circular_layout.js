@@ -11,33 +11,35 @@ import { red } from '@mui/material/colors';
 import { useTheme } from '@mui/material/styles';
 
 const Item = styled('div')(({ theme, css, middle }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    background: "rgba(0,0,0,0)",
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
+    //border: '2px solid',
+    //borderColor: 'red',
     ...theme.typography.body1,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    width: middle ? 450 : 140,
-    transform: middle ? 'translateY(-19.25vh) translateX(-8.5vw)' : `rotate(${css?.rotate || 0}deg) translate(${css?.radius || 0}px) rotate(${css?.rotateReverse || 0}deg)`,
+    width: 150,
+    transform: middle ? `` : `rotate(${css?.rotate || 0}deg) translate(${css?.radius || 0}px) rotate(${css?.rotateReverse || 0}deg)`,
     position: 'absolute',
     left: 0,
+    top: 0,
     '&:hover': {
         cursor: middle ? 'defualt' : 'pointer',
     },
 }));
 
 const Circle = styled('div')({
-    width: '75vw',
-    height: '50vh',
-    borderRadius: '50%',
-    margin: '150px auto 40px',
+    width: '100%',
+    height: '100%',
+    left: 0,
     position: 'relative',
 });
 
 const CircleHolder = styled('div')(({ viewportWidth, viewportHeight }) => ({
     position: 'absolute',
-    left: 3 * viewportWidth / 8 - 100,
-    top: viewportHeight / 4 - 25,
+    left: 0.475 * viewportWidth - 75,
+    top: 0.34 * Math.min(viewportHeight, viewportWidth) + 20,
 }));
 
 export default function CircularCardLayout({ agg_data, aggregationLevel, selectedYear, selectedMonth }) {
@@ -67,8 +69,11 @@ export default function CircularCardLayout({ agg_data, aggregationLevel, selecte
     const buildCircle = () => {
         const num = agg_data.length;
         const type = 1;
-        let radiusX = 3.4 * viewportHeight / 8 - 50;
-        let radiusY = 3.4 * viewportHeight / 8 - 50;
+        let radius = Math.min(viewportHeight, viewportWidth) * 0.34;
+        console.log("Height: " + viewportHeight)
+        console.log("Width: " + viewportWidth)
+        let radiusX = radius;
+        let radiusY = radius;
         let start = -90 + (360 * type) / num / 2;
         let slice = (360 * type) / num;
 
@@ -89,10 +94,13 @@ export default function CircularCardLayout({ agg_data, aggregationLevel, selecte
     let navigate = useNavigate();
 
     return (
-        <Circle>
-            <CircleHolder viewportWidth={viewportWidth} viewportHeight={viewportHeight}>
-                {agg_data.map((data, index) => (
-                    <div>
+        <div>
+            <div style={{ maxWidth: '80%', margin: '0 auto', textAlign: 'center' }} >
+                <Typography variant='h4' style={{ color: theme.palette.text.secondary }}>Meistdiskutierte Themen im <span style={{ color: theme.palette.secondary.main }}>Bundestag</span></Typography>
+            </div>
+            <Circle>
+                <CircleHolder viewportWidth={viewportWidth} viewportHeight={viewportHeight}>
+                    {agg_data.map((data, index) => (
                         <Tooltip key={index} title={
                             <div>
                                 <Typography variant="h6">Wichtigste Themen:</Typography>
@@ -110,35 +118,57 @@ export default function CircularCardLayout({ agg_data, aggregationLevel, selecte
                                 </Typography>
                             </Item>
                         </Tooltip>
-                        {data.max_value ?
-                            <Item middle={true} style={{ display: 'flex', alignItems:'center', justifyContent: 'center', width: '425px', height: '425px', border: '2px solid', borderColor: theme.palette.secondary.main, padding: '10px', borderRadius: '50%' }}>
-                                <div>
-                                <Typography variant="h6">
-                                    <b>Brennpunkt des {aggregationLevel === "Monat" ? "Monats" : "Jahres"}:</b><br />
-                                </Typography>
-                                <Typography variant="h4" style={{color:theme.palette.secondary.main}}>
-                                    {data.name}<br />
-                                </Typography>
+                    ))}
+                </CircleHolder>
+                {agg_data.map((data) => (
+                    data.max_value &&
+                    <Item middle={true} style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: Math.min(viewportHeight, viewportWidth) * 7 / 16,
+                        height: Math.min(viewportHeight, viewportWidth) * 7 / 16,
+                        border: '2px solid',
+                        borderColor: theme.palette.secondary.main,
+                        left: 0.472 * viewportWidth - Math.min(viewportHeight, viewportWidth) * 7 / 32,
+                        top: 0.34 * Math.min(viewportHeight, viewportWidth) + 40 - Math.min(viewportHeight, viewportWidth) * 7 / 32,
+                        padding: '10px', borderRadius: '50%'
+                    }}>
+                        <div>
+                            <Typography variant="h6">
+                                <b>Brennpunkt des {aggregationLevel === "Monat" ? "Monats" : "Jahres"}:</b><br />
+                            </Typography>
+                            <Typography variant="h4" style={{ color: theme.palette.secondary.main }}>
+                                {data.name}<br />
+                            </Typography>
 
-                                <List dense={true} style={{ textAlign: 'center' }}>
-                                    {data.data.slice(0, 2).map(topic =>
-                                        <ListItemButton key={topic.name} style={{ display: 'flex', justifyContent: 'center' }} onClick={() => navigate("/votes", { state: { ressort: data.name, slider_data: { agg_level: aggregationLevel, selectedYear: selectedYear, selectedMonth: selectedMonth } } })}>
-                                            <CustomListText display_text={topic.name}></CustomListText>
-                                        </ListItemButton>)}
-                                </List>
-                                </div>
-                            </Item>
-                            : <div></div>
-                        }
-                        {data.data.length === 0 &&
-                            <Item middle={true} style={{ display: 'flex', alignItems:'center', justifyContent: 'center', width: '425px', height: '425px', border: '2px solid', borderColor: theme.palette.secondary.main, padding: '10px', borderRadius: '50%'}}>
-                                <Typography variant="h5">
-                                   Keine Daten für den Zeitraum {aggregationLevel === "Monat" ? `${selectedMonth}/${selectedYear}` : selectedYear}<br />
-                                </Typography>
-                            </Item>}
-                    </div>
+                            <List dense={true} style={{ textAlign: 'center' }}>
+                                {data.data.slice(0, 2).map(topic =>
+                                    <ListItemButton key={topic.name} style={{ display: 'flex', justifyContent: 'center' }} onClick={() => navigate("/votes", { state: { ressort: data.name, slider_data: { agg_level: aggregationLevel, selectedYear: selectedYear, selectedMonth: selectedMonth } } })}>
+                                        <CustomListText display_text={topic.name}></CustomListText>
+                                    </ListItemButton>)}
+                            </List>
+                        </div>
+                    </Item>
                 ))}
-            </CircleHolder>
-        </Circle>
+                {agg_data[0].data.length === 0 &&
+                    <Item middle={true} style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: Math.min(viewportHeight, viewportWidth) * 7 / 16,
+                        height: Math.min(viewportHeight, viewportWidth) * 7 / 16,
+                        border: '2px solid',
+                        borderColor: theme.palette.secondary.main,
+                        left: 0.472 * viewportWidth - Math.min(viewportHeight, viewportWidth) * 7 / 32,
+                        top: 0.34 * Math.min(viewportHeight, viewportWidth) + 30 - Math.min(viewportHeight, viewportWidth) * 7 / 32,
+                        padding: '10px', borderRadius: '50%'
+                    }}>
+                        <Typography variant="h5">
+                            Keine Daten für den Zeitraum {aggregationLevel === "Monat" ? `${selectedMonth}/${selectedYear}` : selectedYear}<br />
+                        </Typography>
+                    </Item>}
+            </Circle>
+        </div>
     );
 }
