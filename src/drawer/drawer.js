@@ -18,8 +18,7 @@ export default function TemporaryDrawer({ drawerExtended, setDrawerState, setAgg
 
   return (
     <div>
-      <Box sx={{ '& > :not(style)': { m: 1 } }}>x
-      </Box>
+
 
       <React.Fragment key={'top'}>
 
