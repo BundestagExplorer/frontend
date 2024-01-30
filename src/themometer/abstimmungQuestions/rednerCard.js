@@ -31,10 +31,10 @@ export default function RednerCard({ key, full_name, funktion, image_url }) {
           }
           alt={full_name}
         /> */}
-        <Typography Wrap variant="body2">{funktion}</Typography>
-        <Typography Wrap variant="body1">{full_name}</Typography>
-        <Link href={`https://en.wikipedia.org/w/index.php?title=Special:Search&search=${full_name}`} target="_blank" rel="noopener" underline="none">
-          <Typography Wrap variant="body1">Wikipedia <OpenInNewIcon fontSize="small" /></Typography>
+        <Typography wrap variant="body2" color={"secondary"}>{funktion}</Typography>
+        <Typography wrap variant="body1">{full_name}</Typography>
+        <Link href={`https://de.wikipedia.org/w/index.php?title=Special:Search&search=${full_name}`} target="_blank" rel="noopener" underline="none">
+          <Typography wrap variant="body1">Wikipedia <OpenInNewIcon fontSize="small" /></Typography>
         </Link>
       </CardContent>
     </Card >

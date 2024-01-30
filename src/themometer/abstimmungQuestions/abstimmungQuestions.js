@@ -11,35 +11,35 @@ import {
   CardHeader,
   Divider,
   Fab,
+  AccordionActions,
+  CircularProgress,
 } from "@mui/material";
-import MobileStepper from "@mui/material/MobileStepper";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import AddIcon from "@mui/icons-material/Add";
 import RednerCard from "./rednerCard";
 import { Config } from "../../config";
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-
+import ClickableMobileStepper from "./clickableMobileStepper";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useTheme } from "@mui/material/styles";
-
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 const BT_ABSTIMMUNG_REDNER_ENDPOINT = "abstimmung_redner";
 
 
-
-
-
 export default function AbstimmungQuestions({
+  stepBackCallback,
+  questionAnswers,
   questionIndex,
   totalQuestions,
   votingData,
   answerQuestionCallback,
 }) {
-
-
   const theme = useTheme();
   const [rednerData, setRednerData] = React.useState([]);
 
+  const [allRedner, setAllRedner] = React.useState(false);
 
   const getRednerData = async (abstimmung_id) => {
     let params = new URLSearchParams({
@@ -56,7 +56,6 @@ export default function AbstimmungQuestions({
         return response.json();
       })
       .then(function (abstimmungJson) {
-        console.log(abstimmungJson);
         return abstimmungJson
           .map((item) => {
             return {
@@ -86,26 +85,41 @@ export default function AbstimmungQuestions({
     // getRednerData(votingData.id);
   }, [votingData]);
 
+  const stepToColor = (step) => {
+    if (step < questionIndex) {
+      let answer = questionAnswers[step]['answer']
+      return answer === "ja" ? theme.palette.success.main : answer === "nein" ? theme.palette.error.main : theme.palette.grey[500];
+    } else if (step === questionIndex) {
+      return theme.palette.primary.main;
+    } else {
+      return theme.palette.grey[500].main;
+    }
+  };
+
   return votingData ? (
     <>
       <Grid item container md={12} sx={{ display: "flex" }}>
-        <Grid item md={12} sx={{ display: "flex", justifyContent: "center" }}>
-          <MobileStepper
+        <Grid item md={12}>
+          <ClickableMobileStepper
             variant="dots"
             steps={totalQuestions}
-            position="static"
             activeStep={questionIndex}
-            sx={{ maxWidth: 400 }}
+            color={(step) => stepToColor(step)}
+            sx={{
+              maxWidth: "400"
+            }}
           />
         </Grid>
         <Grid item md={12} sx={{ justifyContent: "center", p: "3em" }}>
           <Card
             elevation={10}
-            sx={{ width: "70%", margin: "0 auto", marginBottom: "1vh" }}
+            sx={{ width: "70%", margin: "0 auto", marginBottom: (theme) => theme.spacing(20) }}
           >
+            <Button variant={"contained"} onClick={stepBackCallback} startIcon={<ArrowBackIcon />} color={"secondary"}>Zurück</Button>
             <CardHeader
               title={votingData.title}
               subheader={votingData.dachzeile}
+              subheaderTypographyProps={{ color: "secondary" }}
               sx={{ textAlign: "center" }}
             />
             <CardContent>
@@ -125,17 +139,15 @@ export default function AbstimmungQuestions({
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
               >
-                Rednerliste
+                Redner
               </AccordionSummary>
-              <AccordionDetails>
-                <Grid container direction="row" spacing={2} display="flex">
+              <AccordionDetails sx={{ display: "flex", justifyContent: "center" }}>
+                <Grid item container direction="row" spacing={2} display="flex" width={"100%"} >
                   {
-                    rednerData.map((item) => {
+                    rednerData.slice(0, allRedner ? rednerData.length : 4).map((item) => {
                       return (
-                        <Grid item container md={3} justifyContent={"center"} flexBasis={0} flexGrow={1} >
+                        <Grid item container md={3} justifyContent={"center"} spacing={2}>
                           <RednerCard
                             key={item.id}
                             full_name={item.full_name}
@@ -152,55 +164,61 @@ export default function AbstimmungQuestions({
 
                 </Grid>
               </AccordionDetails>
+              {
+                rednerData.length > 4 &&
+                <AccordionActions sx={{ paddingBottom: 3, paddingRight: 3 }}>
+                  {
+                    allRedner &&
+                    <Button size="large" color={"secondary"} variant="contained" onClick={() => setAllRedner(false)} endIcon={<ArrowUpwardIcon />}>Weniger Redner anzeigen </Button>
+                  }
+                  {
+                    !allRedner &&
+                    <Button size="large" color={"secondary"} variant="contained" onClick={() => setAllRedner(true)} endIcon={<ArrowDownwardIcon />}>Alle Redner anzeigen</Button>
+                  }
+                </AccordionActions>
+              }
             </Accordion>
           </Card>
         </Grid>
       </Grid>
-      <Grid item md={12} sx={{ display: "flex", justifyContent: "center" }}>
-        <Fab
-          sx={{
-            position: "fixed",
-            bottom: (theme) => theme.spacing(10),
-            height: "100px",
-            width: "100px",
-            left: "42%",
-          }}
-          size="large"
-          color="success"
-          onClick={() => answerQuestionCallback("ja")}
-        >
-          <CheckIcon fontSize="large" />
-
-        </Fab >
-        <Fab sx={{
-          position: "fixed",
-          bottom: (theme) => theme.spacing(10),
-          height: "100px",
-          width: "100px",
-        }} color="grey" onClick={() => answerQuestionCallback("enthalten")}>
-          <NavigateNextIcon fontSize="large" />
-        </Fab>
-
-        <Fab sx={{
-          position: "fixed",
-          bottom: (theme) => theme.spacing(10),
-          right: "42%",
-          height: "100px",
-          width: "100px",
-
-        }} onClick={() => answerQuestionCallback("nein")} color="error">
-
-          <ClearIcon fontSize="large" />
-        </Fab>
+      <Grid item container md={3} row sx={{
+        justifyContent: "space-evenly",
+        display: 'flex',
+        position: 'fixed',
+        bottom: (theme) => theme.spacing(10),
+      }}>
+        <Grid item md={4}>
+          <Fab
+            size="large"
+            color="success"
+            onClick={() => answerQuestionCallback("ja")}
+            sx={{ height: "100px", width: "100px" }}
+          >
+            <CheckIcon fontSize="large" />
+          </Fab >
+        </Grid>
+        <Grid item md={4}>
+          <Fab color="grey" onClick={() => answerQuestionCallback("enthalten")} sx={{ height: "100px", width: "100px" }}>
+            <NavigateNextIcon fontSize="large" />
+          </Fab>
+        </Grid>
+        <Grid item md={4}>
+          <Fab onClick={() => answerQuestionCallback("nein")} color="error" sx={{ height: "100px", width: "100px" }}>
+            <ClearIcon fontSize="large" />
+          </Fab>
+        </Grid>
 
       </Grid >
 
     </>
   ) : (
-    <Grid item md={12} justifyContent="center">
-      <Typography variant="h3" align="center">
-        Fehler beim Laden der Fragen :(
-      </Typography>
+    <Grid item container md={12} justifyContent="center">
+      <Grid item md={12}>
+        <Typography variant="h3" align="center">
+          Fragen werden geladen
+        </Typography>
+      </Grid>
+      <CircularProgress />
     </Grid>
   );
 }

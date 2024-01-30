@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { Typography, Grid, Tab, Tabs, Paper, Box, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import { Typography, Grid, Tab, Tabs, Paper, Box, Accordion, AccordionSummary, AccordionDetails, Button } from "@mui/material";
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import ResultChart from "./resultChart";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 function getResults(votingData, answers) {
 
 
@@ -18,7 +18,6 @@ function getResults(votingData, answers) {
 
   answers.forEach((answer) => {
     var voting = votingData[answer.questionIndex]
-    console.log(voting, answer.questionIndex)
     if (voting === undefined || voting.fraktionen === undefined) {
       return;
     }
@@ -48,10 +47,7 @@ function getResults(votingData, answers) {
   return normalizedSimilarityByFraktion;
 }
 
-export default function ResultPage({ votingData, answers, selectedRessorts }) {
-
-  console.log(votingData, answers, selectedRessorts)
-
+export default function ResultPage({ restartQuestionnaireCallback, votingData, answers, selectedRessorts }) {
   const tab_names = ["Gesamt", "Nach Ressort", "Nach Abstimmung"];
 
   const [value, setValue] = React.useState(0);
@@ -68,6 +64,9 @@ export default function ResultPage({ votingData, answers, selectedRessorts }) {
   useEffect(() => {
     setTotalResults(getResults(votingData, answers));
 
+    console.log("votingData", votingData)
+    console.log("answers", answers)
+    console.log("selectedRessoirts", selectedRessorts)
 
     var ressortResults = {};
     var abstimmungResults = {};
@@ -83,32 +82,30 @@ export default function ResultPage({ votingData, answers, selectedRessorts }) {
       abstimmungResults[answer.questionIndex] = getResults(votingData, [answer])
     });
 
-    console.log(abstimmungResults);
 
     setAbstimmungResults(abstimmungResults);
-  }, [votingData, answers]);
+  }, [votingData, answers, selectedRessorts]);
 
   return (
     answers.length > 0 && votingData.length > 0 ? (
 
-      <Grid item container md={12} display={"flex"} justifyContent={"center"}>
+      <Grid item container md={12} display={"flex"} justifyContent={"center"} spacing={3}>
         <Grid item md={12} display={"flex"} justifyContent={"center"}>
-          <Typography variant="h6" align="center">
+          <Typography variant="h4" align="center" color={"primary"}>
             Ergebnisse
           </Typography>
         </Grid>
-        <Grid item md={12} display={"flex"} justifyContent={"center"}>
-          <Paper sx={{ width: '80%', justifyContent: 'center' }}>
-            <Grid container direction="row" sx={{ display: "flex", justifyContent: "center" }}>
+        <Grid item container md={12} justifyContent={"center"}>
+          <Paper elevation={10} sx={{ width: '80%', justifyContent: 'center' }}>
+            <Grid container direction="row" sx={{ justifyContent: "center" }} spacing={3}>
               <Grid
                 item
-                md={12}
-                sx={{ display: "flex" }}>
+                md={12}>
                 <Tabs
                   value={value}
                   onChange={handleChange}
-                  indicatorColor="primary"
-                  textColor="primary"
+                  indicatorColor="secondary"
+                  textColor="secondary"
                   centered
                 >
                   <Tab label={tab_names[0]} value={0} />
@@ -116,28 +113,30 @@ export default function ResultPage({ votingData, answers, selectedRessorts }) {
                   <Tab label={tab_names[2]} value={2} />
                 </Tabs>
               </Grid>
-              <Grid item md={12} padding={2}>
+              <Grid item container md={12} padding={2} justifyContent={"center"}>
                 {
                   value === 0 && totalResults !== undefined ? (
-                    <ResultChart value={0} result={totalResults} />
+                    <Grid item container direction="row" spacing={2} display={"flex"} width={"100%"} justifyContent={'center'}>
+                      <ResultChart value={0} result={totalResults} />
+                    </Grid>
                   ) : value === 1 ? (
                     Object.entries(
                       ressortResults
                     ).map(([key, value], i) => {
                       return (
-                        <Grid item container>
-                          <Accordion sx={{ width: '100%' }}>
-                            <AccordionSummary
-                              expandIcon={<ExpandMoreIcon />}
-                              aria-controls="panel1-content"
-                              id="panel1-header"
-                            >
+                        <Accordion sx={{ width: '100%' }}>
+                          <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1-content"
+                            id="panel1-header"
+                          >
 
-                              <Typography variant="h6" align="center">
-                                {key}
-                              </Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
+                            <Typography variant="h6" align="center">
+                              {key}
+                            </Typography>
+                          </AccordionSummary>
+                          <AccordionDetails sx={{ justifyContent: 'center', display: 'flex', flexDirection: 'column' }}>
+                            <Grid item container direction="row" spacing={2} key={`${value}` + i} display={"flex"} width={"100%"} justifyContent={'center'}>
                               {
                                 Object.keys(value).length !== 0 ? (
                                   <ResultChart result={value} key={key} />
@@ -147,9 +146,9 @@ export default function ResultPage({ votingData, answers, selectedRessorts }) {
                                   </Typography>
                                 )
                               }
-                            </AccordionDetails>
-                          </Accordion>
-                        </Grid>
+                            </Grid>
+                          </AccordionDetails>
+                        </Accordion>
                       )
                     })
                   )
@@ -158,35 +157,38 @@ export default function ResultPage({ votingData, answers, selectedRessorts }) {
                         abstimmungResults
                       ).map(([key, value], i) => {
                         return (
-                          <Grid item container>
-                            <Accordion sx={{ width: '100%' }}>
-                              <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1-content"
-                                id="panel1-header"
-                              >
+                          <Accordion sx={{ width: '100%' }}>
+                            <AccordionSummary
+                              expandIcon={<ExpandMoreIcon />}
+                              aria-controls="panel1-content"
+                              id="panel1-header"
+                            >
 
-                                <Typography variant="h6" align="center">
-                                  {votingData[key].title}
-                                </Typography>
-                              </AccordionSummary>
-                              <AccordionDetails>
+                              <Typography variant="h6" align="center">
+                                {votingData[key].title}
+                              </Typography>
+                            </AccordionSummary>
+                            <AccordionDetails display={'flex'}>
+                              <Grid item container direction="row" spacing={2} key={`${value}` + i} display={"flex"} width={"100%"} justifyContent={'center'}>
                                 {
                                   Object.keys(value).length !== 0 ? (
                                     <ResultChart result={value} key={key} />
                                   ) : (
                                     <Typography variant="h6" align="center">
-                                      Zu diesem Ressort gab es keine Abstimmungen
+                                      Zu dieser Abstimmung konnte kein Ergebnis gefunden werden
                                     </Typography>
                                   )
                                 }
-                              </AccordionDetails>
-                            </Accordion>
-                          </Grid>
+                              </Grid>
+                            </AccordionDetails>
+                          </Accordion>
                         )
                       })
                     )
                 }
+              </Grid>
+              <Grid item container md={12} justifyContent={"center"} p={3}>
+                <Button variant="contained" onClick={restartQuestionnaireCallback} startIcon={<RestartAltIcon />} color="secondary"> Erneut ausfüllen </Button>
               </Grid>
             </Grid>
           </Paper >
