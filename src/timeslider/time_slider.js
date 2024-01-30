@@ -3,14 +3,15 @@ import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+import { useTheme } from '@mui/material/styles';
 
 
-export default function TimeSlider({ setAggregationLevel, expertModeActive, setYear, setMonth, year, month, aggregationLevel, setExpertModeActive, minYear = 2020, maxYear = 2024}) {
+export default function TimeSlider({ setAggregationLevel, setYear, setMonth, year, month, aggregationLevel, minYear = 2020, maxYear = 2024}) {
 
     const today = new Date()
+    const theme = useTheme();
     function getMin(level) {
         return level === 'Monat' ? 1 : minYear
     }
@@ -70,7 +71,7 @@ export default function TimeSlider({ setAggregationLevel, expertModeActive, setY
                 },
                 {
                     value: 12,
-                    label: 'December ' + selectedYear,
+                    label: 'Dez ' + selectedYear,
                 }
             ]
         }
@@ -103,6 +104,7 @@ export default function TimeSlider({ setAggregationLevel, expertModeActive, setY
                     </RadioGroup >
                 </FormControl>
                 <Slider
+                    style={{color: theme.palette.secondary.main}}
                     aria-label="Custom marks"
                     defaultValue={aggregationLevel === "Jahr" ? year : month}
                     step={1}
@@ -117,13 +119,6 @@ export default function TimeSlider({ setAggregationLevel, expertModeActive, setY
                     }}
                 />
             </Box>
-            {setExpertModeActive !== null? <FormControlLabel
-                control={
-                    <Switch checked={expertModeActive} onChange={(event, value) => { setExpertModeActive(value) }} inputProps={{ 'aria-label': 'controlled' }} />
-                }
-                label={expertModeActive ? 'Standardmodus' : 'Expertenmodus'}
-                style={{ marginLeft: '0.5vw' }}
-            />: null}
         </div>
     );
 }

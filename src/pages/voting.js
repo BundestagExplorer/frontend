@@ -158,7 +158,7 @@ const Voting = () => {
         <div>
             <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel={aggregationLevel} showDrawer={() => setDrawerExtented(true)} />
             <div style={{ maxWidth: '80%', margin: '0 auto', padding: '2vh' }} >
-                <h1>Abstimmungen im Bundestag über Gesetzesentwürfe</h1>
+                <h1>Abstimmungen im Bundestag</h1>
 
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                     {/* Category filter accordion */}

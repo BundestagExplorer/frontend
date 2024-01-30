@@ -4,6 +4,7 @@ import Grüne from '../assets/parties/Grünen_logo.png';
 import FDP from '../assets/parties/FDP_logo.png';
 import CDUCSU from '../assets/parties/CDUCSU_logo.png';
 import fraktionslos from '../assets/parties/fraktionslos_logo.png';
+import Linke from '../assets/parties/Linke_logo.png'
 import SPD from '../assets/parties/SPD_logo.png';
 import { Box } from '@mui/material';
 
@@ -20,6 +21,8 @@ const IconSelectorParty = ({ partyName, style }) => {
                 return <Box component={"img"} src={FDP} sx={{ width: 40, height: 40, marginRight: 2, marginLeft: 1 }}></Box>;
             case 'fraktionslos':
                 return <Box component={"img"} src={fraktionslos} sx={{ width: 40, height: 40, marginRight: 2, marginLeft: 1 }}></Box>;
+            case 'Die Linke':
+                return <Box component={"img"} src={Linke} sx={{ width: 40, height: 40, marginRight: 2, marginLeft: 1 }}></Box>;
             case 'SPD':
                 return <Box component={"img"} src={SPD} sx={{ width: 40, height: 40, marginRight: 2, marginLeft: 1 }}></Box>;
             default:
