@@ -7,8 +7,10 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { useTheme } from '@mui/material/styles';
 
 export default function DenseAppBar({displayYear, displayMonth, showDrawer, aggregationLevel, expertModeActive, setExpertModeActive}) {
+  const theme = useTheme();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="grey">
@@ -17,7 +19,7 @@ export default function DenseAppBar({displayYear, displayMonth, showDrawer, aggr
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" component="div">
-            Ausgewählter Zeitraum: {aggregationLevel === "Monat" ? `${displayMonth}/${displayYear}` : displayYear}
+            Ausgewählter Zeitraum: <span style={{color: theme.palette.secondary.main}}>{aggregationLevel === "Monat" ? `${displayMonth}/${displayYear}` : displayYear}</span>
           </Typography>
           <FormControlLabel
                 control={
