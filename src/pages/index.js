@@ -121,6 +121,7 @@ const Home = () => {
         value_sum = value_sum + data["top_topics"][resort_title][element][1]
 
         bubble_list.push(sub_item)
+        bubble_list=bubble_list.reverse()
       }
 
       if (!short){bubble["data"] = bubble_list}
@@ -178,7 +179,8 @@ const Home = () => {
 
   return (
     <div>
-      <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel={aggregationLevel} showDrawer={() => setDrawerExtented(true)} />
+      <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel={aggregationLevel} showDrawer={() => setDrawerExtented(true)} setExpertModeActive={level => setExpertModeActive(level)}
+        expertModeActive={expertModeActive}/>
       <div style={{ padding: 20 }}>
         {expertModeActive ? (
           <CustomCardGrid agg_data={aggData} totalSize={totalSize} miniChartData={aggMonthlyData} selectedMonth={selectedMonth} selectedYear={selectedYear} aggregationLevel={aggregationLevel}/>
@@ -193,9 +195,7 @@ const Home = () => {
         setAggregationLevel={level => setAggregationLevel(level)}
         aggregationLevel={aggregationLevel}
         year={selectedYear}
-        month={selectedMonth}
-        setExpertModeActive={level => setExpertModeActive(level)}
-        expertModeActive={expertModeActive} />
+        month={selectedMonth}/>
     </div>
   );
 };

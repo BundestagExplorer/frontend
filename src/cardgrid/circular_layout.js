@@ -18,7 +18,7 @@ const Item = styled('div')(({ theme, css, middle }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
     width: middle ? 450 : 140,
-    transform: middle ? 'translateY(-6.75vh) translateX(-9.25vw)' : `rotate(${css?.rotate || 0}deg) translate(${css?.radius || 0}px) rotate(${css?.rotateReverse || 0}deg)`,
+    transform: middle ? 'translateY(-19.25vh) translateX(-8.5vw)' : `rotate(${css?.rotate || 0}deg) translate(${css?.radius || 0}px) rotate(${css?.rotateReverse || 0}deg)`,
     position: 'absolute',
     left: 0,
     '&:hover': {
@@ -111,12 +111,13 @@ export default function CircularCardLayout({ agg_data, aggregationLevel, selecte
                             </Item>
                         </Tooltip>
                         {data.max_value ?
-                            <Item middle={true} style={{ border: '2px solid', borderColor: theme.palette.secondary.main, padding: '10px', borderRadius: '5px' }}>
-                                <Typography variant="h4">
+                            <Item middle={true} style={{ display: 'flex', alignItems:'center', justifyContent: 'center', width: '425px', height: '425px', border: '2px solid', borderColor: theme.palette.secondary.main, padding: '10px', borderRadius: '50%' }}>
+                                <div>
+                                <Typography variant="h6">
                                     <b>Brennpunkt des {aggregationLevel === "Monat" ? "Monats" : "Jahres"}:</b><br />
                                 </Typography>
-                                <Typography variant="h5">
-                                    {data.name}:<br />
+                                <Typography variant="h4" style={{color:theme.palette.secondary.main}}>
+                                    {data.name}<br />
                                 </Typography>
 
                                 <List dense={true} style={{ textAlign: 'center' }}>
@@ -125,11 +126,12 @@ export default function CircularCardLayout({ agg_data, aggregationLevel, selecte
                                             <CustomListText display_text={topic.name}></CustomListText>
                                         </ListItemButton>)}
                                 </List>
+                                </div>
                             </Item>
                             : <div></div>
                         }
                         {data.data.length === 0 &&
-                            <Item middle={true} style={{ border: '2px solid', borderColor: theme.palette.secondary.main, padding: '10px', borderRadius: '5px' }}>
+                            <Item middle={true} style={{ display: 'flex', alignItems:'center', justifyContent: 'center', width: '425px', height: '425px', border: '2px solid', borderColor: theme.palette.secondary.main, padding: '10px', borderRadius: '50%'}}>
                                 <Typography variant="h5">
                                    Keine Daten für den Zeitraum {aggregationLevel === "Monat" ? `${selectedMonth}/${selectedYear}` : selectedYear}<br />
                                 </Typography>
