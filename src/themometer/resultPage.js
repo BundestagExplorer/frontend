@@ -4,6 +4,7 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 import ResultChart from "./resultChart";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import IconSelector from "../common/iconSelector";
 function getResults(votingData, answers) {
 
 
@@ -129,11 +130,15 @@ export default function ResultPage({ restartQuestionnaireCallback, votingData, a
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1-content"
                             id="panel1-header"
+                            sx={{
+                              '& .MuiAccordionSummary-content': { alignItems: 'center' },
+                            }}
                           >
-
-                            <Typography variant="h6" align="center">
+                            <Typography variant="h6" align="center" paddingRight={1}>
                               {key}
                             </Typography>
+                            <IconSelector iconName={key} />
+
                           </AccordionSummary>
                           <AccordionDetails sx={{ justifyContent: 'center', display: 'flex', flexDirection: 'column' }}>
                             <Grid item container direction="row" spacing={2} key={`${value}` + i} display={"flex"} width={"100%"} justifyContent={'center'}>

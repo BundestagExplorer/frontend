@@ -1,7 +1,7 @@
 import React from 'react';
 import { Factory, AttachMoney, LocalPolice, Public, Balance, Work, MilitaryTech, Agriculture, FamilyRestroom, HealthAndSafety, Commute, Park, School, Diversity3, Home } from '@mui/icons-material';
 
-const IconSelector = ({ iconName, style }) => {
+const IconSelector = ({ iconName, style, div = true }) => {
     const getIcon = (iconName) => {
         switch (iconName) {
             case 'Wirtschaft':
@@ -40,9 +40,12 @@ const IconSelector = ({ iconName, style }) => {
     };
 
     return (
-        <div style={style}>
-            {getIcon(iconName)}
-        </div>
+        div ?
+            <div style={style}>
+                {getIcon(iconName)}
+            </div>
+            :
+            getIcon(iconName)
     );
 };
 
