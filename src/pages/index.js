@@ -147,7 +147,7 @@ const Home = () => {
         bubble["max_value"] = bubble["value_sum"] === max_val && !max_found && max_val !== 0
         max_found = bubble["value_sum"] === max_val && !max_found
         bubble["value_sum_raw"] = bubble["value_sum"]
-        bubble["value_sum"] = normalize(min_val, max_val, !expertModeActive ? 12 : 25, !expertModeActive ? 28 : 175, bubble["value_sum"])
+        bubble["value_sum"] = normalize(min_val, max_val, !expertModeActive ? 12 : 25, !expertModeActive ? 28 : 100, bubble["value_sum"])
         console.log("bubble")
         console.log(bubble)
         scaled_transformed_data.push(bubble)

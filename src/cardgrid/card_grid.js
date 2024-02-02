@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 import CustomListText from './customlisttext';
 import CustomCard from './custom_card';
 import IconSelector from '../common/iconSelector';
+import Thermometer from '../thermometer/thermometer';
 import MonthlyLineChart from './miniChart';
-import Thermometer from 'react-thermometer-component';
+//import Thermometer from 'react-thermometer-component';
 
 
 export default function CustomCardGrid({ agg_data, totalSize, miniChartData, selectedMonth, selectedYear, aggregationLevel }) {
