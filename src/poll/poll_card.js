@@ -45,7 +45,7 @@ const PollCard = ({ date, title, yesVotes, noVotes, neutralVotes, notVoted, resu
             {title}
           </Typography>
           <Typography variant="body1" color={result === 'accepted' ? 'green' : 'error'} gutterBottom>
-            Ergebnis: {result === 'accepted' ? 'Gesetz angenommen' : 'Gesetz abgelehnt'}
+            Ergebnis: {result === 'accepted' ? 'angenommen' : 'abgelehnt'}
           </Typography>
           <Typography variant="body2" color="textSecondary" gutterBottom>
             Ministerium: {category}
