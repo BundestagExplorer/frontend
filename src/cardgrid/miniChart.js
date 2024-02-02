@@ -7,7 +7,7 @@ const MonthlyLineChart = ({ values, selectedMonth }) => {
   const theme = useTheme(); // Using MUI theme
 
   return (
-    <VictoryChart height={175} width={250}>
+    <VictoryChart height={175} width={250} padding={20}>
       <VictoryAxis
         tickCount={12} // Set the number of ticks to display
         tickFormat={(t) => `${t}`} // Optional: Display month names or any other labels
