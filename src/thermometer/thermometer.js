@@ -11,7 +11,7 @@ class Thermometer extends Component {
     const heightPercent = { height: `${this.options.percent()}%` }
     const heightBgColor = { height: `calc(${this.options.height}px - 57px)` }
     const valstr = this.options.valstr()
-    this._createIntervals()
+    //this._createIntervals()
     const stepIntervals = this._createIntervalsUI(this.options.intervals)
 
     return (
@@ -21,7 +21,7 @@ class Thermometer extends Component {
         <div className="thermometer__meter">
           <ul className="thermometer__statistics">{stepIntervals}</ul>
           <div style={heightPercent} className="thermometer__mercury">
-            <div className="thermometer__percent-current">{valstr}</div>
+            {/* <div className="thermometer__percent-current">{valstr}</div> */}
             <div className="thermometer__mask">
               <div className="thermometer__bg-color" style={heightBgColor}></div>
             </div>
