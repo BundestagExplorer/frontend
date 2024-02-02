@@ -8,6 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import { useTheme } from '@mui/material/styles';
 
 
+
 export default function TimeSlider({ setAggregationLevel, setYear, setMonth, year, month, aggregationLevel, minYear = 2020, maxYear = 2024}) {
 
     const today = new Date()
