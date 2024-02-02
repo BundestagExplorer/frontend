@@ -33,9 +33,7 @@ export default function CustomCardGrid({ agg_data, totalSize, miniChartData, sel
                             // bubble diasbled
                             //<CustomCard ressort_name={data.name} importance_val={data.value_sum} />
                         }
-                        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                            <div>
-                                <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '1vw' }}>
+                                                        <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '1vw' }}>
                                     <IconSelector iconName={data.name} style={{ margin: '0.2vw' }} />
                                     <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '0.1vw', marginRight: '0.1vw' }}>
                                         <Typography
@@ -48,6 +46,9 @@ export default function CustomCardGrid({ agg_data, totalSize, miniChartData, sel
                                         {/* <ListItemText style={{ alignSelf: "flex-end", position: 'absolute', right: 15 }}>{Math.round(data.value_sum_raw / totalSize * 10000) / 100}%</ListItemText> */}
                                     </div>
                                 </div>
+                        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+                            <div>
+
                                 <List dense={true} >
 
                                     {data.data.sort((a, b) => a.value < b.value ? 1 : -1).map(topic =>
@@ -78,7 +79,7 @@ export default function CustomCardGrid({ agg_data, totalSize, miniChartData, sel
 
 
                          <Typography variant="h6" sx={{ marginTop: '1vw', textAlign: 'center' }}>
-                            Zeitliche Entwicklung im Jahr{selectedYear}
+                            Zeitliche Entwicklung im Jahr {selectedYear}
                         </Typography>
                         <MonthlyLineChart values ={miniChartData[data.name]} selectedMonth={selectedMonth}></MonthlyLineChart>
 
