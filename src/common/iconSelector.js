@@ -1,5 +1,5 @@
 import React from 'react';
-import { Factory, AttachMoney, LocalPolice, Public, Balance, Work, MilitaryTech, Agriculture, FamilyRestroom, HealthAndSafety, Commute, Park, School, Diversity3, Home } from '@mui/icons-material';
+import { Factory, Euro, LocalPolice, Public, Balance, Work, MilitaryTech, Agriculture, FamilyRestroom, HealthAndSafety, Commute, Park, School, Diversity3, Home } from '@mui/icons-material';
 
 const IconSelector = ({ iconName, style, div = true }) => {
     const getIcon = (iconName) => {
@@ -7,7 +7,7 @@ const IconSelector = ({ iconName, style, div = true }) => {
             case 'Wirtschaft':
                 return <Factory />;
             case 'Finanzen':
-                return <AttachMoney />;
+                return <Euro />;
             case 'Innenpolitik':
                 return <LocalPolice />;
             case 'Außenpolitik':

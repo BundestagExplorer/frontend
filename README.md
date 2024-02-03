@@ -26,7 +26,7 @@ Create a production build using node, that is deployed in an nginx container on 
 
 ### START/RUN
 Build and run image:
-`docker compose -f docker-compose_prod.yml up --build `
+`docker compose -f docker-compose.yml up --build `
 
 NOTE: npm install might take some time, but only on first startup
 

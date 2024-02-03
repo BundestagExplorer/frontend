@@ -45,10 +45,10 @@ const PollCard = ({ date, title, yesVotes, noVotes, neutralVotes, notVoted, resu
             {title}
           </Typography>
           <Typography variant="body1" color={result === 'accepted' ? 'green' : 'error'} gutterBottom>
-            Result: {result}
+            Ergebnis: {result === 'accepted' ? 'angenommen' : 'abgelehnt'}
           </Typography>
           <Typography variant="body2" color="textSecondary" gutterBottom>
-            Resort: {category}
+            Ministerium: {category}
           </Typography>
         </CardContent>
         {expanded && (
@@ -65,13 +65,13 @@ const PollCard = ({ date, title, yesVotes, noVotes, neutralVotes, notVoted, resu
             style={{ marginRight: 'auto', marginLeft: '.5vw', marginBottom: '1vh' }}
             onClick={handleOpenDetailView}
           >
-            Read More
+            Details zur Abstimmung
           </Button>
           <IconButton
             style={{ marginLeft: 'auto', transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
             onClick={handleExpandClick}
             aria-expanded={expanded}
-            aria-label="show more"
+            aria-label="Mehr anzeigen"
           >
             <ExpandMoreIcon />
           </IconButton>

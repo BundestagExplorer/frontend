@@ -4,6 +4,7 @@ import CircularCardLayout from '../cardgrid/circular_layout';
 import CustomCardGrid from '../cardgrid/card_grid';
 import TemporaryDrawer from '../drawer/drawer';
 import { Config } from '../config';
+import InfoButton from '../common/infoButton';
 
 const BT_TOP_TOPIC_ENDPOINT = 'bundestag_top_topics/';
 
@@ -145,11 +146,11 @@ const Home = () => {
       for (var idx in transformed_data) {
         let bubble = transformed_data[idx]
         bubble["max_value"] = bubble["value_sum"] === max_val && !max_found && max_val !== 0
-        max_found = bubble["value_sum"] === max_val && !max_found
+        max_found = bubble["value_sum"] === max_val || max_found
         bubble["value_sum_raw"] = bubble["value_sum"]
-        bubble["value_sum"] = normalize(min_val, max_val, !expertModeActive ? 12 : 25, !expertModeActive ? 28 : 175, bubble["value_sum"])
-        //console.log("bubble")
-        //console.log(bubble)
+        bubble["value_sum"] = normalize(min_val, max_val, !expertModeActive ? 12 : 25, !expertModeActive ? 28 : 100, bubble["value_sum"])
+        console.log("bubble")
+        console.log(bubble)
         scaled_transformed_data.push(bubble)
       }
 
@@ -178,7 +179,8 @@ const Home = () => {
 
   return (
     <div>
-      <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel={aggregationLevel} showDrawer={() => setDrawerExtented(true)} />
+      <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel={aggregationLevel} showDrawer={() => setDrawerExtented(true)} setExpertModeActive={level => setExpertModeActive(level)}
+        expertModeActive={expertModeActive}/>
       <div style={{ padding: 20 }}>
         {expertModeActive ? (
           <CustomCardGrid agg_data={aggData} totalSize={totalSize} miniChartData={aggMonthlyData} selectedMonth={selectedMonth} selectedYear={selectedYear} aggregationLevel={aggregationLevel}/>
@@ -193,9 +195,8 @@ const Home = () => {
         setAggregationLevel={level => setAggregationLevel(level)}
         aggregationLevel={aggregationLevel}
         year={selectedYear}
-        month={selectedMonth}
-        setExpertModeActive={level => setExpertModeActive(level)}
-        expertModeActive={expertModeActive} />
+        month={selectedMonth}/>
+      <InfoButton/>
     </div>
   );
 };
