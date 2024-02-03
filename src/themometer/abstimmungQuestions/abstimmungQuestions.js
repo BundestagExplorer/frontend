@@ -13,7 +13,8 @@ import {
   Fab,
   AccordionActions,
   CircularProgress,
-  Slide
+  Slide,
+  Tooltip
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import RednerCard from "./rednerCard";
@@ -26,7 +27,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useTheme } from "@mui/material/styles";
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-const BT_ABSTIMMUNG_REDNER_ENDPOINT = "abstimmung_redner";
+
+const BT_ABSTIMMUNG_REDNER_ENDPOINT = "abstimmung_redner/";
 
 
 export default function AbstimmungQuestions({
@@ -168,11 +170,11 @@ export default function AbstimmungQuestions({
                   Redner
                 </AccordionSummary>
                 <AccordionDetails sx={{ display: "flex", justifyContent: "center" }}>
-                  <Grid item container direction="row" spacing={2} display="flex" width={"100%"} >
+                  <Grid item container direction="row" spacing={4} display="flex" width={"100%"} >
                     {
                       rednerData.slice(0, allRedner ? rednerData.length : 4).map((item) => {
                         return (
-                          <Grid item container md={3} justifyContent={"center"} spacing={2}>
+                          <Grid item container md={3} justifyContent={"center"} spacing={4}>
                             <RednerCard
                               key={item.id}
                               full_name={item.full_name}
@@ -214,24 +216,29 @@ export default function AbstimmungQuestions({
         bottom: (theme) => theme.spacing(10),
       }}>
         <Grid item md={4}>
-          <Fab
-            size="large"
-            color="success"
-            onClick={() => onStepForward("ja")}
-            sx={{ height: "100px", width: "100px" }}
-          >
-            <CheckIcon fontSize="large" />
-          </Fab >
+          <Tooltip title="Dafür">
+            <Fab
+              color="success"
+              onClick={() => onStepForward("ja")}
+              sx={{ height: "100px", width: "100px" }}
+            >
+              <CheckIcon fontSize="large" />
+            </Fab >
+          </Tooltip>
         </Grid>
         <Grid item md={4}>
-          <Fab color="grey" onClick={() => onStepForward("enthalten")} sx={{ height: "100px", width: "100px" }}>
-            <NavigateNextIcon fontSize="large" />
-          </Fab>
+          <Tooltip title="Diese Frage überspringen">
+            <Fab color="grey" onClick={() => onStepForward("enthalten")} sx={{ height: "100px", width: "100px" }}>
+              <NavigateNextIcon fontSize="large" />
+            </Fab>
+          </Tooltip>
         </Grid>
         <Grid item md={4}>
-          <Fab onClick={() => onStepForward("nein")} color="error" sx={{ height: "100px", width: "100px" }}>
-            <ClearIcon fontSize="large" />
-          </Fab>
+          <Tooltip title="Dagegen">
+            <Fab onClick={() => onStepForward("nein")} color="error" sx={{ height: "100px", width: "100px" }}>
+              <ClearIcon fontSize="large" />
+            </Fab>
+          </Tooltip>
         </Grid>
 
       </Grid >
