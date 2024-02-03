@@ -38,7 +38,7 @@ const Circle = styled('div')({
 
 const CircleHolder = styled('div')(({ viewportWidth, viewportHeight }) => ({
     position: 'absolute',
-    left: 0.475 * viewportWidth - 75,
+    left: 0.475 * viewportWidth - 60,
     top: 0.34 * Math.min(viewportHeight, viewportWidth) + 20,
 }));
 
@@ -130,7 +130,7 @@ export default function CircularCardLayout({ agg_data, aggregationLevel, selecte
                         height: Math.min(viewportHeight, viewportWidth) * 7 / 16,
                         border: '2px solid',
                         borderColor: theme.palette.secondary.main,
-                        left: 0.472 * viewportWidth - Math.min(viewportHeight, viewportWidth) * 7 / 32,
+                        left: 0.472 * viewportWidth - Math.min(viewportHeight, viewportWidth) * 7 / 32 + 15,
                         top: 0.34 * Math.min(viewportHeight, viewportWidth) + 40 - Math.min(viewportHeight, viewportWidth) * 7 / 32,
                         padding: '10px', borderRadius: '50%'
                     }}>
@@ -160,7 +160,7 @@ export default function CircularCardLayout({ agg_data, aggregationLevel, selecte
                         height: Math.min(viewportHeight, viewportWidth) * 7 / 16,
                         border: '2px solid',
                         borderColor: theme.palette.secondary.main,
-                        left: 0.472 * viewportWidth - Math.min(viewportHeight, viewportWidth) * 7 / 32,
+                        left: 0.472 * viewportWidth - Math.min(viewportHeight, viewportWidth) * 7 / 32 + 15,
                         top: 0.34 * Math.min(viewportHeight, viewportWidth) + 30 - Math.min(viewportHeight, viewportWidth) * 7 / 32,
                         padding: '10px', borderRadius: '50%'
                     }}>

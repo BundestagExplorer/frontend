@@ -48,12 +48,12 @@ const InfoButton = () => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText style={{ textAlign: 'justify' }}>
-            Diese Übersicht zeigt die meist diskutierten Themen des Bundestags. 
-            Sie werden anhand der Häufigkeit der vorkommenden Wörter in den Debatten ermittelt. 
-            Diese Themen werden anschließend mittels einer statistischen Methode den Ministerien zugeordnet und somit die Relevanz des Ministeriums im 
-            ausgewählten Zeitraum ermittelt. Diese Relevanz der Ministerien wird anhand der Textgröße verdeutlicht. <br/>
-            Die Hauptübersicht bezieht sich ausschließlich auf die Reden in den Plenardebatten, während die Übersicht im Themenbereich der Abstimmungen 
-            sich ausschließlich auf die Abstimmungen bezieht.
+            Diese Übersicht stellt die am intensivsten diskutierten Themen im Bundestag dar, 
+            basierend auf der Häufigkeit der Wörter in den Debatten. Mithilfe statistischer Methoden werden die Themen 
+            den entsprechenden Ministerien zugeordnet, um ihre Relevanz im gewählten Zeitraum zu analysieren. Die Bedeutung der 
+            Ministerien wird durch die Größe der dazugehörigen Textabschnitte verdeutlicht. <br/>
+            Es ist zu beachten, dass die Hauptübersicht sich auf die Themen der Plenardebatten konzentriert, 
+            während die Abstimmungsübersicht die Umsetzung dieser Themen in Abstimmungen darstellt.
           </DialogContentText>
         </DialogContent>
       </Dialog>
