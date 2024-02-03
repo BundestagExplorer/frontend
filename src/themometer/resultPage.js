@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Typography, Grid, Tab, Tabs, Paper, Box, Accordion, AccordionSummary, AccordionDetails, Button, Slide } from "@mui/material";
-import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import ResultChart from "./resultChart";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -41,7 +40,6 @@ function getResults(votingData, answers) {
 
   let normalizedSimilarityByFraktion = {};
 
-  console.log(similarityByFraktion, countByFraktion)
 
   for (const [key, value] of Object.entries(similarityByFraktion)) {
     normalizedSimilarityByFraktion[key] = value / countByFraktion[key];
@@ -68,10 +66,6 @@ export default function ResultPage({ restartQuestionnaireCallback, votingData, a
 
   useEffect(() => {
     setTotalResults(getResults(votingData, answers));
-
-    console.log("votingData", votingData)
-    console.log("answers", answers)
-    console.log("selectedRessoirts", selectedRessorts)
 
     var ressortResults = {};
     var abstimmungResults = {};
