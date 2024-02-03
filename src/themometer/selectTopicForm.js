@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControlLabel, FormGroup, FormControl, Checkbox, Grid, Container, Box, Paper, MenuItem, Typography, useTheme, Button, Stepper, Step, StepLabel, FormHelperText, Select, InputLabel } from '@mui/material';
+import { FormControlLabel, FormGroup, FormControl, Checkbox, Grid, Container, Box, Paper, MenuItem, Typography, useTheme, Button, Stepper, Step, StepLabel, FormHelperText, Select, InputLabel, Divider } from '@mui/material';
 import { ressorts } from '../common/ressorts';
 import { Form } from 'react-router-dom';
 import SendIcon from '@mui/icons-material/Send';
@@ -89,12 +89,12 @@ export default function SelectTopicForm({ setActiveStep, setSelectedRessorts, se
             <Grid item container md={7} alignContent="center" justifyContent="center">
                 <FormControl error={!atLeastOneRessortSelected} component="fieldset">
                     <FormGroup sx={{ alignContent: 'center', alignItems: 'center' }}>
-                        <Grid item container md={6} direction="row" spacing={1} alignContent="center" alignItems={'center'} sx={{ paddingLeft: "100px" }}>
+                        <Grid item container md={12} direction="row" spacing={1} alignContent="center" alignItems={'center'} sx={{ paddingLeft: "100px" }}>
                             {
                                 ressortCheckboxState.map(
                                     (ressort, _) => {
                                         return (
-                                            <Grid item container md={6} xs={6} key={ressort.id}>
+                                            <Grid item md={4} xs={6} key={ressort.id}>
                                                 <FormControlLabel key={ressort.id}
                                                     control={<Checkbox checked={ressort.checked}
                                                         onChange={handleCheckboxChange}
@@ -111,6 +111,7 @@ export default function SelectTopicForm({ setActiveStep, setSelectedRessorts, se
                             }
                         </Grid>
                     </FormGroup>
+                    <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
                     <Grid item container md={12} justifyContent='center'>
                         <FormControl sx={{ minWidth: 100, textAlign: 'center' }}>
                             <InputLabel id="demo-simple-select-label">Fragenanzahl</InputLabel>

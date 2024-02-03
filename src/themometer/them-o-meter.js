@@ -56,7 +56,10 @@ const ThemOMeter = () => {
 
   const [totalQuestions, setTotalQuestions] = React.useState(10);
 
+
+
   useEffect(() => {
+    setVotingData([]);
     const getVotingData = async () => {
       let params = new URLSearchParams({
         limit: totalQuestions * 3,
@@ -102,9 +105,10 @@ const ThemOMeter = () => {
             .sort((a, b) => new Date(b.date) - new Date(a.date));
         })
         .then(function (data) {
-          setVotingData(shuffle(data));
-          //console.log(data.filter( (elem) => { return elem.title === "Bundeswehreinsatz im Irak"}))
+          var shuffledData = shuffle(data).slice(0, totalQuestions);
+          setVotingData(shuffledData);
         });
+      //console.log(data.filter( (elem) => { return elem.title === "Bundeswehreinsatz im Irak"})).
     };
     getVotingData();
   }, [selectedRessorts, totalQuestions]);

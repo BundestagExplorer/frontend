@@ -27,9 +27,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useTheme } from "@mui/material/styles";
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import DrucksachenCards from "./drucksachenCards";
+import QuestionContent from "./questionContent";
+import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 const BT_ABSTIMMUNG_REDNER_ENDPOINT = "abstimmung_redner/";
-
+const BT_DRUCKSACHEN_ENDPOINT = "drucksache/";
 
 export default function AbstimmungQuestions({
   stepBackCallback,
@@ -43,6 +47,7 @@ export default function AbstimmungQuestions({
   const [rednerData, setRednerData] = React.useState([]);
 
   const [allRedner, setAllRedner] = React.useState(false);
+  const [allDrucksache, setAllDrucksache] = React.useState(false);
 
   const [slideDirection, setSlideDirection] = React.useState("right");
 
@@ -84,6 +89,40 @@ export default function AbstimmungQuestions({
         //console.log(data.filter( (elem) => { return elem.title === "Bundeswehreinsatz im Irak"}))
       });
   };
+
+  const [drucksacheData, setDrucksacheData] = React.useState([]);
+
+  const fetchDrucksachenForAbstimmung = async (abstimmungen) => {
+    console.log(abstimmungen);
+
+    let params = new URLSearchParams();
+
+    abstimmungen.drucksachen.forEach((drucksache) => {
+      params.append("drucksache_ids", drucksache.drucksache_id);
+    });
+
+    await fetch(
+      Config.API_URL + BT_DRUCKSACHEN_ENDPOINT + "?" + params,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    ).then((response) =>
+      response.json()
+    ).then((data) => {
+      setDrucksacheData(data);
+    });
+  }
+
+  useEffect(() => {
+    if (votingData && votingData.drucksachen.length > 0) {
+      fetchDrucksachenForAbstimmung(votingData)
+    }
+  }
+    , [votingData]
+  );
 
   useEffect(() => {
     if (votingData) {
@@ -150,24 +189,52 @@ export default function AbstimmungQuestions({
                 sx={{ textAlign: "center" }}
               />
               <CardContent>
-                <Typography variant="body1">
-                  Lorem ipsum odor amet, consectetuer adipiscing elit. Netus risus
-                  parturient sodales taciti eget turpis in mus. Amet arcu platea
-                  porttitor sollicitudin faucibus ligula. Eros hendrerit metus metus
-                  ullamcorper orci bibendum lobortis vehicula. Ligula proin ligula
-                  vulputate quis adipiscing nascetur blandit diam consectetur.
-                  Convallis est non facilisi vitae potenti. Nibh curabitur imperdiet
-                  potenti suscipit libero urna pulvinar augue. Euismod tempor
-                  maximus pulvinar lobortis ac conubia fames. Integer torquent nunc
-                  ipsum nascetur erat per..
-                </Typography>
+                <QuestionContent abstimmungData={votingData} drucksachenData={drucksacheData} />
               </CardContent>
               <Divider />
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Grid item container md={12} justifyContent="flex-start" alignItems={"center"} gap={"5px"}>
+                    <DescriptionIcon color="secondary" />
+                    <Typography align="center" color="secondary" display='flex' marginLeft={"2px"}>
+
+                      Drucksachen
+                    </Typography>
+                  </Grid>
+
+                </AccordionSummary>
+                <AccordionDetails sx={{ display: "flex", justifyContent: "center" }}>
+
+                  <Grid item container direction="row" spacing={4} display="flex" width={"100%"} >
+                    <DrucksachenCards drucksacheData={drucksacheData.slice(0, allDrucksache ? drucksacheData.length : 4)} />
+                  </Grid>
+                </AccordionDetails>
+                {
+                  drucksacheData.length > 4 &&
+                  <AccordionActions sx={{ paddingBottom: 3, paddingRight: 3 }}>
+                    {
+                      allDrucksache &&
+                      <Button size="large" color={"secondary"} variant="contained" onClick={() => setAllDrucksache(false)} endIcon={<ArrowUpwardIcon />}>Weniger Drucksachen anzeigen </Button>
+                    }
+                    {
+                      !allDrucksache &&
+                      <Button size="large" color={"secondary"} variant="contained" onClick={() => setAllDrucksache(true)} endIcon={<ArrowDownwardIcon />}>Alle Drucksachen anzeigen</Button>
+                    }
+                  </AccordionActions>
+                }
+              </Accordion>
+
               <Accordion>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                 >
-                  Redner
+                  <Grid item container md={12} justifyContent="flex-start" alignItems={"center"} gap={"5px"}>
+                    <RecordVoiceOverIcon color="secondary" />
+                    <Typography align="center" color="secondary" display='flex'>
+                      Redner
+                    </Typography>
+                  </Grid>
+
                 </AccordionSummary>
                 <AccordionDetails sx={{ display: "flex", justifyContent: "center" }}>
                   <Grid item container direction="row" spacing={4} display="flex" width={"100%"} >
@@ -208,7 +275,7 @@ export default function AbstimmungQuestions({
             </Card>
           </Slide>
         </Grid>
-      </Grid>
+      </Grid >
       <Grid item container md={3} row sx={{
         justifyContent: "space-evenly",
         display: 'flex',
