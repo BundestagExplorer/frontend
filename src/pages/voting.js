@@ -96,7 +96,6 @@ const Voting = () => {
             )
         }).then(function (data) {
             setVotingData(data)
-            //console.log(data.filter((elem) => { return elem.title === "Deutsch-französisches Parlamentsabkommen" }))
         });
     }
 

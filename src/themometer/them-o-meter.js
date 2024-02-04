@@ -6,14 +6,14 @@ import {
   Stepper,
   Step,
   StepLabel,
-  Divider,
 } from "@mui/material";
 
 import SelectTopicForm from "./selectTopicForm";
-import AbstimmenQuestions from "./abstimmungQuestions";
+import AbstimmungQuestions from "./abstimmungQuestions/abstimmungQuestions";
 import { Config } from "../config";
 import { dachzeileToRessort } from "../common/dachzeileToRessort";
 import ResultPage from "./resultPage";
+
 
 const BT_ABSTIMMUNGEN_ENDPOINT = "abstimmung/";
 
@@ -40,7 +40,8 @@ function shuffle(array) {
 const ThemOMeter = () => {
   const theme = useTheme();
 
-  const totalQuestions = 15;
+
+
 
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -54,59 +55,64 @@ const ThemOMeter = () => {
   const [selectedRessorts, setSelectedRessorts] = React.useState([
   ]);
 
-  const getVotingData = async () => {
-    let params = new URLSearchParams({
-      limit: totalQuestions * 3,
-    });
+  const [totalQuestions, setTotalQuestions] = React.useState(10);
 
-    selectedRessorts.forEach((ressort) => {
-      params.append("dachzeile", ressort.name);
-    });
 
-    fetch(Config.API_URL + BT_ABSTIMMUNGEN_ENDPOINT + "?" + params, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (abstimmungJson) {
-        return abstimmungJson
-          .map((item) => {
-            return {
-              id: item.id,
-              abstimmungDate: item.abstimmung_date,
-              title: item.titel,
-              ja: item.ja,
-              nein: item.nein,
-              enthalten: item.enthalten,
-              nichtAbgegeben: item.nicht_abgegeben,
-              result: item.ja > item.nein ? "accepted" : "rejected",
-              additionalInfo:
-                "abstract" in item ? item.abstract : "No abstract",
-              drucksachen: item.drucksachen,
-              fraktionen: item.fraktionen,
-              dachzeile:
-                "dachzeile" in item ? dachzeileToRessort[item.dachzeile] : null,
-              category:
-                "dachzeile" in item
-                  ? dachzeileToRessort[item.dachzeile]
-                  : "keine Zuordnung",
-            };
-          })
-          .sort((a, b) => new Date(b.date) - new Date(a.date));
-      })
-      .then(function (data) {
-        setVotingData(shuffle(data));
-        //console.log(data.filter( (elem) => { return elem.title === "Bundeswehreinsatz im Irak"}))
-      });
-  };
 
   useEffect(() => {
+    setVotingData([]);
+    const getVotingData = async () => {
+      let params = new URLSearchParams({
+        limit: totalQuestions * 3,
+      });
+
+      selectedRessorts.forEach((ressort) => {
+        params.append("dachzeile", ressort.name);
+      });
+
+      fetch(Config.API_URL + BT_ABSTIMMUNGEN_ENDPOINT + "?" + params, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (abstimmungJson) {
+          return abstimmungJson
+            .map((item) => {
+              return {
+                id: item.id,
+                abstimmungDate: item.abstimmung_date,
+                title: item.titel,
+                ja: item.ja,
+                nein: item.nein,
+                enthalten: item.enthalten,
+                nichtAbgegeben: item.nicht_abgegeben,
+                result: item.ja > item.nein ? "accepted" : "rejected",
+                additionalInfo:
+                  "abstract" in item ? item.abstract : "No abstract",
+                drucksachen: item.drucksachen,
+                fraktionen: item.fraktionen,
+                dachzeile:
+                  "dachzeile" in item ? dachzeileToRessort[item.dachzeile] : null,
+                category:
+                  "dachzeile" in item
+                    ? dachzeileToRessort[item.dachzeile]
+                    : "keine Zuordnung",
+              };
+            })
+            .sort((a, b) => new Date(b.date) - new Date(a.date));
+        })
+        .then(function (data) {
+          var shuffledData = shuffle(data).slice(0, totalQuestions);
+          setVotingData(shuffledData);
+        });
+      //console.log(data.filter( (elem) => { return elem.title === "Bundeswehreinsatz im Irak"})).
+    };
     getVotingData();
-  }, [selectedRessorts]);
+  }, [selectedRessorts, totalQuestions]);
 
   const answerQuestion = (answer) => {
     setQuestionAnswers([...questionAnswers, { questionIndex, answer }]);
@@ -120,6 +126,24 @@ const ThemOMeter = () => {
     }
   };
 
+  const stepBackCallback = () => {
+
+    if (questionIndex === 0) {
+      setActiveStep(0);
+      return;
+    }
+    var newQuestionAnswers = [...questionAnswers].slice(0, -1);
+    setQuestionAnswers(newQuestionAnswers);
+    setQuestionIndex(questionIndex - 1);
+  }
+
+  const restartQuestionnaireCallback = () => {
+    setActiveStep(0)
+    setQuestionAnswers([]);
+    setQuestionIndex(0);
+    setVotingData([]);
+  }
+
   const steps = ["Wähle deine Themen", "Stimme ab", "Vergleiche Ergebnisse"];
 
   return (
@@ -129,7 +153,7 @@ const ThemOMeter = () => {
           {steps.map((label, index) => {
             return (
               <Step key={index}>
-                <StepLabel>{label}</StepLabel>
+                <StepLabel color="primary">{label}</StepLabel>
               </Step>
             );
           })}
@@ -139,9 +163,12 @@ const ThemOMeter = () => {
         <SelectTopicForm
           setActiveStep={setActiveStep}
           setSelectedRessorts={setSelectedRessorts}
+          setTotalQuestions={setTotalQuestions}
         />
       ) : activeStep === 1 ? (
-        <AbstimmenQuestions
+        <AbstimmungQuestions
+          stepBackCallback={stepBackCallback}
+          questionAnswers={questionAnswers}
           questionIndex={questionIndex}
           totalQuestions={
             totalQuestions > votingData.length
@@ -153,6 +180,7 @@ const ThemOMeter = () => {
         />
       ) : activeStep === 2 ? (
         <ResultPage
+          restartQuestionnaireCallback={restartQuestionnaireCallback}
           votingData={votingData}
           answers={questionAnswers}
           selectedRessorts={selectedRessorts}
@@ -167,7 +195,9 @@ const ThemOMeter = () => {
           </span>
         </Typography>
       )}
+
     </Grid>
+
   );
 };
 

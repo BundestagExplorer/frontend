@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useTheme } from '@mui/material/styles';
 
-const InfoButton = () => {
+const InfoButton = ({ infoButtonText }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
@@ -48,12 +48,7 @@ const InfoButton = () => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText style={{ textAlign: 'justify' }}>
-            Diese Übersicht stellt die am intensivsten diskutierten Themen im Bundestag dar, 
-            basierend auf der Häufigkeit der Wörter in den Debatten. Mithilfe statistischer Methoden werden die Themen 
-            den entsprechenden Ministerien zugeordnet, um ihre Relevanz im gewählten Zeitraum zu analysieren. Die Bedeutung der 
-            Ministerien wird durch die Größe der dazugehörigen Textabschnitte verdeutlicht. <br/>
-            Es ist zu beachten, dass die Hauptübersicht sich auf die Themen der Plenardebatten konzentriert, 
-            während die Abstimmungsübersicht die Umsetzung dieser Themen in Abstimmungen darstellt.
+            {infoButtonText}
           </DialogContentText>
         </DialogContent>
       </Dialog>
