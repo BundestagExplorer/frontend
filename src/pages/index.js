@@ -5,8 +5,19 @@ import CustomCardGrid from '../cardgrid/card_grid';
 import TemporaryDrawer from '../drawer/drawer';
 import { Config } from '../config';
 import InfoButton from '../common/infoButton';
+import Typography from '@mui/material/Typography';
 
 const BT_TOP_TOPIC_ENDPOINT = 'bundestag_top_topics/';
+
+
+const infoButtonText = <Typography variant="body1">
+  Diese Übersicht stellt die am intensivsten diskutierten Themen im Bundestag dar,
+  basierend auf der Häufigkeit der Wörter in den Debatten. Mithilfe statistischer Methoden werden die Themen
+  den entsprechenden Ministerien zugeordnet, um ihre Relevanz im gewählten Zeitraum zu analysieren. Die Bedeutung der
+  Ministerien wird durch die Größe der dazugehörigen Textabschnitte verdeutlicht. <br />
+  Es ist zu beachten, dass die Hauptübersicht sich auf die Themen der Plenardebatten konzentriert,
+  während die Abstimmungsübersicht die Umsetzung dieser Themen in Abstimmungen darstellt.
+</Typography>
 
 
 var default_agg_data =
@@ -23,7 +34,7 @@ var default_agg_data =
     }
   ]
 
-  var default_monthly_agg_data =
+var default_monthly_agg_data =
   [
     {
       "name": "Default",
@@ -84,24 +95,24 @@ const Home = () => {
   const updateMonthlyData = async (selectedYear) => {
 
     var search_params = {
-      year : selectedYear
+      year: selectedYear
     }
     //fetch data for minichart
-      var monthlyData = {}
+    var monthlyData = {}
 
-      for (var i = 1; i<= 12; i++){
-        search_params["month"] = i
-        //get only short form of parsed data
-        let data = await fetchData(search_params, true)
-        //restructure data for use in minichart
-        data.forEach(function (element, i) {
-          monthlyData[element.name] ? monthlyData[element.name].push(element.value_sum) : monthlyData[element.name] = [element.value_sum]
-        });
-      }
-      setAggMonthlyData(monthlyData)
+    for (var i = 1; i <= 12; i++) {
+      search_params["month"] = i
+      //get only short form of parsed data
+      let data = await fetchData(search_params, true)
+      //restructure data for use in minichart
+      data.forEach(function (element, i) {
+        monthlyData[element.name] ? monthlyData[element.name].push(element.value_sum) : monthlyData[element.name] = [element.value_sum]
+      });
+    }
+    setAggMonthlyData(monthlyData)
   }
 
-  function data_parser(data, short=false) {
+  function data_parser(data, short = false) {
     // transforms the json from the api endpoint to a matching format for the word-cloud
     let transformed_data = []
     let total = 0
@@ -115,16 +126,16 @@ const Home = () => {
       var value_sum = 0
       for (var element in data["top_topics"][resort_title]) {
         let sub_item = {}
-        if (!short){
-        sub_item["name"] = data["top_topics"][resort_title][element][0]
-        sub_item["value"] = data["top_topics"][resort_title][element][1]
+        if (!short) {
+          sub_item["name"] = data["top_topics"][resort_title][element][0]
+          sub_item["value"] = data["top_topics"][resort_title][element][1]
         }
         value_sum = value_sum + data["top_topics"][resort_title][element][1]
 
         bubble_list.push(sub_item)
       }
 
-      if (!short){bubble["data"] = bubble_list}
+      if (!short) { bubble["data"] = bubble_list }
 
       bubble["value_sum"] = value_sum
       total += value_sum
@@ -132,7 +143,7 @@ const Home = () => {
       transformed_data.push(bubble)
     }
 
-    if(!short){
+    if (!short) {
       setTotalSize(total)
       var values = []
       for (var index in transformed_data) {
@@ -155,7 +166,7 @@ const Home = () => {
       }
 
       return scaled_transformed_data
-    }else{
+    } else {
       return transformed_data
     }
   }
@@ -180,12 +191,12 @@ const Home = () => {
   return (
     <div>
       <DenseAppBar displayYear={selectedYear} displayMonth={selectedMonth} aggregationLevel={aggregationLevel} showDrawer={() => setDrawerExtented(true)} setExpertModeActive={level => setExpertModeActive(level)}
-        expertModeActive={expertModeActive}/>
+        expertModeActive={expertModeActive} />
       <div style={{ padding: 20 }}>
         {expertModeActive ? (
-          <CustomCardGrid agg_data={aggData} totalSize={totalSize} miniChartData={aggMonthlyData} selectedMonth={selectedMonth} selectedYear={selectedYear} aggregationLevel={aggregationLevel}/>
+          <CustomCardGrid agg_data={aggData} totalSize={totalSize} miniChartData={aggMonthlyData} selectedMonth={selectedMonth} selectedYear={selectedYear} aggregationLevel={aggregationLevel} />
         ) : (
-          <CircularCardLayout agg_data={aggData} aggregationLevel={aggregationLevel} selectedMonth={selectedMonth} selectedYear={selectedYear}/>
+          <CircularCardLayout agg_data={aggData} aggregationLevel={aggregationLevel} selectedMonth={selectedMonth} selectedYear={selectedYear} />
         )}
       </div>
       <TemporaryDrawer drawerExtended={drawerExtended}
@@ -195,8 +206,8 @@ const Home = () => {
         setAggregationLevel={level => setAggregationLevel(level)}
         aggregationLevel={aggregationLevel}
         year={selectedYear}
-        month={selectedMonth}/>
-      <InfoButton/>
+        month={selectedMonth} />
+      <InfoButton infoButtonText={infoButtonText} />
     </div>
   );
 };

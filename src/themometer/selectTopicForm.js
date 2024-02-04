@@ -134,7 +134,7 @@ export default function SelectTopicForm({ setActiveStep, setSelectedRessorts, se
                     </Grid>
                 </FormControl >
             </Grid >
-            <Grid container md={12} justifyContent='center' paddingBottom={3}>
+            <Grid item container md={12} justifyContent='center' paddingBottom={3}>
                 <FormControl>
                     <FormGroup sx={{ alignItems: 'center' }}>
                         <FormControlLabel control={<Checkbox onChange={handleSetAll} />} label="Alle Themen" />

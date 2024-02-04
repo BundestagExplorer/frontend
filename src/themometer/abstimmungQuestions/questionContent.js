@@ -90,9 +90,6 @@ function sortByVorgangHeuristic(a, b, abstimmungData, vorgangCounter, vorgangDru
 }
 
 export default function QuestionContent({ abstimmungData, drucksachenData }) {
-    const [expanded, setExpanded] = React.useState(
-        false
-    );
 
     const [content, setContent] = React.useState(
         {}
@@ -104,7 +101,6 @@ export default function QuestionContent({ abstimmungData, drucksachenData }) {
 
         const drucksachenData = [...inDrucksachenData]
 
-        console.log(abstimmungData, drucksachenData)
 
         if (drucksachenData.length === 0) {
             contentObject = {
@@ -176,7 +172,6 @@ export default function QuestionContent({ abstimmungData, drucksachenData }) {
             'sachgebiete': uniqueVorgaenge[0].sachgebiet,
             'deskriptoren': uniqueVorgaenge[0].deskriptoren,
         }
-        console.log(contentObject)
         return contentObject
     };
 
@@ -186,7 +181,7 @@ export default function QuestionContent({ abstimmungData, drucksachenData }) {
         setContent(getContentObject(abstimmungData, drucksachenData))
     }, [abstimmungData, drucksachenData]);
 
-    return (
+    return drucksachenData.length !== 0 ?
         <Grid container item xs={12} spacing={2} justifyContent="center">
             <Divider flexItem sx={{ width: "100%" }} />
             <Grid item md={12}>
@@ -222,5 +217,6 @@ export default function QuestionContent({ abstimmungData, drucksachenData }) {
             </Grid>
 
         </Grid >
-    )
+        : <Typography variant="h6" color="pillA">Keine Drucksachen gefunden</Typography>
+
 }

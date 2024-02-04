@@ -117,7 +117,7 @@ export default function ResultPage({ restartQuestionnaireCallback, votingData, a
                   {
                     value === 0 && totalResults !== undefined ? (
                       <Grid item container direction="row" spacing={2} display={"flex"} width={"100%"} justifyContent={'center'}>
-                        <ResultChart value={0} result={totalResults} />
+                        <ResultChart childKey={0} result={totalResults} />
                       </Grid>
                     ) : value === 1 ? (
                       Object.entries(
@@ -143,7 +143,7 @@ export default function ResultPage({ restartQuestionnaireCallback, votingData, a
                               <Grid item container direction="row" spacing={2} key={`${value}` + i} display={"flex"} width={"100%"} justifyContent={'center'}>
                                 {
                                   Object.keys(value).length !== 0 ? (
-                                    <ResultChart result={value} key={key} />
+                                    <ResultChart result={value} key={key} childKey={key} />
                                   ) : (
                                     <Typography variant="h6" align="center">
                                       Zu diesem Ressort gab es keine Abstimmungen
@@ -176,7 +176,7 @@ export default function ResultPage({ restartQuestionnaireCallback, votingData, a
                                 <Grid item container direction="row" spacing={2} key={`${value}` + i} display={"flex"} width={"100%"} justifyContent={'center'}>
                                   {
                                     Object.keys(value).length !== 0 ? (
-                                      <ResultChart result={value} key={key} />
+                                      <ResultChart result={value} key={key} childKey={key} />
                                     ) : (
                                       <Typography variant="h6" align="center">
                                         Zu dieser Abstimmung konnte kein Ergebnis gefunden werden

@@ -114,7 +114,6 @@ const ThemOMeter = () => {
   }, [selectedRessorts, totalQuestions]);
 
   const answerQuestion = (answer) => {
-    console.log([...questionAnswers, { questionIndex, answer }])
     setQuestionAnswers([...questionAnswers, { questionIndex, answer }]);
     if (
       questionIndex === totalQuestions - 1 ||

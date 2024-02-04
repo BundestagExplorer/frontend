@@ -3,10 +3,10 @@ import { Card, CardContent, CardMedia, CardHeader, Typography, Box, Link } from 
 import defaultRedner from "../../assets/defaultRedner.png";
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
-export default function RednerCard({ key, full_name, funktion, image_url }) {
+export default function RednerCard({ full_name, funktion, image_url }) {
 
   return (
-    <Card key={key} sx={{ maxWidth: 230, m: 3 }}>
+    <Card sx={{ maxWidth: 230, m: 3 }}>
       <CardMedia
         component="img"
         image={image_url}
@@ -20,10 +20,10 @@ export default function RednerCard({ key, full_name, funktion, image_url }) {
         }
       />
       <CardContent>
-        <Typography wrap variant="body2" color={"secondary"}>{funktion}</Typography>
-        <Typography wrap variant="body1">{full_name}</Typography>
+        <Typography variant="body2" color={"secondary"}>{funktion}</Typography>
+        <Typography variant="body1">{full_name}</Typography>
         <Link href={`https://de.wikipedia.org/w/index.php?title=Special:Search&search=${full_name}`} target="_blank" rel="noopener" underline="none">
-          <Typography wrap variant="body1">Wikipedia <OpenInNewIcon fontSize="small" /></Typography>
+          <Typography variant="body1">Wikipedia <OpenInNewIcon fontSize="small" /></Typography>
         </Link>
       </CardContent>
     </Card >

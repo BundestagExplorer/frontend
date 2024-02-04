@@ -86,14 +86,12 @@ export default function AbstimmungQuestions({
       })
       .then(function (data) {
         setRednerData(data);
-        //console.log(data.filter( (elem) => { return elem.title === "Bundeswehreinsatz im Irak"}))
       });
   };
 
   const [drucksacheData, setDrucksacheData] = React.useState([]);
 
   const fetchDrucksachenForAbstimmung = async (abstimmungen) => {
-    console.log(abstimmungen);
 
     let params = new URLSearchParams();
 
@@ -163,7 +161,7 @@ export default function AbstimmungQuestions({
 
   return votingData ? (
     <>
-      <Grid item container md={12} sx={{ display: "flex" }}>
+      <Grid item container md={12} sx={{ display: "flex" }} spacing={2}>
         <Grid item md={12}>
           <ClickableMobileStepper
             variant="dots"
@@ -175,7 +173,7 @@ export default function AbstimmungQuestions({
             }}
           />
         </Grid>
-        <Grid item md={12} sx={{ justifyContent: "center", p: "3em" }}>
+        <Grid item md={12} sx={{ justifyContent: "center" }}>
           <Slide direction={slideDirection} in={inState} container={containerRef.current} onEntered={() => setSlideDirection("right")} onExited={() => setSlideDirection("left")} >
             <Card
               elevation={10}
