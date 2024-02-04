@@ -3,7 +3,14 @@ import { FormControlLabel, FormGroup, FormControl, Checkbox, Grid, Container, Bo
 import { ressorts } from '../common/ressorts';
 import { Form } from 'react-router-dom';
 import SendIcon from '@mui/icons-material/Send';
+import InfoButton from "../common/infoButton";
 
+const infoButtonText = <Typography variant="body1">
+    Wähle Ressorts aus, die dich interessieren, indem du die entsprechenden Boxen anklickst. <br />
+    Anschließend kannst du noch die Anzahl der Fragen auswählen, welche du beantworten möchtest. <br />
+    Um mit dem Them-o-meter zu starten, klicke auf "Themen bestätigen". <br />
+    Viel Spaß!
+</Typography>
 export default function SelectTopicForm({ setActiveStep, setSelectedRessorts, setTotalQuestions }) {
     const theme = useTheme();
 
@@ -143,6 +150,7 @@ export default function SelectTopicForm({ setActiveStep, setSelectedRessorts, se
                 </FormControl>
 
             </Grid >
+            <InfoButton infoButtonText={infoButtonText} />
         </Grid >
     )
 };

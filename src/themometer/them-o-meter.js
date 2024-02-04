@@ -14,6 +14,7 @@ import { Config } from "../config";
 import { dachzeileToRessort } from "../common/dachzeileToRessort";
 import ResultPage from "./resultPage";
 
+
 const BT_ABSTIMMUNGEN_ENDPOINT = "abstimmung/";
 
 function shuffle(array) {
@@ -194,7 +195,9 @@ const ThemOMeter = () => {
           </span>
         </Typography>
       )}
+
     </Grid>
+
   );
 };
 

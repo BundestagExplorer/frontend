@@ -31,7 +31,34 @@ import DrucksachenCards from "./drucksachenCards";
 import QuestionContent from "./questionContent";
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import DescriptionIcon from '@mui/icons-material/Description';
+import InfoButton from "../../common/infoButton";
 
+const infoButtonText = <Typography variant="body1">
+  Hier siehst du die Details zu einer Abstimmung. Wie würdest du abstimmen?  <br />
+  Wenn der Titel nicht ausschlaggebened genug ist, kannst du die Drucksachen und Redner einsehen, um eine fundierte Entscheidung zu treffen. <br />
+  Oben siehst du deinen Fortschritt und unten kannst du deine Entscheidung treffen. <br />
+  Du hast dich umentschieden? Kein Problem, du kannst auch Fragen zurückgehen. Drücke hierzu einfach auf Zurück. <br />
+  Viel Spaß! <br />
+  <br />
+  Der Bundestag kann ganz schön komplex sein. Hier erklären wir kurz was es mit den Drucksachen und Rednern auf sich hat: <br />
+  <br />
+  <Typography fontWeight="bold">
+    Drucksachen
+  </Typography>
+  Alle Vorlagen, die im Bundestag verhandelt werden, werden in Form von Drucksachen veröffentlicht. <br /> Hierzu gehören
+  Gesetzentwürfe, Anträge von Fraktionen oder der Bundesregierung, Beschlussempfehlungen und Berichte aus den Ausschüssen, Änderungs- und Entschließungsanträge, Große und Kleine Anfragen aus dem Parlament an die Bundesregierung, Berichte und Unterrichtungen sowie Fragen für die Fragestunde im Plenum.
+  Wir zeigen all jene Drucksachen, welche einen Bezug zu einer Abstimmung haben. <br />
+
+  <Typography fontWeight="bold">
+    Redner
+  </Typography>
+  Redner sind die Abgeordneten, die im Bundestag zu einer Abstimmunge gesprochen haben.
+  Wir hoffen, dass du dir in Zukunft sogar die Rede anhören kannst. <br />
+
+  Noch etwas unklar? Auf der offiziellen Seite des Bundestages gibt es noch mehr Informationen: https://www.bundestag.de/services/glossar
+  <br />
+
+</Typography>
 const BT_ABSTIMMUNG_REDNER_ENDPOINT = "abstimmung_redner/";
 const BT_DRUCKSACHEN_ENDPOINT = "drucksache/";
 
@@ -307,7 +334,7 @@ export default function AbstimmungQuestions({
         </Grid>
 
       </Grid >
-
+      <InfoButton infoButtonText={infoButtonText} />
     </>
   ) : (
     <Grid item container md={12} justifyContent="center">
@@ -317,6 +344,7 @@ export default function AbstimmungQuestions({
         </Typography>
       </Grid>
       <CircularProgress />
+      <InfoButton infoButtonText={infoButtonText} />
     </Grid>
   );
 }
