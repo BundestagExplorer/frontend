@@ -3,7 +3,7 @@ FROM node:21 as build
 
 WORKDIR /app
 COPY package*.json /app/
-RUN npm install --legacy-peer-deps --registry=https://registry.npmjs.org/
+RUN npm install --legacy-peer-deps --maxsockets=5
 COPY ./ /app/
 RUN npm run build
 
