@@ -3,7 +3,7 @@ FROM node:21 as build
 
 WORKDIR /app
 COPY package*.json /app/
-RUN npm install --legacy-peer-deps --retry=5 --fetch-timeout=60000
+RUN npm install --legacy-peer-deps --registry=https://registry.npmjs.org/
 COPY ./ /app/
 RUN npm run build
 
