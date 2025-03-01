@@ -3,7 +3,11 @@ FROM node:21 as build
 
 WORKDIR /app
 COPY package*.json /app/
+RUN npm set fetch-retry-mintimeout 30000 \
+    && npm set fetch-retry-maxtimeout 180000 \
+    && npm set fetch-timeout 3000000
 RUN npm install --legacy-peer-deps --maxsockets=5
+
 COPY ./ /app/
 RUN npm run build
 
